@@ -1,0 +1,6 @@
+<screen include-child-content="true">
+    <subscreens default-item="Service"/>
+    <widgets>
+        <subscreens-panel id="service-app" type="popup" title="Service Tracker"/>
+    </widgets>
+</screen>

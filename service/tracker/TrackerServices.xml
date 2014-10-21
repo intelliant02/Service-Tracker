@@ -1,0 +1,7 @@
+<services>
+    <service verb="create" noun="ReceptionEntity" type="entity-auto" authenticate="false">
+     <in-parameters>
+         <auto-parameters include="all"/>
+     </in-parameters>
+    </service>
+</services>

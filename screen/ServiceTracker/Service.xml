@@ -1,0 +1,89 @@
+<screen>
+    <transition name="createEntry">
+        <service-call name="tracker.TrackerServices.create#ReceptionEntity"/>
+        <default-response url="."/>
+    </transition>
+    <widgets>
+        <label type="h3" text="Welcome to the Service Tracker system"/>
+        <container>
+            <container-dialog id="EntryForReceptionist" button-text="Reception's car entry">
+                <form-single name="CarEntryAtReception" transition="createEntry">
+                    <auto-fields-entity entity-name="service.tracker.ReceptionEntity" field-type="edit"/>
+                    <field name="Job">
+                        <default-field>
+                            <drop-down no-current-selected-key="PM(Paid)">
+                                <option key="PM(Free)"/>
+                                <option key="PM(Paid)"/>
+                                <option key="GR"/>
+                                <option key="QS"/>
+                                <option key="BP"/>
+                            </drop-down>
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="DriverOrOwner">
+                        <default-field title="D/O">
+                            <drop-down allow-empty="false" no-current-selected-key="Driver">
+                                <option key="Driver"/>
+                                <option key="Owner"/>
+                            </drop-down>
+                        </default-field>
+                    </field>
+                    <field name="Gift">
+                        <default-field>
+                            <drop-down allow-empty="false" no-current-selected-key="No">
+                                <option key="Yes"/>
+                                <option key="No"/>
+                            </drop-down>
+                        </default-field>
+                    </field>
+                    <field name="Gift">
+                        <default-field>
+                            <drop-down allow-empty="false" no-current-selected-key="No">
+                                <option key="Yes"/>
+                                <option key="No"/>
+                            </drop-down>
+                        </default-field>
+                    </field>
+                    <field name="PickUp">
+                        <default-field>
+                            <drop-down allow-empty="false" no-current-selected-key="No">
+                                <option key="Yes"/>
+                                <option key="No"/>
+                            </drop-down>
+                        </default-field>
+                    </field>
+                    <field name="PickUp">
+                        <default-field>
+                            <drop-down allow-empty="false" no-current-selected-key="No">
+                                <option key="Yes"/>
+                                <option key="No"/>
+                            </drop-down>
+                        </default-field>
+                    </field>
+                    <field name="DropCar">
+                        <default-field>
+                            <drop-down allow-empty="false" no-current-selected-key="No">
+                                <option key="Yes"/>
+                                <option key="No"/>
+                            </drop-down>
+                        </default-field>
+                    </field>
+                    <field name="CustomerWaiting">
+                        <default-field>
+                            <drop-down allow-empty="false" no-current-selected-key="No">
+                                <option key="Yes"/>
+                                <option key="No"/>
+                            </drop-down>
+                        </default-field>
+                    </field>
+                    <field name="ReceptionSubmitButton">
+                        <default-field title="Create">
+                            <submit/>
+                        </default-field>
+                    </field>
+                </form-single>
+            </container-dialog>
+        </container>
+    </widgets>
+</screen>
