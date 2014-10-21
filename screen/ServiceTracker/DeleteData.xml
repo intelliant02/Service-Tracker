@@ -40,7 +40,7 @@
                 </default-field>
             </field>
         </form-list>
-        <form-list name="ListTutorials" list="tutorialList" transition="findReceptionEntity" dynamic="true">
+        <form-list name="ListTutorials" list="tutorialList2" transition="findReceptionEntity" dynamic="true">
 
             <field name="CarNo">
                 <default-field>
