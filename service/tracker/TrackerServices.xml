@@ -1,5 +1,5 @@
 <services>
-    <service verb="create" noun="ReceptionEntity" type="entity-auto" authenticate="false">
+    <service verb="create" noun="ReceptionEntity" authenticate="false">
      <in-parameters>
          <parameter name="CarNo"/>
          <parameter name="InTime"/>
@@ -9,17 +9,19 @@
          <parameter name="Gift"/>
          <parameter name="DropCar"/>
          <parameter name="CustomerWaiting"/>
+         <parameter name="CarStatus"/>
      </in-parameters>
         <actions>
-            <service-call name="create#CarNoAndStatus" in-map="[CarNo:CarNO, CarStatus:CarStatus]"/>
+            <service-call name="create#service.tracker.ReceptionEntity" out-map="context" in-map="context"/>
+            <service-call name="create#service.tracker.CarNoAndStatus" in-map="[CarNo:CarNo, CarStatus:CarStatus]"/>
         </actions>
     </service>
-    <service verb="create" noun="CarNoAndStatus" type="entity-auto" authenticate="false">
+    <!--<service verb="create" noun="CarNoAndStatus" authenticate="false">
         <in-parameters>
             <parameter name="CarNo"/>
-            <parameter name="CarStatus"/>
+           <parameter name="CarStatus"/>
         </in-parameters>
-    </service>
+    </service> -->
     <service verb="delete" noun="ReceptionEntity" type="entity-auto" authenticate="false">
         <in-parameters>
             <auto-parameters include="all"/>
