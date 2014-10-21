@@ -1,0 +1,14 @@
+# gradle/build files
+build/
+.gradle
+
+# IntelliJ IDEA files
+.idea/
+out/
+*.ipr
+*.iws
+*.iml
+
+# Linux auto files
+*~
+
