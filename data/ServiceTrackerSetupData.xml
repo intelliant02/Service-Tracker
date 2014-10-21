@@ -1,4 +1,7 @@
 <entity-facade-xml type="seed">
+    <moqui.screen.SubscreensItem screenLocation="component://webroot/screen/webroot/apps.xml"
+                                 subscreenName="tracker" userGroupId="ALL_USERS" subscreenLocation="component://ServiceTracker/screen/ServiceTracker.xml"
+                                 menuTitle="Service Tracker" menuIndex="5" menuInclude="Y"/>
     <moqui.security.ArtifactGroup artifactGroupId="SERVICE_TRACKER_APP" description="Service tracker App (via root screen)"/>
     <moqui.security.ArtifactGroupMember artifactGroupId="SERVICE_TRACKER_APP" artifactName="component://ServiceTracker/screen/ServiceTracker.xml"
                                         artifactTypeEnumId="AT_XML_SCREEN" inheritAuthz="Y"/>
