@@ -1,0 +1,10 @@
+<entity-facade-xml type="seed">
+    <service.tracker.CarStatusType CarStatus="Reception"/>
+    <service.tracker.CarStatusType CarStatus="Service Advisor"/>
+    <service.tracker.CarStatusType CarStatus="Job controllor"/>
+    <service.tracker.CarStatusType CarStatus="Final Inspector"/>
+    <service.tracker.CarStatusType CarStatus="Washer"/>
+    <service.tracker.CarStatusType CarStatus="Cleaner"/>
+    <service.tracker.CarStatusType CarStatus="Security"/>
+    <service.tracker.CarStatusType CarStatus="Ready to delivered"/>
+</entity-facade-xml>

@@ -10,4 +10,7 @@
         <field name="DropCar" type="text-medium"/>
         <field name="CustomerWaiting" type="text-medium"/>
     </entity>
+    <entity entity-name="CarStatusType" package-name="service.tracker">
+        <field name="CarStatus" type="text-long" is-pk="true"/>
+    </entity>
 </entities>
