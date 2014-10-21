@@ -1,7 +1,28 @@
 <services>
     <service verb="create" noun="ReceptionEntity" type="entity-auto" authenticate="false">
      <in-parameters>
-         <auto-parameters include="all"/>
+         <parameter name="CarNo"/>
+         <parameter name="InTime"/>
+         <parameter name="Job"/>
+         <parameter name="ServiceAdvisor"/>
+         <parameter name="DriverOrOwner"/>
+         <parameter name="Gift"/>
+         <parameter name="DropCar"/>
+         <parameter name="CustomerWaiting"/>
      </in-parameters>
+        <actions>
+            <service-call name="create#CarNoAndStatus" in-map="[CarNo:CarNO, CarStatus:CarStatus]"/>
+        </actions>
+    </service>
+    <service verb="create" noun="CarNoAndStatus" type="entity-auto" authenticate="false">
+        <in-parameters>
+            <parameter name="CarNo"/>
+            <parameter name="CarStatus"/>
+        </in-parameters>
+    </service>
+    <service verb="delete" noun="ReceptionEntity" type="entity-auto" authenticate="false">
+        <in-parameters>
+            <auto-parameters include="all"/>
+        </in-parameters>
     </service>
 </services>
