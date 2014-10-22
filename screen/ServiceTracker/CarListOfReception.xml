@@ -1,6 +1,9 @@
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.4.xsd"
         default-menu-include="false" standalone="true">
+    <transition name="createAdvisor">
+        <default-response url="../Service"/>
+    </transition>
     <actions>
         <service-call name="tracker.TrackerServices.get#ReceptionEntityAndCarStatus" in-map="context"
                       out-map="context"/>
@@ -14,12 +17,13 @@
                 <widgets>
                     <container>
                         <container-dialog id="Advisor-container" button-text="Advisor">
-                            <form-single name="Advisor-form">
+                            <form-single name="Advisor-form" transition="createAdvisor">
                                 <auto-fields-entity entity-name="AdvisorEntry" field-type="edit"/>
                                 <field name="CarNo"><default-field><display text="${reception.CarNo}"/></default-field></field>
                                 <field name="BeforeRoadTest"><default-field><text-line size="20"/></default-field></field>
                                 <field name="AfterRoadTest"><default-field><text-line size="20"/></default-field></field>
                                 <field name="CapNumber"><default-field><text-line size="20"/></default-field></field>
+                                <field name="ReceptionSubmitButton"><default-field title="Create"><submit/></default-field> </field>
                             </form-single>
                         </container-dialog>
                         <link text="${reception.CarNo}" url="" url-type="plain"/>
