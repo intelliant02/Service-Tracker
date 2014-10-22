@@ -1,0 +1,29 @@
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.4.xsd"
+        default-menu-include="false" standalone="true">
+    <actions>
+        <service-call name="tracker.TrackerServices.get#ReceptionEntityAndCarStatus" in-map="context"
+                      out-map="context"/>
+    </actions>
+    <widgets>
+        <container id="reception-section">
+            <container id="reception-title">
+                <label text="Car waiting for Service advisor " type="h5"/>
+            </container>
+            <section-iterate name="CarEntries" list="receptionCarList" entry="reception">
+                <widgets>
+                    <container>
+                        <link text="${reception.CarNo}" url="" url-type="plain"/>
+                        <label text="${reception.CarStatus}"/>
+                    </container>
+                </widgets>
+            </section-iterate>
+        </container>
+        <!-- <form-list name="CarList" list="receptionCarList" skip-start="true" skip-end="true">
+             <field name="CarNo"><default-field>
+                  <link text="${wikiSpaceId}" url="wiki/${wikiSpaceId}" url-type="plain"/>
+            </default-field></field>
+            <field name="Job"><default-field><display/></default-field></field>
+        </form-list> -->
+    </widgets>
+</screen>

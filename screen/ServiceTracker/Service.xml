@@ -3,6 +3,9 @@
         <service-call name="tracker.TrackerServices.create#ReceptionEntity"/>
         <default-response url="."/>
     </transition>
+    <transition name="receptionCarList">
+        <default-response url="../CarListOfReception"/>
+    </transition>
     <widgets>
         <label type="h3" text="Welcome to the Service Tracker system"/>
         <container>
@@ -29,23 +32,17 @@
                             </drop-down>
                         </default-field>
                     </field>
-                    <field name="Gift">
-                        <default-field>
-                            <drop-down allow-empty="false" no-current-selected-key="No">
-                                <option key="Yes"/>
-                                <option key="No"/>
+                    <field name="CarStatus">
+                        <default-field title="Status">
+                            <drop-down allow-empty="false" allow-multiple="false">
+                                <entity-options key="${CarStatus}">
+                                    <entity-find entity-name="service.tracker.CarStatusType">
+                                    </entity-find>
+                                </entity-options>
                             </drop-down>
                         </default-field>
                     </field>
                     <field name="Gift">
-                        <default-field>
-                            <drop-down allow-empty="false" no-current-selected-key="No">
-                                <option key="Yes"/>
-                                <option key="No"/>
-                            </drop-down>
-                        </default-field>
-                    </field>
-                    <field name="PickUp">
                         <default-field>
                             <drop-down allow-empty="false" no-current-selected-key="No">
                                 <option key="Yes"/>
@@ -85,5 +82,10 @@
                 </form-single>
             </container-dialog>
         </container>
+        <container-panel id="ReceptionCarContainer" dynamic="true">
+            <section name="PanelLeft"><widgets>
+                <dynamic-container id="receptionEntry" transition="receptionCarList"/>
+            </widgets></section>
+        </container-panel>
     </widgets>
 </screen>
