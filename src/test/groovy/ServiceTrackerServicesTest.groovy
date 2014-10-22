@@ -53,6 +53,17 @@ class ServiceTrackerServicesTest extends Specification {
         carCreated.delete()
         status.delete()
     }
+    def "Test Advisor entity"(){
+        when:
+        def createEntry = ec.entity.makeValue("service.tracker.AdvisorEntry")
+                                   .setAll([CarNo : "WB-02-M", CustomerName : "Rahul", CustomerMobile : "9830984765", DriverName : "Roy",
+                                            DriverMobile : "9840857843", BeforeRoadTest : "Yes", AfterRoadTest : "Yes"]).create()
+        EntityValue created = ec.entity.makeFind("service.tracker.AdvisorEntry").condition("CarNo", "WB-02-M").one()
+        then:
+        created != null
+        cleanup:
+        created.delete()
+    }
 
    /* def "Test Entity ECA rule for Reception Entity service"(){
         when:
