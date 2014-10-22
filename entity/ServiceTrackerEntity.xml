@@ -23,6 +23,7 @@
         <field name="CarNo" type="text-long" is-pk="true"/>
         <field name="CustomerName" type="text-long"/>
         <field name="MobileNo" type="text-long"/>
+        <field name="PromisedTime" type="date-time"/>
         <field name="DriverName" type="text-long"/>
         <field name="DriverMobile" type="text-long"/>
         <field name="Job" type="text-long"/>
