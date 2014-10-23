@@ -2,6 +2,7 @@
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.4.xsd"
         default-menu-include="false" standalone="true">
     <transition name="createAdvisor">
+        <service-call name="tracker.TrackerServices.create#AdvisorEntry"/>
         <default-response url="../Service"/>
     </transition>
     <actions>
@@ -20,10 +21,30 @@
                             <form-single name="Advisor-form" transition="createAdvisor">
                                 <auto-fields-entity entity-name="AdvisorEntry" field-type="edit"/>
                                 <field name="CarNo"><default-field><display text="${reception.CarNo}"/></default-field></field>
-                                <field name="BeforeRoadTest"><default-field><text-line size="20"/></default-field></field>
-                                <field name="AfterRoadTest"><default-field><text-line size="20"/></default-field></field>
+                                <field name="BeforeRoadTest"><default-field>
+                                    <drop-down allow-empty="false" no-current-selected-key="No">
+                                        <option key="Yes"/>
+                                        <option key="No"/>
+                                    </drop-down>
+                                </default-field></field>
+                                <field name="AfterRoadTest"><default-field>
+                                    <drop-down allow-empty="false" no-current-selected-key="No">
+                                        <option key="Yes"/>
+                                        <option key="No"/>
+                                    </drop-down>
+                                </default-field></field>
+                                <field name="CarStatus">
+                                    <default-field title="Status">
+                                        <drop-down allow-empty="false" allow-multiple="false">
+                                            <entity-options key="${CarStatus}">
+                                                <entity-find entity-name="service.tracker.CarStatusType">
+                                                </entity-find>
+                                            </entity-options>
+                                        </drop-down>
+                                    </default-field>
+                                </field>
                                 <field name="CapNumber"><default-field><text-line size="20"/></default-field></field>
-                                <field name="ReceptionSubmitButton"><default-field title="Create"><submit/></default-field> </field>
+                                <field name="advisorSubmitButton"><default-field title="Create"><submit/></default-field></field>
                             </form-single>
                         </container-dialog>
                         <link text="${reception.CarNo}" url="" url-type="plain"/>

@@ -1,16 +1,16 @@
 <services>
     <service verb="create" noun="ReceptionEntity" authenticate="false">
-     <in-parameters>
-         <parameter name="CarNo"/>
-         <parameter name="InTime"/>
-         <parameter name="Job"/>
-         <parameter name="ServiceAdvisor"/>
-         <parameter name="DriverOrOwner"/>
-         <parameter name="Gift"/>
-         <parameter name="DropCar"/>
-         <parameter name="CustomerWaiting"/>
-         <parameter name="CarStatus"/>
-     </in-parameters>
+        <in-parameters>
+            <parameter name="CarNo"/>
+            <parameter name="InTime"/>
+            <parameter name="Job"/>
+            <parameter name="ServiceAdvisor"/>
+            <parameter name="DriverOrOwner"/>
+            <parameter name="Gift"/>
+            <parameter name="DropCar"/>
+            <parameter name="CustomerWaiting"/>
+            <parameter name="CarStatus"/>
+        </in-parameters>
         <actions>
             <service-call name="create#service.tracker.ReceptionEntity" out-map="context" in-map="context"/>
             <service-call name="create#service.tracker.CarNoAndStatus" in-map="[CarNo:CarNo, CarStatus:CarStatus]"/>
@@ -32,10 +32,27 @@
         <out-parameters><parameter name="receptionCarList" type="List"/></out-parameters>
         <actions>
             <entity-find entity-name="ReceptionEntityAndCarStatus" list="receptionCarList">
-              <econditions>
-                   <econdition field-name="CarStatus" value="Reception"/>
-               </econditions>
+                <econditions>
+                    <econdition field-name="CarStatus" value="Reception"/>
+                </econditions>
             </entity-find>
+        </actions>
+    </service>
+    <service verb="create" noun="AdvisorEntry" authenticate="false">
+        <in-parameters>
+            <parameter name="CarNo"/>
+            <parameter name="CustomerName"/>
+            <parameter name="MobileName"/>
+            <parameter name="promisedTime"/>
+            <parameter name="DriverName"/>
+            <parameter name="Job"/>
+            <parameter name="BeforeRoadTest"/>
+            <parameter name="AfterRoadTest"/>
+            <parameter name="CarStatus"/>
+        </in-parameters>
+        <actions>
+            <service-call name="create#service.tracker.AdvisorEntry" out-map="context" in-map="context"/>
+            <service-call name="update#service.tracker.CarNoAndStatus" in-map="[CarNo:CarNo, CarStatus:CarStatus]"/>
         </actions>
     </service>
 </services>
