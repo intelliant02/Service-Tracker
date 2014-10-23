@@ -32,7 +32,9 @@
         <out-parameters><parameter name="receptionCarList" type="List"/></out-parameters>
         <actions>
             <entity-find entity-name="ReceptionEntityAndCarStatus" list="receptionCarList">
-                <search-form-input/>
+              <econditions>
+                   <econdition field-name="CarStatus" value="Reception"/>
+               </econditions>
             </entity-find>
         </actions>
     </service>
