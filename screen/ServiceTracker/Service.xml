@@ -6,6 +6,9 @@
     <transition name="receptionCarList">
         <default-response url="../CarListOfReception"/>
     </transition>
+    <transition name="adviserCarList">
+        <default-response url="../CarListOfAdviser"/>
+    </transition>
     <widgets>
         <label type="h3" text="Welcome to the Service Tracker system"/>
         <container>
@@ -85,7 +88,13 @@
         <container-panel id="ReceptionCarContainer" dynamic="true">
             <section name="PanelLeft"><widgets>
                 <dynamic-container id="receptionEntry" transition="receptionCarList"/>
+                <dynamic-container id="adviserEntry" transition="adviserCarList"/>
             </widgets></section>
+            <container>
+                <section name="Adviser">
+                    <label type="h3" text="Hello"/>
+                </section>
+            </container>
         </container-panel>
     </widgets>
 </screen>

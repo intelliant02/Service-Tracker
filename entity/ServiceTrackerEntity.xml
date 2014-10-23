@@ -3,7 +3,7 @@
         <field name="CarNo" type="text-long" is-pk="true"/>
         <field name="InTime" type="date-time"/>
         <field name="Job" type="text-medium"/>
-        <field name="ServiceAdvisor" type="text-medium"/>
+        <field name="ServiceAdviser" type="text-medium"/>
         <field name="DriverOrOwner" type="text-medium"/>
         <field name="Gift" type="text-medium"/>
         <!-- <field name="JDP" type="text-medium"/> -->
@@ -17,9 +17,9 @@
         <field name="CarNo" type="text-long" is-pk="true"/>
         <field name="CarStatus" type="text-long"/>
        <relationship type="one" related-entity-name="service.tracker.ReceptionEntity"/>
-        <relationship type="one" related-entity-name="service.tracker.AdvisorEntry"/>
+        <relationship type="one" related-entity-name="service.tracker.AdviserEntry"/>
     </entity>
-    <entity entity-name="AdvisorEntry" package-name="service.tracker">
+    <entity entity-name="AdviserEntry" package-name="service.tracker">
         <field name="CarNo" type="text-long" is-pk="true"/>
         <field name="CustomerName" type="text-long"/>
         <field name="MobileNo" type="text-long"/>
@@ -38,8 +38,8 @@
         <alias-all entity-alias="EXFTAP"/>
         <alias-all entity-alias="ENUM"/>
     </view-entity>
-    <view-entity entity-name="AdvisorEntryAndCarStatus" package-name="service.tracker" authorize-skip="true">
-        <member-entity entity-alias="EXFTAP" entity-name="AdvisorEntry"/>
+    <view-entity entity-name="AdviserEntryAndCarStatus" package-name="service.tracker" authorize-skip="true">
+        <member-entity entity-alias="EXFTAP" entity-name="AdviserEntry"/>
         <member-entity entity-alias="ENUM" entity-name="CarNoAndStatus" join-from-alias="EXFTAP">
             <key-map field-name="CarNo" related-entity-name="CarNo"/>
         </member-entity>

@@ -4,7 +4,7 @@
             <parameter name="CarNo"/>
             <parameter name="InTime"/>
             <parameter name="Job"/>
-            <parameter name="ServiceAdvisor"/>
+            <parameter name="ServiceAdviser"/>
             <parameter name="DriverOrOwner"/>
             <parameter name="Gift"/>
             <parameter name="DropCar"/>
@@ -38,7 +38,7 @@
             </entity-find>
         </actions>
     </service>
-    <service verb="create" noun="AdvisorEntry" authenticate="false">
+    <service verb="create" noun="AdviserEntry" authenticate="false">
         <in-parameters>
             <parameter name="CarNo"/>
             <parameter name="CustomerName"/>
@@ -51,7 +51,7 @@
             <parameter name="CarStatus"/>
         </in-parameters>
         <actions>
-            <service-call name="create#service.tracker.AdvisorEntry" out-map="context" in-map="context"/>
+            <service-call name="create#service.tracker.AdviserEntry" out-map="context" in-map="context"/>
             <service-call name="update#service.tracker.CarNoAndStatus" in-map="[CarNo:CarNo, CarStatus:CarStatus]"/>
         </actions>
     </service>

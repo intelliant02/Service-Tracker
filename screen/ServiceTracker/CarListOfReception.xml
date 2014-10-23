@@ -1,8 +1,8 @@
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.4.xsd"
         default-menu-include="false" standalone="true">
-    <transition name="createAdvisor">
-        <service-call name="tracker.TrackerServices.create#AdvisorEntry"/>
+    <transition name="createAdviser">
+        <service-call name="tracker.TrackerServices.create#AdviserEntry"/>
         <default-response url="../Service"/>
     </transition>
     <actions>
@@ -12,14 +12,14 @@
     <widgets>
         <container id="reception-section">
             <container id="reception-title">
-                <label text="Car waiting for Service advisor " type="h5"/>
+                <label text="Car waiting for Service adviser " type="h5"/>
             </container>
             <section-iterate name="CarEntries" list="receptionCarList" entry="reception">
                 <widgets>
                     <container>
-                        <container-dialog id="Advisor-container" button-text="Advisor">
-                            <form-single name="Advisor-form" transition="createAdvisor">
-                                <auto-fields-entity entity-name="AdvisorEntry" field-type="edit"/>
+                        <container-dialog id="Adviser-container" button-text="Adviser">
+                            <form-single name="Adviser-form" transition="createAdviser">
+                                <auto-fields-entity entity-name="AdviserEntry" field-type="edit"/>
                                 <field name="CarNo"><default-field><display text="${reception.CarNo}"/></default-field></field>
                                 <field name="BeforeRoadTest"><default-field>
                                     <drop-down allow-empty="false" no-current-selected-key="No">
@@ -44,7 +44,7 @@
                                     </default-field>
                                 </field>
                                 <field name="CapNumber"><default-field><text-line size="20"/></default-field></field>
-                                <field name="advisorSubmitButton"><default-field title="Create"><submit/></default-field></field>
+                                <field name="adviserSubmitButton"><default-field title="Create"><submit/></default-field></field>
                             </form-single>
                         </container-dialog>
                         <link text="${reception.CarNo}" url="" url-type="plain"/>
