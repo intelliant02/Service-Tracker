@@ -3,14 +3,18 @@
         <service-call name="tracker.TrackerServices.delete#ReceptionEntity"/>
         <default-response url="."/>
     </transition>
+    <transition name="deleteStatus">
+        <service-call name="delete#CarNoAndStatus"/>
+        <default-response url="."/>
+    </transition>
     <transition name="findReceptionEntity">
         <default-response url="."/>
     </transition>
     <actions>
-        <entity-find entity-name="ReceptionEntityAndCarStatus" list="tutorialList2"> <!--Data is retrieve from view entity-->
+        <entity-find entity-name="AdviserEntry" list="tutorialList2"> <!--Data is retrieve from view entity-->
             <search-form-inputs/>
         </entity-find>
-        <entity-find entity-name="ReceptionEntity" list="receptionList"><search-form-inputs/></entity-find>
+        <entity-find entity-name="CarNoAndStatus" list="receptionList"><search-form-inputs/></entity-find>
     </actions>
     <widgets>
         <container-dialog id="delete" button-text="delete">
@@ -32,8 +36,32 @@
                 </field>
             </form-single>
         </container-dialog>
+        <container-dialog id="delete" button-text="delete status">
+            <form-single name="deleteN" transition="deleteStatus">
+                <field name="CarNo">
+                    <default-field title="CarNo" tooltip="This is the status of the example">
+                        <drop-down allow-empty="false" allow-multiple="false">
+                            <entity-options key="${CarNo}">
+                                <entity-find entity-name="CarNoAndStatus">
+                                </entity-find>
+                            </entity-options>
+                        </drop-down>
+                    </default-field>
+                </field>
+                <field name="submitButton">
+                    <default-field title="Delete">
+                        <submit/>
+                    </default-field>
+                </field>
+            </form-single>
+        </container-dialog>
         <form-list name="ListTutorials2" list="receptionList" transition="findReceptionEntity" dynamic="true">
             <field name="CarNo">
+                <default-field>
+                    <display/>
+                </default-field>
+            </field>
+            <field name="CarStatus">
                 <default-field>
                     <display/>
                 </default-field>
@@ -45,7 +73,7 @@
                     <display/>
                 </default-field>
             </field>
-            <field name="CarStatus">
+            <field name="BeforeRoadTest">
                 <default-field><display/></default-field>
             </field>
         </form-list>
