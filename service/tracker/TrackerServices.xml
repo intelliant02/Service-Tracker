@@ -28,12 +28,23 @@
         </in-parameters>
     </service>
     <service verb="get" noun="ReceptionEntityAndCarStatus" authenticate="false">
-        <in-parameters><auto-parameters include="all"/> </in-parameters>
+        <in-parameters><auto-parameters include="all"/></in-parameters>
         <out-parameters><parameter name="receptionCarList" type="List"/></out-parameters>
         <actions>
             <entity-find entity-name="ReceptionEntityAndCarStatus" list="receptionCarList">
                 <econditions>
                     <econdition field-name="CarStatus" value="Reception"/>
+                </econditions>
+            </entity-find>
+        </actions>
+    </service>
+    <service verb="get" noun="AdviserEntryAndCarStatus" authenticate="false">
+        <in-parameters><auto-parameters include="all"/></in-parameters>
+        <out-parameters><parameter name="adviserCarList" type="List"/></out-parameters>
+        <actions>
+            <entity-find entity-name="AdviserEntryAndCarStatus" list="adviserCarList">
+                <econditions>
+                    <econdition field-name="CarStatus" value="Service Advisor"/> <!-- TODO: Need to change the Advisor to Adviser -->
                 </econditions>
             </entity-find>
         </actions>
