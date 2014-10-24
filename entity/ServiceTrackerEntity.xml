@@ -1,7 +1,6 @@
 <entities>
     <entity entity-name="ReceptionEntity" package-name="service.tracker" authorize-skip="true">
         <field name="CarNo" type="text-long" is-pk="true"/>
-        <field name="InTime" type="date-time"/>
         <field name="Job" type="text-medium"/>
         <field name="ServiceAdviser" type="text-medium"/>
         <field name="DriverOrOwner" type="text-medium"/>
@@ -13,12 +12,18 @@
     <entity entity-name="CarStatusType" package-name="service.tracker">
         <field name="CarStatus" type="text-long" is-pk="true"/>
     </entity>
+    <entity entity-name="SecurityCheck" package-name="service.tracker">
+        <field name="CarNo" type="text-medium" is-pk="true"/>
+        <field name="KmIn" type="text-medium"/>
+    </entity>
     <entity entity-name="CarNoAndStatus" package-name="service.tracker">
         <field name="CarNo" type="text-long" is-pk="true"/>
         <field name="CarStatus" type="text-long"/>
-       <relationship type="one" related-entity-name="service.tracker.ReceptionEntity"/>
-        <relationship type="one" related-entity-name="service.tracker.AdviserEntry"/>
     </entity>
+    <extend-entity entity-name="CarNoAndStatus" package-name="service.tracker">
+        <field name="InTime" type="date-time"/>
+        <field name="OutTime" type="date-time"/>
+    </extend-entity>
     <entity entity-name="AdviserEntry" package-name="service.tracker">
         <field name="CarNo" type="text-long" is-pk="true"/>
         <field name="CustomerName" type="text-long"/>
@@ -29,6 +34,17 @@
         <field name="Job" type="text-long"/>
         <field name="BeforeRoadTest" type="text-long"/>
         <field name="AfterRoadTest" type="text-long"/>
+    </entity>
+    <entity entity-name="CarController" package-name="service.tracker">
+        <field name="CarNo" type="text-long" is-pk="true"/>
+        <field name="Area" type="text-long"/>
+        <field name="BayNo" type="text-long"/>
+    </entity>
+    <entity entity-name="CarTechnicians" package-name="service.tracker">
+        <field name="CarNo" type="text-long" is-pk="true"/>
+        <field name="Technicians" type="text-long"/>
+        <field name="InTime" type="date-time"/>
+        <field name="OutTime" type="date-time"/>
     </entity>
     <view-entity entity-name="ReceptionEntityAndCarStatus" package-name="service.tracker" authorize-skip="true">
         <member-entity entity-alias="EXFTAP" entity-name="ReceptionEntity"/>
