@@ -1,0 +1,103 @@
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.4.xsd"
+        default-menu-include="false" standalone="true">
+    <transition name="createEntry">
+        <default-response url="."/>
+    </transition>
+    <actions>
+        <service-call name="tracker.TrackerServices.get#CarNoAndStatus" in-map="context"
+                      out-map="context"/>
+        <entity-find entity-name="service.tracker.CarNoAndStatus" list="receptionList">
+            <search-form-inputs/>
+        </entity-find>
+    </actions>
+    <widgets>
+        <container id="reception-section">
+            <container id="reception-title">
+                <label text="Car waiting for Reception " type="h5"/>
+            </container>
+            <section-iterate name="CarEntries" list="receptionList" entry="reception">
+                <widgets>
+                    <container>
+                        <container-dialog id="EntryForReceptionist" button-text="Reception">
+                            <form-single name="CarEntryAtReception" transition="createEntry">
+                                <auto-fields-entity entity-name="service.tracker.ReceptionEntity" field-type="edit"/>
+                                <auto-fields-entity entity-name="service.tracker.CarNoAndStatus" field-type="edit"/>
+                                <field name="Job">
+                                    <default-field>
+                                        <drop-down no-current-selected-key="PM(Paid)">
+                                            <option key="PM(Free)"/>
+                                            <option key="PM(Paid)"/>
+                                            <option key="GR"/>
+                                            <option key="QS"/>
+                                            <option key="BP"/>
+                                        </drop-down>
+                                        <display/>
+                                    </default-field>
+                                </field>
+                                <field name="DriverOrOwner">
+                                    <default-field title="D/O">
+                                        <drop-down allow-empty="false" no-current-selected-key="Driver">
+                                            <option key="Driver"/>
+                                            <option key="Owner"/>
+                                        </drop-down>
+                                    </default-field>
+                                </field>
+
+                                <field name="CarStatus">
+                                    <default-field title="Status">
+                                        <drop-down allow-empty="false" allow-multiple="false">
+                                            <entity-options key="${CarStatus}">
+                                                <entity-find entity-name="service.tracker.CarStatusType">
+                                                </entity-find>
+                                            </entity-options>
+                                        </drop-down>
+                                    </default-field>
+                                </field>
+                                <field name="Gift">
+                                    <default-field>
+                                        <drop-down allow-empty="false" no-current-selected-key="No">
+                                            <option key="Yes"/>
+                                            <option key="No"/>
+                                        </drop-down>
+                                    </default-field>
+                                </field>
+                                <field name="PickUp">
+                                    <default-field>
+                                        <drop-down allow-empty="false" no-current-selected-key="No">
+                                            <option key="Yes"/>
+                                            <option key="No"/>
+                                        </drop-down>
+                                    </default-field>
+                                </field>
+                                <field name="DropCar">
+                                    <default-field>
+                                        <drop-down allow-empty="false" no-current-selected-key="No">
+                                            <option key="Yes"/>
+                                            <option key="No"/>
+                                        </drop-down>
+                                    </default-field>
+                                </field>
+                                <field name="CustomerWaiting">
+                                    <default-field>
+                                        <drop-down allow-empty="false" no-current-selected-key="No">
+                                            <option key="Yes"/>
+                                            <option key="No"/>
+                                        </drop-down>
+                                    </default-field>
+                                </field>
+                                <field name="ReceptionSubmitButton">
+                                    <default-field title="Create">
+                                        <submit/>
+                                    </default-field>
+                                </field>
+                            </form-single>
+                        </container-dialog>
+                        <link text="${reception.CarNo}" url="" url-type="plain"/>
+                        <label text="${reception.CarStatus}"/>
+                    </container>
+                </widgets>
+            </section-iterate>
+        </container>
+    </widgets>
+</screen>
