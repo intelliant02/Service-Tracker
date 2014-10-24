@@ -51,10 +51,14 @@
                                         <field name="adviserSubmitButton"><default-field title="Create"><submit/></default-field></field>
                                     </form-single>
                                 </container-dialog>
+                                <link text="${reception.CarNo}" url="" url-type="plain"/>
+                                <label text="${reception.CarStatus}"/>
                             </widgets>
+                            <fail-widgets>
+                                <link text="${reception.CarNo}" url="" url-type="plain"/>
+                                <label text="${reception.CarStatus}"/>
+                            </fail-widgets>
                         </section>
-                        <link text="${reception.CarNo}" url="" url-type="plain"/>
-                        <label text="${reception.CarStatus}"/>
                     </container>
                 </widgets>
             </section-iterate>
