@@ -16,11 +16,16 @@
         <field name="CarNo" type="text-medium" is-pk="true"/>
         <field name="KmIn" type="text-medium"/>
     </entity>
-    <entity entity-name="CarNoAndStatus" package-name="service.tracker">
+    <entity entity-name="StatusAndCarNo" package-name="service.tracker">
         <field name="CarNo" type="text-long" is-pk="true"/>
-        <field name="CarStatus" type="text-long"/>
+        <field name="CarStatus" type="text-long" is-pk="true"/>
+        <relationship type="one" related-entity-name="service.tracker.ReceptionEntity"/>
+        <relationship type="one" related-entity-name="service.tracker.SecurityCheck"/>
+        <relationship type="one" related-entity-name="service.tracker.AdviserEntry"/>
+        <relationship type="one" related-entity-name="service.tracker.CarController"/>
+        <relationship type="one" related-entity-name="service.tracker.CarTechnicians"/>
     </entity>
-    <extend-entity entity-name="CarNoAndStatus" package-name="service.tracker">
+    <extend-entity entity-name="StatusAndCarNo" package-name="service.tracker">
         <field name="InTime" type="date-time"/>
         <field name="OutTime" type="date-time"/>
     </extend-entity>
@@ -42,21 +47,29 @@
     </entity>
     <entity entity-name="CarTechnicians" package-name="service.tracker">
         <field name="CarNo" type="text-long" is-pk="true"/>
-        <field name="Technicians" type="text-long"/>
+        <field name="Technicians" type="text-long"/> <!-- TODO: Need to change the field TechniciansId from Technicians -->
         <field name="InTime" type="date-time"/>
         <field name="OutTime" type="date-time"/>
     </entity>
     <view-entity entity-name="ReceptionEntityAndCarStatus" package-name="service.tracker" authorize-skip="true">
         <member-entity entity-alias="EXFTAP" entity-name="ReceptionEntity"/>
-        <member-entity entity-alias="ENUM" entity-name="CarNoAndStatus" join-from-alias="EXFTAP">
-            <key-map field-name="CarNo" related-entity-name="CarNo"/>
+        <member-entity entity-alias="ENUM" entity-name="StatusAndCarNo" join-from-alias="EXFTAP">
+            <key-map field-name="CarNo" related-entity-name="service.tracker.ReceptionEntity"/>
         </member-entity>
         <alias-all entity-alias="EXFTAP"/>
         <alias-all entity-alias="ENUM"/>
     </view-entity>
     <view-entity entity-name="AdviserEntryAndCarStatus" package-name="service.tracker" authorize-skip="true">
         <member-entity entity-alias="EXFTAP" entity-name="AdviserEntry"/>
-        <member-entity entity-alias="ENUM" entity-name="CarNoAndStatus" join-from-alias="EXFTAP">
+        <member-entity entity-alias="ENUM" entity-name="StatusAndCarNo" join-from-alias="EXFTAP">
+            <key-map field-name="CarNo" related-entity-name="CarNo"/>
+        </member-entity>
+        <alias-all entity-alias="EXFTAP"/>
+        <alias-all entity-alias="ENUM"/>
+    </view-entity>
+    <view-entity entity-name="SecurityAndCarStatus" package-name="service.tracker" authorize-skip="true">
+        <member-entity entity-alias="EXFTAP" entity-name="SecurityCheck"/>
+        <member-entity entity-alias="ENUM" entity-name="StatusAndCarNo" join-from-alias="EXFTAP">
             <key-map field-name="CarNo" related-entity-name="CarNo"/>
         </member-entity>
         <alias-all entity-alias="EXFTAP"/>
