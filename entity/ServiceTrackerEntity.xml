@@ -1,4 +1,5 @@
 <entities>
+
     <entity entity-name="ReceptionEntity" package-name="service.tracker" authorize-skip="true">
         <field name="CarNo" type="text-long" is-pk="true"/>
         <field name="Job" type="text-medium"/>
@@ -16,20 +17,8 @@
         <field name="CarNo" type="text-medium" is-pk="true"/>
         <field name="KmIn" type="text-medium"/>
     </entity>
-    <entity entity-name="StatusAndCarNo" package-name="service.tracker">
-        <field name="CarNo" type="text-long" is-pk="true"/>
-        <field name="CarStatus" type="text-long" is-pk="true"/>
-        <relationship type="one" related-entity-name="service.tracker.ReceptionEntity"/>
-        <relationship type="one" related-entity-name="service.tracker.SecurityCheck"/>
-        <relationship type="one" related-entity-name="service.tracker.AdviserEntry"/>
-        <relationship type="one" related-entity-name="service.tracker.CarController"/>
-        <relationship type="one" related-entity-name="service.tracker.CarTechnicians"/>
-    </entity>
-    <extend-entity entity-name="StatusAndCarNo" package-name="service.tracker">
-        <field name="InTime" type="date-time"/>
-        <field name="OutTime" type="date-time"/>
-    </extend-entity>
-    <entity entity-name="AdviserEntry" package-name="service.tracker">
+   
+   <entity entity-name="AdviserEntry" package-name="service.tracker">
         <field name="CarNo" type="text-long" is-pk="true"/>
         <field name="CustomerName" type="text-long"/>
         <field name="MobileNo" type="text-long"/>
@@ -53,15 +42,15 @@
     </entity>
     <view-entity entity-name="ReceptionEntityAndCarStatus" package-name="service.tracker" authorize-skip="true">
         <member-entity entity-alias="EXFTAP" entity-name="ReceptionEntity"/>
-        <member-entity entity-alias="ENUM" entity-name="StatusAndCarNo" join-from-alias="EXFTAP">
-            <key-map field-name="CarNo" related-entity-name="service.tracker.ReceptionEntity"/>
+        <member-entity entity-alias="ENUM" entity-name="StatusOfCar" join-from-alias="EXFTAP">
+            <key-map field-name="CarNo" related-entity-name="CarNo"/>
         </member-entity>
         <alias-all entity-alias="EXFTAP"/>
         <alias-all entity-alias="ENUM"/>
     </view-entity>
     <view-entity entity-name="AdviserEntryAndCarStatus" package-name="service.tracker" authorize-skip="true">
         <member-entity entity-alias="EXFTAP" entity-name="AdviserEntry"/>
-        <member-entity entity-alias="ENUM" entity-name="StatusAndCarNo" join-from-alias="EXFTAP">
+        <member-entity entity-alias="ENUM" entity-name="StatusOfCar" join-from-alias="EXFTAP">
             <key-map field-name="CarNo" related-entity-name="CarNo"/>
         </member-entity>
         <alias-all entity-alias="EXFTAP"/>
@@ -69,7 +58,7 @@
     </view-entity>
     <view-entity entity-name="SecurityAndCarStatus" package-name="service.tracker" authorize-skip="true">
         <member-entity entity-alias="EXFTAP" entity-name="SecurityCheck"/>
-        <member-entity entity-alias="ENUM" entity-name="StatusAndCarNo" join-from-alias="EXFTAP">
+        <member-entity entity-alias="ENUM" entity-name="StatusOfCar" join-from-alias="EXFTAP">
             <key-map field-name="CarNo" related-entity-name="CarNo"/>
         </member-entity>
         <alias-all entity-alias="EXFTAP"/>

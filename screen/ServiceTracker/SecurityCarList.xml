@@ -24,7 +24,7 @@
                         <container-dialog id="EntryForReceptionist" button-text="Reception">
                             <form-single name="CarEntryAtReception" transition="createEntry">
                                 <auto-fields-entity entity-name="service.tracker.ReceptionEntity" field-type="edit"/>
-                                <auto-fields-entity entity-name="service.tracker.StatusAndCarNo" field-type="edit"/>
+                                <auto-fields-entity entity-name="service.tracker.StatusOfCar" field-type="edit"/>
                                 <field name="CarNo">
                                     <default-field><display text="${reception.CarNo}"/></default-field>
                                 </field>

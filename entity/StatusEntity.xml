@@ -1,0 +1,8 @@
+<entities>
+    <entity entity-name="StatusOfCar" package-name="service.tracker">
+    <field name="CarNo" type="text-long" is-pk="true"/>
+    <field name="CarStatus" type="text-long" is-pk="true"/>
+    <field name="InTime" type="date-time"/>
+    <field name="OutTime" type="date-time"/>
+    </entity>
+</entities>

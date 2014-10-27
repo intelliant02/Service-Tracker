@@ -13,7 +13,7 @@
         </in-parameters>
         <actions>
             <service-call name="create#service.tracker.ReceptionEntity" out-map="context" in-map="context"/>
-            <service-call name="create#service.tracker.StatusAndCarNo" in-map="[CarNo:CarNo, CarStatus:CarStatus]"/>
+            <service-call name="create#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:CarStatus]"/>
         </actions>
     </service>
     <service verb="create" noun="CarController" authenticate="false">
@@ -22,10 +22,10 @@
         </in-parameters>
         <actions>
             <service-call name="create#service.tracker.CarController" in-map="context" out-map="context"/>
-            <service-call name="create#service.tracker.StatusAndCarNo" in-map="[CarNo:CarNo, CarStatus:CarStatus]"/>
+            <service-call name="create#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:CarStatus]"/>
         </actions>
     </service>
-    <!--<service verb="create" noun="StatusAndCarNo" authenticate="false">
+    <!--<service verb="create" noun="StatusOfCar" authenticate="false">
         <in-parameters>
             <parameter name="CarNo"/>
            <parameter name="CarStatus"/>
@@ -57,12 +57,12 @@
         </in-parameters>
         <actions>
             <service-call name="create#service.tracker.SecurityCheck" in-map="[CarNo:CarNo, KmIn:KmIn]"/>
-            <service-call name="create#service.tracker.StatusAndCarNo"
+            <service-call name="create#service.tracker.StatusOfCar"
                           in-map="[CarNo:CarNo, CarStatus:'Reception', InTime:InTime]"/>
             <!--TODO: Find out a way to work InTime -->
         </actions>
     </service>
-    <service verb="delete" noun="StatusAndCarNo" type="entity-auto" authenticate="false">
+    <service verb="delete" noun="StatusOfCar" type="entity-auto" authenticate="false">
         <in-parameters>
             <auto-parameters include="all"/>
         </in-parameters>
@@ -82,7 +82,7 @@
             </entity-find>
         </actions>
     </service>
-    <service verb="get" noun="StatusAndCarNo" authenticate="false">
+    <service verb="get" noun="StatusOfCar" authenticate="false">
         <in-parameters>
             <auto-parameters include="all"/>
         </in-parameters>
@@ -90,7 +90,7 @@
             <parameter name="receptionCarList" type="List"/>
         </out-parameters>
         <actions>
-            <entity-find entity-name="StatusAndCarNo" list="receptionCarList">
+            <entity-find entity-name="StatusOfCar" list="receptionCarList">
                 <econditions>
                     <econdition field-name="CarStatus" value="Reception"/>
                 </econditions>
@@ -111,7 +111,7 @@
         </in-parameters>
         <actions>
             <service-call name="create#service.tracker.AdviserEntry" out-map="context" in-map="context"/>
-            <service-call name="update#service.tracker.StatusAndCarNo" in-map="[CarNo:CarNo, CarStatus:CarStatus, InTime:InTime]"> <!-- Need to change create from update -->
+            <service-call name="update#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:CarStatus, InTime:'2014-10-29 18:25']"> <!-- Need to change create from update -->
                 <econditions combine="and">
                     <econdition>
                         <econdition field-name="CarNo" value="${CarNo}"/>
