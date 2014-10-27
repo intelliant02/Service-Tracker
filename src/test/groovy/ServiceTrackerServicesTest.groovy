@@ -32,13 +32,18 @@ class ServiceTrackerServicesTest extends Specification {
         ec.user.logoutUser()
     }
 
+  /*  def "Test security test service"() {
+        when:
+        def createSecurityEntry = ec.service.sync().name("tracker.TrackerServices.createSecurityCheck")
+        .parameters([CarNo: "12", CarStatus: "Reception", InTime: "2014-10-25 17:50", KmIn : "123"]).call()
+    } */
     def "Create car entry with Reception Entity service"() {
         when:
         def createEntry = ec.service.sync().name("tracker.TrackerServices.createReceptionEntity")
                 .parameters([CarNo: "WB-02_M5", Job: "PM(Free)", ServiceAdviser: "Abhishek Bagchi", InTime: "2014-10-08 21:20:00.0", DriverOrOwner: "Owner",
                 CarStatus: "Reception", Gift: "Yes", DropCar: "Yes", CustomerWaiting: "No"]).call()
         EntityValue carCreated = ec.entity.makeFind("service.tracker.ReceptionEntity").condition("CarNo", "WB-02_M5").one()
-        EntityValue status = ec.entity.makeFind("service.tracker.CarNoAndStatus").condition("CarNo", "WB-02_M5").one()
+        EntityValue status = ec.entity.makeFind("service.tracker.StatusAndCarNo").condition("CarNo", "WB-02_M5").one()
         then:
         carCreated != null
         carCreated.Job == "PM(Free)"
@@ -68,13 +73,13 @@ class ServiceTrackerServicesTest extends Specification {
     def "Test create adviser Entry services"() {
         when:
         def createEntry = ec.service.sync().name("tracker.TrackerServices.createReceptionEntity")
-                .parameters([CarNo: "WB-04-002", Job: "PM(Free)", ServiceAdviser: "Abhishek Bagchi", InTime: "2014-10-08 21:20:00.0", DriverOrOwner: "Owner",
+                .parameters([CarNo: "WB-04-0002", Job: "PM(Free)", ServiceAdviser: "Abhishek Bagchi", InTime: "2014-10-08 21:20:00.0", DriverOrOwner: "Owner",
                 CarStatus: "Reception", Gift: "Yes", DropCar: "Yes", CustomerWaiting: "No"]).call()
         def updateAdviser = ec.service.sync().name("tracker.TrackerServices.createAdviserEntry")
-                .parameters([CarNo: "WB-04-002", CustomerName: "Rahul", MobileNo: "9999999999", DriverName: "Roy",
+                .parameters([CarNo: "WB-04-0002", CustomerName: "Rahul", MobileNo: "9999999999", DriverName: "Roy",
                 DriverMobile: "9840857843", BeforeRoadTest: "Yes", AfterRoadTest: "Yes", CarStatus: "Service Adviser"]).call()
-        EntityValue created = ec.entity.makeFind("service.tracker.AdviserEntry").condition("CarNo", "WB-04-002").one()
-        EntityValue statuscreated = ec.entity.makeFind("service.tracker.CarNoAndStatus").condition("CarNo", "WB-04-002").one()
+        EntityValue created = ec.entity.makeFind("service.tracker.AdviserEntry").condition("CarNo", "WB-04-0002").one()
+        EntityValue statuscreated = ec.entity.makeFind("service.tracker.StatusAndCarNo").condition("CarNo", "WB-04-0002").one()
         then:
         created != null
         statuscreated != null
@@ -89,7 +94,7 @@ class ServiceTrackerServicesTest extends Specification {
           def createEntry = ec.service.sync().name("tracker.TrackerServices.createReceptionEntity")
                   .parameters([CarNo : "frtc", Job : "PM(Free)", ServiceAdviser : "Abhishek Bagchi", InTime : "2014-10-08 21:20:00.0", DriverOrOwner : "Owner"
                   , Gift : "Yes", CarStatus : "Reception", DropCar : "Yes", CustomerWaiting : "No"]).call()
-          EntityValue getStatus = ec.entity.makeFind("service.tracker.CarNoAndStatus").condition("CarNo", "frtc").one()
+          EntityValue getStatus = ec.entity.makeFind("service.tracker.StatusAndCarNo").condition("CarNo", "frtc").one()
           then:
           getStatus != null
           getStatus.CarStatus == "Reception"
@@ -104,5 +109,4 @@ class ServiceTrackerServicesTest extends Specification {
           then:
           findRecord == null
       } */
-
 }

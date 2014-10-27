@@ -1,28 +1,33 @@
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.4.xsd"
         default-menu-include="false" standalone="true">
+    <transition name="createAdviserEntry">
+        <service-call name="tracker.TrackerServices.create#AdviserEntry"/>
+        <default-response url="../Service"/>
+    </transition>
     <transition name="createEntry">
-        <default-response url="."/>
+        <service-call name="tracker.TrackerServices.create#ReceptionEntity"/>
+        <default-response url="../Service"/>
     </transition>
     <actions>
-        <service-call name="tracker.TrackerServices.get#CarNoAndStatus" in-map="context"
+        <service-call name="tracker.TrackerServices.get#SecurityAndCarStatus" in-map="context"
                       out-map="context"/>
-        <entity-find entity-name="service.tracker.CarNoAndStatus" list="receptionList">
-            <search-form-inputs/>
-        </entity-find>
     </actions>
     <widgets>
         <container id="reception-section">
             <container id="reception-title">
                 <label text="Car waiting for Reception " type="h5"/>
             </container>
-            <section-iterate name="CarEntries" list="receptionList" entry="reception">
+            <section-iterate name="CarEntries" list="receptionCarList" entry="reception">
                 <widgets>
                     <container>
                         <container-dialog id="EntryForReceptionist" button-text="Reception">
                             <form-single name="CarEntryAtReception" transition="createEntry">
                                 <auto-fields-entity entity-name="service.tracker.ReceptionEntity" field-type="edit"/>
-                                <auto-fields-entity entity-name="service.tracker.CarNoAndStatus" field-type="edit"/>
+                                <auto-fields-entity entity-name="service.tracker.StatusAndCarNo" field-type="edit"/>
+                                <field name="CarNo">
+                                    <default-field><display text="${reception.CarNo}"/></default-field>
+                                </field>
                                 <field name="Job">
                                     <default-field>
                                         <drop-down no-current-selected-key="PM(Paid)">
@@ -43,10 +48,9 @@
                                         </drop-down>
                                     </default-field>
                                 </field>
-
                                 <field name="CarStatus">
                                     <default-field title="Status">
-                                        <drop-down allow-empty="false" allow-multiple="false">
+                                        <drop-down allow-empty="false" allow-multiple="false" no-current-selected-key="Service adviser">
                                             <entity-options key="${CarStatus}">
                                                 <entity-find entity-name="service.tracker.CarStatusType">
                                                 </entity-find>
