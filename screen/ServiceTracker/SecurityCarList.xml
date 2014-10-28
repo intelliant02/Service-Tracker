@@ -1,10 +1,6 @@
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.4.xsd"
         default-menu-include="false" standalone="true">
-    <transition name="createAdviserEntry">
-        <service-call name="tracker.TrackerServices.create#AdviserEntry"/>
-        <default-response url="../Service"/>
-    </transition>
     <transition name="createEntry">
         <service-call name="tracker.TrackerServices.create#ReceptionEntity"/>
         <default-response url="../Service"/>
@@ -24,7 +20,6 @@
                         <container-dialog id="EntryForReceptionist" button-text="Reception">
                             <form-single name="CarEntryAtReception" transition="createEntry">
                                 <auto-fields-entity entity-name="service.tracker.ReceptionEntity" field-type="edit"/>
-                                <auto-fields-entity entity-name="service.tracker.StatusOfCar" field-type="edit"/>
                                 <field name="CarNo">
                                     <default-field><display text="${reception.CarNo}"/></default-field>
                                 </field>
@@ -50,12 +45,7 @@
                                 </field>
                                 <field name="CarStatus">
                                     <default-field title="Status">
-                                        <drop-down allow-empty="false" allow-multiple="false" no-current-selected-key="Service adviser">
-                                            <entity-options key="${CarStatus}">
-                                                <entity-find entity-name="service.tracker.CarStatusType">
-                                                </entity-find>
-                                            </entity-options>
-                                        </drop-down>
+                                        <display text="Service adviser"/>
                                     </default-field>
                                 </field>
                                 <field name="Gift">
@@ -97,7 +87,7 @@
                                 </field>
                             </form-single>
                         </container-dialog>
-                        <link text="${reception.CarNo}" url="" url-type="plain"/>
+                        <label text="${reception.CarNo}"/>
                         <label text="${reception.CarStatus}"/>
                     </container>
                 </widgets>

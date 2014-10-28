@@ -2,6 +2,7 @@ import org.moqui.context.ExecutionContext
 import spock.lang.*
 import spock.lang.Specification
 import org.moqui.Moqui
+
 /**
  * Created by debmalya.biswas on 20/10/14.
  */
@@ -46,15 +47,4 @@ class SecurityTests extends Specification {
         entityValue.artifactTypeEnumId == "AT_XML_SCREEN"
         entityValue.inheritAuthz == "Y"
     }
-
-   /* def "Test admin permission for service tracker"() {
-        when:
-        def entityValue = ec.entity.makeFind("moqui.security.ArtifactAuthz").condition("userGroupId", "ADMIN").one()
-        then:
-        entityValue.artifactGroupId == "SERVICE_TRACKER_APP"
-        entityValue.authzTypeEnumId == "AUTHZT_ALWAYS"
-        entityValue.authzActionEnumId == "AUTHZA_ALL"
-    } */
-
-
 }

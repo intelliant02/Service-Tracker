@@ -1,30 +1,42 @@
 <screen require-authentication="false">
+    <transition name="deleteAdviser">
+        <service-call name="tracker.DeleteServices.delete#AdviserEntry"/>
+        <default-response url="."/>
+    </transition>
     <transition name="deleteReception">
-        <service-call name="tracker.TrackerServices.delete#ReceptionEntity"/>
+        <service-call name="tracker.DeleteServices.delete#ReceptionEntity"/>
+        <default-response url="."/>
+    </transition>
+    <transition name="deleteStatusType">
+        <service-call name="tracker.DeleteServices.delete#StatusOfCar"/>
         <default-response url="."/>
     </transition>
     <transition name="deleteStatus">
-        <service-call name="delete#CarNoAndStatus"/>
+        <service-call name="delete#StatusOfCar"/>
         <default-response url="."/>
     </transition>
     <transition name="findReceptionEntity">
         <default-response url="."/>
     </transition>
     <actions>
-        <entity-find entity-name="AdviserEntry" list="tutorialList2"> <!--Data is retrieve from view entity-->
+        <entity-find entity-name="service.tracker.AdviserEntryAndCarStatus" list="tutorialList2">
             <search-form-inputs/>
         </entity-find>
-        <entity-find entity-name="CarNoAndStatus" list="receptionList"><search-form-inputs/></entity-find>
+        <entity-find entity-name="service.tracker.StatusOfCar" list="receptionList">
+            <search-form-inputs/>
+        </entity-find>
+        <entity-find entity-name="service.tracker.ReceptionEntity" list="receptionTestList">
+            <search-form-inputs/>
+        </entity-find>
     </actions>
     <widgets>
-        <container-dialog id="delete" button-text="delete">
-            <form-single name="deleteN" transition="deleteReception">
+        <container-dialog id="delete1" button-text="delete">
+            <form-single name="delete1" transition="deleteReception">
                 <field name="CarNo">
                     <default-field title="CarNo" tooltip="This is the status of the example">
                         <drop-down allow-empty="false" allow-multiple="false">
                             <entity-options key="${CarNo}">
-                                <entity-find entity-name="ReceptionEntity">
-                                </entity-find>
+                                <entity-find entity-name="ReceptionEntity"/>
                             </entity-options>
                         </drop-down>
                     </default-field>
@@ -37,12 +49,39 @@
             </form-single>
         </container-dialog>
         <container-dialog id="delete" button-text="delete status">
-            <form-single name="deleteN" transition="deleteStatus">
+            <form-single name="deleteN" transition="deleteStatusType">
                 <field name="CarNo">
                     <default-field title="CarNo" tooltip="This is the status of the example">
                         <drop-down allow-empty="false" allow-multiple="false">
                             <entity-options key="${CarNo}">
-                                <entity-find entity-name="CarNoAndStatus">
+                                <entity-find entity-name="StatusOfCar">
+                                </entity-find>
+                            </entity-options>
+                        </drop-down>
+                    </default-field>
+                </field>
+                <field name="CarStatus">
+                    <default-field><drop-down allow-empty="false" allow-multiple="false">
+                        <entity-options key="${CarStatus}">
+                            <entity-find entity-name="StatusOfCar">
+                            </entity-find>
+                        </entity-options>
+                    </drop-down></default-field>
+                </field>
+                <field name="submitButton">
+                    <default-field title="Delete">
+                        <submit/>
+                    </default-field>
+                </field>
+            </form-single>
+        </container-dialog>
+        <container-dialog id="deleteStatusType" button-text="deleteStatus1">
+            <form-single name="delete-status" transition="deleteAdviser">
+                <field name="CarNo">
+                    <default-field title="Status">
+                        <drop-down allow-empty="false" allow-multiple="false">
+                            <entity-options key="${CarNo}">
+                                <entity-find entity-name="service.tracker.AdviserEntry">
                                 </entity-find>
                             </entity-options>
                         </drop-down>
@@ -52,11 +91,19 @@
                     <default-field title="Delete">
                         <submit/>
                     </default-field>
-                </field>
-            </form-single>
-        </container-dialog>
+                </field></form-single></container-dialog>
         <form-list name="ListTutorials2" list="receptionList" transition="findReceptionEntity" dynamic="true">
+            <field name="CarStatus">
+                <default-field>
+                    <display/>
+                </default-field>
+            </field>
             <field name="CarNo">
+                <default-field>
+                    <display/>
+                </default-field>
+            </field>
+            <!--<field name="CarNo">
                 <default-field>
                     <display/>
                 </default-field>
@@ -66,14 +113,19 @@
                     <display/>
                 </default-field>
             </field>
+            <field name="InTime"><default-field><display/></default-field></field> -->
+
         </form-list>
-        <form-list name="ListTutorials" list="tutorialList2" transition="findReceptionEntity" dynamic="true">
-            <field name="CarNo">
-                <default-field>
-                    <display/>
-                </default-field>
+        <form-list name="ListTutorial" list="tutorialList2" transition="findReceptionEntity" dynamic="true">
+            <field name="Job">
+                <default-field><display/></default-field>
             </field>
-            <field name="BeforeRoadTest">
+            <field name="CarStatus"><default-field><display/></default-field></field>
+            <field name="CarNo"><default-field><display/></default-field></field>
+            <field name="InTime"><default-field><display/></default-field></field>
+        </form-list>
+        <form-list name="ListTutorials" list="receptionTestList" transition="findReceptionEntity" dynamic="true">
+            <field name="CarNo">
                 <default-field><display/></default-field>
             </field>
         </form-list>

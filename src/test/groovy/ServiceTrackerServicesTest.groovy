@@ -3,8 +3,6 @@ import org.moqui.context.ExecutionContext
 import org.moqui.entity.EntityValue
 import spock.lang.*
 import spock.lang.Specification
-
-
 /**
  * Created by debmalya.biswas on 20/10/14.
  */

@@ -2,8 +2,6 @@ import org.moqui.Moqui
 import org.moqui.context.ExecutionContext
 import spock.lang.Shared
 import spock.lang.Specification
-
-
 /**
  * Created by debmalya.biswas on 21/10/14.
  */
@@ -30,7 +28,8 @@ class SeedDataTest extends Specification {
         ec.artifactExecution.enableAuthz()
         ec.user.logoutUser()
     }
-    def "Test for Car status type"(){
+
+    def "Test for Car status type"() {
         when:
         def entityList = ec.entity.makeFind("service.tracker.CarStatusType").list()
         then:
