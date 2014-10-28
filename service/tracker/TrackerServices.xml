@@ -82,8 +82,9 @@
         </out-parameters>
         <actions>
             <entity-find entity-name="ReceptionEntityAndCarStatus" list="adviserCarList">
-                <econditions>
-                    <econdition field-name="CarStatus" value="Service adviser"/>
+                <econditions combine="and">
+                    <econdition field-name="CarStatus" value="Service Adviser"/>
+                    <econdition field-name="OutTime" from="null"/>
                 </econditions>
             </entity-find>
         </actions>
