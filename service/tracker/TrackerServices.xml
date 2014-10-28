@@ -31,17 +31,6 @@
             <service-call name="create#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:CarStatus]"/>
         </actions>
     </service>
-    <!--<service verb="create" noun="StatusOfCar" authenticate="false">
-        <in-parameters>
-            <parameter name="CarNo"/>
-           <parameter name="CarStatus"/>
-        </in-parameters>
-    </service> -->
-    <service verb="delete" noun="StatusOfCar" type="entity-auto" authenticate="false">
-        <in-parameters>
-            <auto-parameters include="all"/>
-        </in-parameters>
-    </service>
     <service verb="get" noun="SecurityAndCarStatus" authenticate="false">
         <in-parameters>
             <auto-parameters include="all"/>
@@ -67,11 +56,6 @@
             <service-call name="create#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:'Reception', InTime:ec.user.nowTimestamp]"/>
             <!--TODO: Find out a way to work InTime -->
         </actions>
-    </service>
-    <service verb="delete" noun="SecurityCheck" type="entity-auto" authenticate="false">
-        <in-parameters>
-            <auto-parameters include="all"/>
-        </in-parameters>
     </service>
     <service verb="get" noun="ReceptionEntityAndCarStatus" authenticate="false">
         <in-parameters>
@@ -124,7 +108,7 @@
         <in-parameters>
             <parameter name="CarNo"/>
             <parameter name="CustomerName"/>
-            <parameter name="MobileName"/>
+            <parameter name="MobileNo"/>
             <parameter name="promisedTime"/>
             <parameter name="DriverName"/>
             <parameter name="Job"/>
