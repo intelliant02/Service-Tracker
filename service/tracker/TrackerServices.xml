@@ -2,7 +2,6 @@
     <service verb="create" noun="ReceptionEntity" authenticate="false">
         <in-parameters>
             <parameter name="CarNo"/>
-            <parameter name="InTime"/>
             <parameter name="Job"/>
             <parameter name="ServiceAdviser"/>
             <parameter name="DriverOrOwner"/>
@@ -12,8 +11,15 @@
             <parameter name="CarStatus"/>
         </in-parameters>
         <actions>
-            <service-call name="create#service.tracker.ReceptionEntity" out-map="context" in-map="context"/>
-            <service-call name="create#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:CarStatus]"/>
+            <service-call name="create#service.tracker.ReceptionEntity"  in-map="[CarNo:CarNo, ServiceAdviser:ServiceAdviser,
+                                                                                  DriverOrOwner:DriverOrOwner, Gift:Gift,
+                                                                                  DropCar:DropCar, CustomerWaiting:CustomerWaiting, Job:Job]"/>
+            <service-call name="update#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:'Reception', OutTime:ec.user.nowTimestamp]">
+                <econditions>
+                    <econdition field-name="CarNo" value="${CarNo}"/>
+                </econditions>
+            </service-call>
+            <service-call name="create#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:'Service Adviser', InTime:ec.user.nowTimestamp]"/> <!-- Need to change create from update -->
         </actions>
     </service>
     <service verb="create" noun="CarController" authenticate="false">
@@ -31,7 +37,7 @@
            <parameter name="CarStatus"/>
         </in-parameters>
     </service> -->
-    <service verb="delete" noun="ReceptionEntity" type="entity-auto" authenticate="false">
+    <service verb="delete" noun="StatusOfCar" type="entity-auto" authenticate="false">
         <in-parameters>
             <auto-parameters include="all"/>
         </in-parameters>
@@ -45,8 +51,9 @@
         </out-parameters>
         <actions>
             <entity-find entity-name="SecurityAndCarStatus" list="receptionCarList">
-                <econditions>
+                <econditions combine="and">
                     <econdition field-name="CarStatus" value="Reception"/>
+                    <econdition field-name="OutTime" from="null"/>
                 </econditions>
             </entity-find>
         </actions>
@@ -57,12 +64,11 @@
         </in-parameters>
         <actions>
             <service-call name="create#service.tracker.SecurityCheck" in-map="[CarNo:CarNo, KmIn:KmIn]"/>
-            <service-call name="create#service.tracker.StatusOfCar"
-                          in-map="[CarNo:CarNo, CarStatus:'Reception', InTime:InTime]"/>
+            <service-call name="create#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:'Reception', InTime:ec.user.nowTimestamp]"/>
             <!--TODO: Find out a way to work InTime -->
         </actions>
     </service>
-    <service verb="delete" noun="StatusOfCar" type="entity-auto" authenticate="false">
+    <service verb="delete" noun="SecurityCheck" type="entity-auto" authenticate="false">
         <in-parameters>
             <auto-parameters include="all"/>
         </in-parameters>
@@ -110,8 +116,16 @@
             <parameter name="CarStatus"/>
         </in-parameters>
         <actions>
-            <service-call name="create#service.tracker.AdviserEntry" out-map="context" in-map="context"/>
-            <service-call name="update#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:CarStatus, InTime:'2014-10-29 18:25']"> <!-- Need to change create from update -->
+            <service-call name="create#service.tracker.AdviserEntry"  in-map="[CarNo:CarNo, CustomerName:CustomerName, MobileNo:MobileNo,
+                                                                               PromisedTime:PromisedTime, DriverName:DriverName, DriverMobile:DriverMobile,
+                                                                               Job:Job, BeforeRoadTest:BeforeRoadTest, AfterRoadTest:AfterRoadTest]"/>
+            <service-call name="update#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, OutTime:ec.user.nowTimestamp]">
+                <econditions>
+                    <econdition field-name="CarNo" value="${CarNo}"/>
+                    <econdition field-name="CarStatus" value="Reception"/>
+                </econditions>
+            </service-call>
+            <service-call name="create#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:'Service Adviser', InTime:ec.user.nowTimestamp]"> <!-- Need to change create from update -->
                 <econditions combine="and">
                     <econdition>
                         <econdition field-name="CarNo" value="${CarNo}"/>
@@ -119,6 +133,7 @@
                     </econdition>
                 </econditions>
             </service-call>
+
         </actions>
     </service>
 </services>
