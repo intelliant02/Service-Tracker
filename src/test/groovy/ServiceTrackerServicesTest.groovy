@@ -32,29 +32,7 @@ class ServiceTrackerServicesTest extends Specification {
         ec.user.logoutUser()
     }
 
-    /*
 
-      def "Create car entry with Reception Entity service"() {
-          when:
-          def createEntry = ec.service.sync().name("tracker.TrackerServices.createReceptionEntity")
-                  .parameters([CarNo: "WB-02-M6", Job: "PM(Free)", ServiceAdviser: "Abhishek Bagchi", InTime: "2014-10-08 21:20:00.0", DriverOrOwner: "Owner",
-                  CarStatus: "Reception", Gift: "Yes", DropCar: "Yes", CustomerWaiting: "No"]).call()
-          EntityValue carCreated = ec.entity.makeFind("service.tracker.ReceptionEntity").condition("CarNo", "WB-02-M6").one()
-          EntityValue status = ec.entity.makeFind("service.tracker.StatusOfCar").condition("CarNo", "WB-02-M5").one()
-          then:
-          carCreated != null
-          carCreated.Job == "PM(Free)"
-          carCreated.ServiceAdviser == "Abhishek Bagchi"
-          carCreated.DriverOrOwner == "Owner"
-          carCreated.Gift == "Yes"
-          carCreated.DropCar == "Yes"
-          carCreated.CustomerWaiting == "No"
-          status.CarStatus == "Reception"
-          cleanup:
-          carCreated.delete()
-          status.delete()
-      }
-  */
     def "Test Adviser entity"() {
         when:
         def createEntry = ec.entity.makeValue("service.tracker.AdviserEntry")
@@ -67,24 +45,6 @@ class ServiceTrackerServicesTest extends Specification {
         created.delete()
     }
 
-    /*  def "Test create adviser Entry services"() {
-          when:
-          def createEntry = ec.service.sync().name("tracker.TrackerServices.createReceptionEntity")
-                  .parameters([CarNo: "WB-04-0002", Job: "PM(Free)", ServiceAdviser: "Abhishek Bagchi", InTime: "2014-10-08 21:20:00.0", DriverOrOwner: "Owner",
-                  CarStatus: "Reception", Gift: "Yes", DropCar: "Yes", CustomerWaiting: "No"]).call()
-          def updateAdviser = ec.service.sync().name("tracker.TrackerServices.createAdviserEntry")
-                  .parameters([CarNo: "WB-04-0002", CustomerName: "Rahul", MobileNo: "9999999999", DriverName: "Roy",
-                  DriverMobile: "9840857843", BeforeRoadTest: "Yes", AfterRoadTest: "Yes", CarStatus: "Service Adviser"]).call()
-          EntityValue created = ec.entity.makeFind("service.tracker.AdviserEntry").condition("CarNo", "WB-04-0002").one()
-          EntityValue statuscreated = ec.entity.makeFind("service.tracker.CarAndStatus").condition("CarNo", "WB-04-0002").one()
-          then:
-          created != null
-          statuscreated != null
-          statuscreated.CarStatus == "Service Adviser"
-          cleanup:
-          created.delete()
-          statuscreated.delete()
-      } */
     def "Test Security Check"() {
         when:
         def createEntry = ec.service.sync().name("tracker.TrackerServices.createSecurityCheck")
@@ -121,17 +81,38 @@ class ServiceTrackerServicesTest extends Specification {
         cleanup:
         getValue.delete()
         getSecurity.delete()
-        getStatus.delete()
+        getStatus.delete() //TODO: Find a way to delete multiple value of status
     }
 
-    /* 
-   
-        def "delete Record"(){
-           when:
-           def deleteRecord  = ec.entity.makeFind("service.tracker.ReceptionEntity").condition("CarNo", "WB-02-H-8917").one()
-           deleteRecord.
-                   def findRecord = ec.entity.makeFind("service.tracker.ReceptionEntity").condition("CarNo", "WB-02-H-8917").one()
-           then:
-           findRecord == null
-       } */
+    def "Test Service Adviser Entry"(){
+        when:
+        def createEntrySecurity = ec.service.sync().name("tracker.TrackerServices.createSecurityCheck")
+                .parameters([CarNo: "WB-01-0003", KmIn: "123"]).call()
+        def createEntryReception = ec.service.sync().name("tracker.TrackerServices.createReceptionEntity")
+                .parameters([CarNo: "WB-01-0003", Job: "PM(Free)", ServiceAdviser: "Abhishek Bagchi", DriverOrOwner: "Owner",
+                Gift: "Yes", DropCar: "Yes", CustomerWaiting: "No"]).call()
+        def createEntryAdviser = ec.service.sync().name("tracker.TrackerServices.createAdviserEntry")
+                .parameters([CarNo:"WB-01-0003", CustomerName:"Deb", MobileNo:"9836545651",
+                DriverName:"Raj", DriverMobile:"9836545651",
+                Job:"PM(Free)", BeforeRoadTest:"Yes", AfterRoadTest:"No"]).call()
+        EntityValue getValue = ec.entity.makeFind("service.tracker.ReceptionEntity").condition("CarNo", "WB-01-0003").one()
+        EntityValue getSecurity = ec.entity.makeFind("service.tracker.SecurityCheck").condition("CarNo", "WB-01-0003").one()
+        EntityValue getAdviser = ec.entity.makeFind("service.tracker.AdviserEntry").condition("CarNo", "WB-01-0003").one()
+        EntityValue getStatus = ec.entity.makeFind("service.tracker.StatusOfCar").condition("CarNo", "WB-01-0003").one()
+        then:
+        getValue != null
+        getSecurity != null
+        getAdviser != null
+        getAdviser.CustomerName == "Deb"
+        getAdviser.MobileNo == "9836545651"
+        getAdviser.Job == "PM(Free)"
+        getAdviser.BeforeRoadTest == "Yes"
+        getAdviser.AfterRoadTest == "No"
+        cleanup:
+        getSecurity.delete()
+        getValue.delete()
+        getStatus.delete() //TODO: Find a way to delete multiple value of status
+
+    }
+
 }
