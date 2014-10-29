@@ -1,5 +1,5 @@
 <entities>
-
+<!--================== This is Reception Entity ===================-->
     <entity entity-name="ReceptionEntity" package-name="service.tracker" authorize-skip="true">
         <field name="CarNo" type="text-long" is-pk="true"/>
         <field name="Job" type="text-medium"/>
@@ -10,9 +10,11 @@
         <field name="DropCar" type="text-medium"/>
         <field name="CustomerWaiting" type="text-medium"/>
     </entity>
+
     <entity entity-name="CarStatusType" package-name="service.tracker">
         <field name="CarStatus" type="text-long" is-pk="true"/>
     </entity>
+
     <entity entity-name="SecurityCheck" package-name="service.tracker">
         <field name="CarNo" type="text-medium" is-pk="true"/>
         <field name="KmIn" type="text-medium"/>
@@ -29,17 +31,23 @@
         <field name="BeforeRoadTest" type="text-long"/>
         <field name="AfterRoadTest" type="text-long"/>
     </entity>
-    <entity entity-name="CarController" package-name="service.tracker">
+<!-- TODO: Working on this -->
+    <entity entity-name="JobController" package-name="service.tracker">
         <field name="CarNo" type="text-long" is-pk="true"/>
-        <field name="Area" type="text-long"/>
+        <field name="FromDate" type="date-time" is-pk="true"/>
+        <field name="Area" type="text-medium"/>
         <field name="BayNo" type="text-long"/>
+        <field name="AwaitingTechnician" type="text-medium"/>
     </entity>
-    <entity entity-name="CarTechnicians" package-name="service.tracker">
+    <!-- TODO: Working on this -->
+    <entity entity-name="Technicians" package-name="service.tracker">
         <field name="CarNo" type="text-long" is-pk="true"/>
-        <field name="Technicians" type="text-long"/> <!-- TODO: Need to change the field TechniciansId from Technicians -->
+        <field name="TechnicianId" type="text-long" is-pk="true"/>
         <field name="InTime" type="date-time"/>
         <field name="OutTime" type="date-time"/>
+        <field name="FromDate" type="date-time" is-pk="true"/>
     </entity>
+
     <view-entity entity-name="ReceptionEntityAndCarStatus" package-name="service.tracker" authorize-skip="true">
         <member-entity entity-alias="EXFTAP" entity-name="ReceptionEntity"/>
         <member-entity entity-alias="ENUM" entity-name="StatusOfCar" join-from-alias="EXFTAP">
@@ -48,6 +56,7 @@
         <alias-all entity-alias="EXFTAP"/>
         <alias-all entity-alias="ENUM"/>
     </view-entity>
+
     <view-entity entity-name="AdviserEntryAndCarStatus" package-name="service.tracker" authorize-skip="true">
         <member-entity entity-alias="EXFTAP" entity-name="AdviserEntry"/>
         <member-entity entity-alias="ENUM" entity-name="StatusOfCar" join-from-alias="EXFTAP">
@@ -56,6 +65,7 @@
         <alias-all entity-alias="EXFTAP"/>
         <alias-all entity-alias="ENUM"/>
     </view-entity>
+
     <view-entity entity-name="SecurityAndCarStatus" package-name="service.tracker" authorize-skip="true">
         <member-entity entity-alias="EXFTAP" entity-name="SecurityCheck"/>
         <member-entity entity-alias="ENUM" entity-name="StatusOfCar" join-from-alias="EXFTAP">
@@ -64,4 +74,5 @@
         <alias-all entity-alias="EXFTAP"/>
         <alias-all entity-alias="ENUM"/>
     </view-entity>
+
 </entities>
