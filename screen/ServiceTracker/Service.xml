@@ -77,6 +77,20 @@
                         </section>
                     </box-body>
                 </container-box>
+                <!-- TODO: Need to implement another section in the panel left where all car will be listed which is back from technician.  -->
+                <container-box>
+                    <box-header>
+                        <label text="Back from Technician" type="h5"/>
+                    </box-header>
+                    <box-body>
+                        <section name="panelLeftBackFromTechnician">
+                            <widgets>
+                                <label text="Work in progress"/>
+                                <!-- <dynamic-container id="adviserEntry" transition="adviserCarList"/> -->
+                            </widgets>
+                        </section>
+                    </box-body>
+                </container-box>
             </panel-left>
 
             <panel-center spacing="3">
