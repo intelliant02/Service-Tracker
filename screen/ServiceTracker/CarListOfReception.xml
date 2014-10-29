@@ -12,14 +12,10 @@
     </actions>
     <widgets>
         <container id="reception-section">
-            <container id="reception-title">
-                <label text="Car waiting for Service adviser " type="h5"/>
-            </container>
             <section-iterate name="CarEntriesReception" list="adviserCarList" entry="adviser">
                 <widgets>
                     <container>
-                        <section
-                                name="test"> <!-- TODO: Added a sample -> How to show button for different user. Need to implement this when the different user is created -->
+                        <section name="test"> <!-- TODO: Added a sample -> How to show button for different user. Need to implement this when the different user is created -->
                             <condition>
                                 <expression>user == 'john.doe'</expression>
                             </condition>

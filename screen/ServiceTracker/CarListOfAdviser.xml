@@ -2,71 +2,54 @@
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.4.xsd"
         default-menu-include="false" standalone="true">
     <transition name="createController">
-        <service-call name="tracker.TrackerServices.create#AdviserEntry"/>
         <default-response url="../Service"/>
     </transition>
     <actions>
         <service-call name="tracker.TrackerServices.get#AdviserEntryAndCarStatus" in-map="context"
                       out-map="context"/>
-
     </actions>
     <widgets>
-        <container id="adviser-section">
-            <container id="adviser-title">
-                <label text="Car waiting for Technician" type="h5"/>
-            </container>
-            <section-iterate name="adviserEntries" list="jobControllerCarList" entry="adviser">
+        <container id="controller-section">
+            <section-iterate name="controllerEntries" list="jobControllerCarList" entry="controller">
                 <widgets>
                     <container>
                         <container-dialog id="job-controller-container" button-text="Controller">
                             <form-single name="job-controller-form" transition="createController">
-                                <auto-fields-entity entity-name="AdviserEntry" field-type="edit"/>
                                 <!-- TODO: This will be change when creating Job controller field -->
                                 <field name="CarNo">
                                     <default-field>
-                                        <display text="${adviser.CarNo}"/>
+                                        <display text="${controller.CarNo}"/>
                                     </default-field>
                                 </field>
-                                <field name="BeforeRoadTest">
+                                <field name="Area">
                                     <default-field>
-                                        <drop-down allow-empty="false" no-current-selected-key="No">
-                                            <option key="Yes"/>
-                                            <option key="No"/>
+                                        <drop-down allow-empty="false" no-current-selected-key="Ground Floor">
+                                            <option key="First Floor"/>
+                                            <option key="Ground Floor"/>
+                                            <option key="Second Floor"/>
                                         </drop-down>
                                     </default-field>
                                 </field>
-                                <field name="AfterRoadTest">
+                                <field name="BayNo">
                                     <default-field>
-                                        <drop-down allow-empty="false" no-current-selected-key="No">
-                                            <option key="Yes"/>
-                                            <option key="No"/>
-                                        </drop-down>
+                                        <text-line size="3"/>
                                     </default-field>
                                 </field>
-                                <field name="CarStatus">
-                                    <default-field title="Status">
-                                        <drop-down allow-empty="false" allow-multiple="false">
-                                            <entity-options key="${CarStatus}">
-                                                <entity-find entity-name="service.tracker.CarStatusType">
-                                                </entity-find>
-                                            </entity-options>
-                                        </drop-down>
-                                    </default-field>
+                                <field name="TechnicianId">
+                                    <default-field><text-line size="5"/></default-field>
                                 </field>
-                                <field name="CapNumber">
-                                    <default-field>
-                                        <text-line size="20"/>
-                                    </default-field>
+                                <field name="AwaitingTechnician">
+                                    <default-field><display text="Yes"/></default-field>
                                 </field>
-                                <field name="adviserSubmitButton">
+                                <field name="controllerSubmitButton">
                                     <default-field title="Create">
                                         <submit/>
                                     </default-field>
                                 </field>
                             </form-single>
                         </container-dialog>
-                        <label text="${adviser.CarNo}"/>
-                        <label text="${adviser.CarStatus}"/>
+                        <label text="${controller.CarNo}"/>
+                        <label text="${controller.CarStatus}"/>
                     </container>
                 </widgets>
             </section-iterate>

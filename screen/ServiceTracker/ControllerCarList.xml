@@ -1,0 +1,7 @@
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.4.xsd"
+        default-menu-include="false" standalone="true">
+    <widgets>
+        <label text="Work in progress" type="h5"/>
+    </widgets>
+</screen>

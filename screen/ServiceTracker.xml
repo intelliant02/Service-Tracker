@@ -1,5 +1,5 @@
-<screen include-child-content="true">
-    <subscreens default-item="Service"/>
+<screen>
+    <subscreens default-item="Service" always-use-full-path="true"/>
     <widgets>
         <subscreens-panel id="service-app" type="popup" title="Service Tracker"/>
     </widgets>
