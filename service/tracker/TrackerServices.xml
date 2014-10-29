@@ -22,6 +22,27 @@
             <service-call name="create#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:'Service Adviser', InTime:ec.user.nowTimestamp]"/> <!-- Need to change create from update -->
         </actions>
     </service>
+
+    <service verb="create" noun="JobController" authenticate="false">
+        <in-parameters>
+            <parameter name="CarNo"/>
+            <parameter name="Area"/>
+            <parameter name="BayNo"/>
+            <parameter name="TechnicianId"/>
+            <parameter name="AwaitingTechnician"/>
+        </in-parameters>
+        <actions>
+            <service-call name="create#service.tracker.JobController" in-map="[CarNo:CarNo, FromDate:ec.user.nowTimestamp, BayNo:BayNo, AwaitingTechnician:AwaitingTechnician]"/>
+            <service-call name="update#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:'Job Controller', OutTime:ec.user.nowTimestamp]">
+            <econditions>
+                <econdition field-name="CarNo" value="${CarNo}"/>
+            </econditions>
+            </service-call>
+            <service-call name="create#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:'Technician', InTime:ec.user.nowTimestamp]"/>
+            <service-call name="create#service.tracker.Technicians" in-map="[CarNo:CarNo, TechnicianId:TechnicianId, FromDate:ec.user.nowTimestamp]"/>
+        </actions>
+    </service>
+
     <service verb="create" noun="CarController" authenticate="false">
         <in-parameters>
             <auto-parameters include="all"/>
@@ -31,6 +52,7 @@
             <service-call name="create#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:CarStatus]"/>
         </actions>
     </service>
+
     <service verb="get" noun="SecurityAndCarStatus" authenticate="false">
         <in-parameters>
             <auto-parameters include="all"/>
@@ -47,6 +69,7 @@
             </entity-find>
         </actions>
     </service>
+
     <service verb="create" noun="SecurityCheck" authenticate="false">
         <in-parameters>
             <auto-parameters include="all"/>
@@ -54,9 +77,9 @@
         <actions>
             <service-call name="create#service.tracker.SecurityCheck" in-map="[CarNo:CarNo, KmIn:KmIn]"/>
             <service-call name="create#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:'Reception', InTime:ec.user.nowTimestamp]"/>
-            <!--TODO: Find out a way to work InTime -->
         </actions>
     </service>
+
     <service verb="get" noun="ReceptionEntityAndCarStatus" authenticate="false">
         <in-parameters>
             <auto-parameters include="all"/>
@@ -73,6 +96,7 @@
             </entity-find>
         </actions>
     </service>
+
     <service verb="get" noun="AdviserEntryAndCarStatus" authenticate="false">
         <in-parameters>
             <auto-parameters include="all"/>
@@ -84,11 +108,12 @@
             <entity-find entity-name="AdviserEntryAndCarStatus" list="jobControllerCarList">
                 <econditions combine="and">
                     <econdition field-name="CarStatus" value="Job Controller"/>
-                    <econdition field-name="OutTime" from="null"/>
+                    <econdition field-name="AwaitingTechnician" value="Yes"/>
                 </econditions>
             </entity-find>
         </actions>
     </service>
+
     <service verb="get" noun="StatusOfCar" authenticate="false">
         <in-parameters>
             <auto-parameters include="all"/>
@@ -104,6 +129,7 @@
             </entity-find>
         </actions>
     </service>
+
     <service verb="create" noun="AdviserEntry" authenticate="false">
         <in-parameters>
             <parameter name="CarNo"/>
@@ -128,4 +154,5 @@
             <service-call name="create#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:'Job Controller', InTime:ec.user.nowTimestamp]"/> <!-- Need to change create from update -->
         </actions>
     </service>
+
 </services>
