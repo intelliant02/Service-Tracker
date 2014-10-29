@@ -12,6 +12,12 @@
     <transition name="securityCarList">
         <default-response url="../SecurityCarList"/>
     </transition>
+    <transition name="controllerList">
+        <default-response url="../ControllerCarList"/>
+    </transition>
+    <transition name="inspectorList">
+        <default-response url="../InspectorCarList"/>
+    </transition>
     <widgets>
         <label type="h3" text="Welcome to the Service Tracker system"/>
         <container>
@@ -31,14 +37,108 @@
                 </form-single>
             </container-dialog>
         </container>
-        <container-panel id="ReceptionCarContainer" dynamic="true">
-            <section name="PanelLeft">
-                <widgets>
-                    <dynamic-container id="securityEntry" transition="securityCarList"/>
-                    <dynamic-container id="receptionEntry" transition="receptionCarList"/>
-                    <dynamic-container id="adviserEntry" transition="adviserCarList"/>
-                </widgets>
-            </section>
+        <container-panel id="dashboard-panel" dynamic="true">
+            <panel-left closable="true" resizable="true" size="120" spacing="5">
+                <container-box>
+                    <box-header>
+                        <label text="Car waiting for Reception" type="h5"/>
+                    </box-header>
+                    <box-body>
+                        <section name="panelLeftSecurity">
+                            <widgets>
+                                <dynamic-container id="securityEntry" transition="securityCarList"/>
+                            </widgets>
+                        </section>
+                    </box-body>
+                </container-box>
+
+                <container-box>
+                    <box-header>
+                        <label text="Car waiting for Adviser" type="h5"/>
+                    </box-header>
+                    <box-body>
+                        <section name="panelLeftReception">
+                            <widgets>
+                                <dynamic-container id="receptionEntry" transition="receptionCarList"/>
+                            </widgets>
+                        </section>
+                    </box-body>
+                </container-box>
+
+                <container-box>
+                    <box-header>
+                        <label text="Car waiting for Controller" type="h5"/>
+                    </box-header>
+                    <box-body>
+                        <section name="panelLeftController">
+                            <widgets>
+                                <dynamic-container id="adviserEntry" transition="adviserCarList"/>
+                            </widgets>
+                        </section>
+                    </box-body>
+                </container-box>
+            </panel-left>
+
+            <panel-center spacing="3">
+                <container-box>
+                    <box-header><label text="Ground Floor" type="strong"/></box-header>
+                    <box-body>
+                        <section name="panelCentreGroundFloor">
+                            <widgets>
+                                <dynamic-container id="controllerEntry" transition="controllerList"/>
+                            </widgets>
+                        </section>
+                    </box-body>
+                </container-box>
+
+                <container-box>
+                    <box-header><label text="First Floor" type="strong"/></box-header>
+                    <box-body>
+                        <section name="panelCentreFiReady">
+                            <widgets>
+                                <label text="Work in progress"/>
+                                <!-- TODO:   <dynamic-container id="controllerEntry" transition="inspectorList"/> -->
+                            </widgets>
+                        </section>
+                    </box-body>
+                </container-box>
+
+                <container-box>
+                    <box-header><label text="FI ready" type="strong"/></box-header>
+                    <box-body>
+                        <section name="panelCenterInspector">
+                            <widgets>
+                                <dynamic-container id="fiReadyEntry" transition="inspectorList"/>
+                            </widgets>
+                        </section>
+                    </box-body>
+                </container-box>
+            </panel-center>
+
+            <panel-right closable="true" resizable="true" size="240" spacing="5">
+                <container-box>
+                    <box-header><label type="strong" text="Washing and cleaning"/></box-header>
+                    <box-body>
+                        <section name="panelRightWasher">
+                            <widgets>
+                                <label text="Work in progress"/>
+                                <!-- TODO: <dynamic-container id="fiReadyEntry" transition="inspectorList"/> -->
+                            </widgets>
+                        </section>
+                    </box-body>
+                </container-box>
+                <container-box>
+                    <box-header><label type="strong" text="Awaiting delivery"/></box-header>
+                    <box-body>
+                        <section name="panelRightWasher">
+                            <widgets>
+                                <label text="Work in progress"/>
+                                <!-- TODO: <dynamic-container id="fiReadyEntry" transition="inspectorList"/> -->
+                            </widgets>
+                        </section>
+                    </box-body>
+                </container-box>
+            </panel-right>
         </container-panel>
     </widgets>
 </screen>

@@ -11,9 +11,6 @@
     </actions>
     <widgets>
         <container id="reception-section">
-            <container id="reception-title">
-                <label text="Car waiting for Reception " type="h5"/>
-            </container>
             <section-iterate name="CarEntries" list="receptionCarList" entry="reception">
                 <widgets>
                     <container>
