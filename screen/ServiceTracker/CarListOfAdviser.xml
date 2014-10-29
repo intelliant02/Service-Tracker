@@ -2,6 +2,7 @@
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.4.xsd"
         default-menu-include="false" standalone="true">
     <transition name="createController">
+        <service-call name="tracker.TrackerServices.create#JobController"/>
         <default-response url="../Service"/>
     </transition>
     <actions>
