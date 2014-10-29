@@ -56,7 +56,7 @@ class ServiceTrackerServicesTest extends Specification {
         statusValue.CarStatus == "Reception"
         cleanup:
         getValue.delete()
-        statusValue.delete()
+        ec.entity.makeFind("service.tracker.StatusOfCar").condition("CarNo", "WB-01-01").deleteAll()
     }
 
     def "Test Reception Entry"(){
@@ -79,7 +79,7 @@ class ServiceTrackerServicesTest extends Specification {
         cleanup:
         getValue.delete()
         getSecurity.delete()
-        getStatus.delete() //TODO: Find a way to delete multiple value of status
+        ec.entity.makeFind("service.tracker.StatusOfCar").condition("CarNo", "WB-01-0002").deleteAll()
     }
 
     def "Test Service Adviser Entry"(){
@@ -109,7 +109,7 @@ class ServiceTrackerServicesTest extends Specification {
         cleanup:
         getSecurity.delete()
         getValue.delete()
-        getStatus.delete() //TODO: Find a way to delete multiple value of status
+        ec.entity.makeFind("service.tracker.StatusOfCar").condition("CarNo", "WB-01-0003").deleteAll()
 
     }
 
