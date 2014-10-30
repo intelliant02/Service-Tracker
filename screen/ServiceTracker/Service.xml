@@ -94,28 +94,24 @@
             </panel-left>
 
             <panel-center spacing="3">
-                <container-box>
-                    <box-header><label text="Ground Floor" type="strong"/></box-header>
-                    <box-body>
+
                         <section name="panelCentreGroundFloor">
                             <widgets>
                                 <dynamic-container id="controllerEntry" transition="controllerList"/>
                             </widgets>
                         </section>
-                    </box-body>
-                </container-box>
 
-                <container-box>
+
+                <!--<container-box>
                     <box-header><label text="First Floor" type="strong"/></box-header>
                     <box-body>
                         <section name="panelCentreFiReady">
                             <widgets>
                                 <label text="Work in progress"/>
-                                <!-- TODO:   <dynamic-container id="controllerEntry" transition="inspectorList"/> -->
                             </widgets>
                         </section>
                     </box-body>
-                </container-box>
+                </container-box> -->
 
                 <container-box>
                     <box-header><label text="FI ready" type="strong"/></box-header>

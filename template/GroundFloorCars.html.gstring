@@ -1,0 +1,3 @@
+${'<b>Bay No: </b>' + technician.BayNo + '<p></p>'}
+${'<b>Car No: </b>' + technician.CarNo + '<p></p>'}
+${'<b>Waiting for: </b>' + technician.TechnicianId + '<p></p>'}

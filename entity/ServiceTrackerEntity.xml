@@ -48,6 +48,16 @@
         <field name="FromDate" type="date-time" is-pk="true"/>
     </entity>
 
+    <view-entity entity-name="JobControllerAndTechnician" package-name="service.tracker">
+        <member-entity entity-alias="EXFTAP" entity-name="JobController"/>
+        <member-entity entity-alias="ENUM" entity-name="Technicians" join-from-alias="EXFTAP">
+                <key-map field-name="CarNo" related-entity-name="CarNo"/>
+        </member-entity>
+        <alias-all entity-alias="EXFTAP"/>
+        <alias-all entity-alias="ENUM"/>
+    </view-entity>
+
+
     <view-entity entity-name="ReceptionEntityAndCarStatus" package-name="service.tracker" authorize-skip="true">
         <member-entity entity-alias="EXFTAP" entity-name="ReceptionEntity"/>
         <member-entity entity-alias="ENUM" entity-name="StatusOfCar" join-from-alias="EXFTAP">

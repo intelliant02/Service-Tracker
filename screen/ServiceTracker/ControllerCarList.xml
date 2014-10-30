@@ -1,7 +1,58 @@
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.4.xsd"
         default-menu-include="false" standalone="true">
+
+    <actions>
+        <service-call name="tracker.TrackerServices.get#JobControllerAndTechnician" in-map="context" out-map="context"/>
+        <entity-find entity-name="JobControllerAndTechnician" list="technicianListFirstFloor">
+            <econditions combine="and">
+                <econdition field-name="Area" value="First Floor"/>
+                <econdition field-name="AwaitingTechnician" value="Yes"/>
+            </econditions>
+        </entity-find>
+    </actions>
+
     <widgets>
-        <label text="Work in progress" type="h5"/>
+
+        <section name="GroundFloorCarList">
+            <widgets>
+                <container-box>
+                    <box-header><label text="Ground Floor" type="strong"/></box-header>
+                    <box-toolbar/>
+                    <box-body>
+                        <container style="float-box" type="ul">
+                            <section-iterate name="GroundFloorList" list="technicianList" entry="technician">
+                                <widgets>
+                                    <container type="li">
+                                        <render-mode><text type="html" location="component://ServiceTracker/template/GroundFloorCars.html.gstring"/></render-mode>
+                                    </container>
+                                </widgets>
+                            </section-iterate>
+                        </container>
+                    </box-body>
+                </container-box>
+            </widgets>
+        </section>
+
+        <section name="FirstFloorCarList">
+            <widgets>
+                <container-box>
+                    <box-header><label text="First Floor" type="strong"/></box-header>
+                    <box-toolbar/>
+                    <box-body>
+                        <container style="float-box" type="ul">
+                            <section-iterate name="FirstFloorList" list="technicianListFirstFloor" entry="technicianFirstFloor">
+                                <widgets>
+                                    <container type="li">
+                                        <render-mode><text type="html" location="component://ServiceTracker/template/FirstFloorCars.html.gstring"/></render-mode>
+                                    </container>
+                                </widgets>
+                            </section-iterate>
+                        </container>
+                    </box-body>
+                </container-box>
+            </widgets>
+        </section>
+
     </widgets>
 </screen>

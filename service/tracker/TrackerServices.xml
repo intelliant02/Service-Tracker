@@ -32,7 +32,7 @@
             <parameter name="AwaitingTechnician"/>
         </in-parameters>
         <actions>
-            <service-call name="create#service.tracker.JobController" in-map="[CarNo:CarNo, FromDate:ec.user.nowTimestamp, BayNo:BayNo, AwaitingTechnician:AwaitingTechnician]"/>
+            <service-call name="create#service.tracker.JobController" in-map="[CarNo:CarNo, FromDate:ec.user.nowTimestamp, BayNo:BayNo, Area:Area, AwaitingTechnician:AwaitingTechnician]"/>
             <service-call name="update#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:'Job Controller', OutTime:ec.user.nowTimestamp]">
             <econditions>
                 <econdition field-name="CarNo" value="${CarNo}"/>
@@ -65,6 +65,21 @@
                 <econditions combine="and">
                     <econdition field-name="CarStatus" value="Reception"/>
                     <econdition field-name="OutTime" from="null"/>
+                </econditions>
+            </entity-find>
+        </actions>
+    </service>
+
+    <service verb="get" noun="JobControllerAndTechnician" authenticate="false">
+        <in-parameters><auto-parameters include="all"/></in-parameters>
+        <out-parameters>
+            <parameter name="technicianList" type="List"/>
+        </out-parameters>
+        <actions>
+            <entity-find entity-name="JobControllerAndTechnician" list="technicianList">
+                <econditions combine="and">
+                    <econdition field-name="Area" value="Ground Floor"/>
+                    <econdition field-name="AwaitingTechnician" value="Yes"/>
                 </econditions>
             </entity-find>
         </actions>
@@ -108,7 +123,7 @@
             <entity-find entity-name="AdviserEntryAndCarStatus" list="jobControllerCarList">
                 <econditions combine="and">
                     <econdition field-name="CarStatus" value="Job Controller"/>
-                    <econdition field-name="AwaitingTechnician" value="Yes"/>
+                   <econdition field-name="OutTime" from="null"/>
                 </econditions>
             </entity-find>
         </actions>
