@@ -2,6 +2,8 @@
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.4.xsd"
         default-menu-include="false" standalone="true">
 
+    <transition name="technicianStatus"><default-response url="../Service"/></transition>
+
     <actions>
         <service-call name="tracker.TrackerServices.get#JobControllerAndTechnician" in-map="context" out-map="context"/>
         <entity-find entity-name="JobControllerAndTechnician" list="technicianListFirstFloor">
@@ -25,6 +27,24 @@
                                 <widgets>
                                     <container type="li">
                                         <render-mode><text type="html" location="component://ServiceTracker/template/GroundFloorCars.html.gstring"/></render-mode>
+                                        <container-dialog id="Status" button-text="Status">
+                                            <form-single name="technicianStatus" transition="technicianStatus">
+                                                <field name="CarNo">
+                                                    <default-field>
+                                                        <display text="${technician.CarNo}"/>
+                                                    </default-field>
+                                                </field>
+                                                <field name="InTime">
+                                                    <default-field title="Technician Status">
+                                                        <drop-down allow-empty="false" allow-multiple="false">
+                                                            <option key="In"/>
+                                                            <option key="Out"/>
+                                                        </drop-down>
+                                                    </default-field>
+                                                </field>
+                                                <field name="submitTechnicianStatus"><default-field title="Submit"><submit/></default-field></field>
+                                            </form-single>
+                                        </container-dialog>
                                     </container>
                                 </widgets>
                             </section-iterate>
@@ -45,6 +65,24 @@
                                 <widgets>
                                     <container type="li">
                                         <render-mode><text type="html" location="component://ServiceTracker/template/FirstFloorCars.html.gstring"/></render-mode>
+                                        <container-dialog id="StatusForFirstFloor" button-text="Status">
+                                            <form-single name="technicianStatusFirstFloor" transition="technicianStatus">
+                                                <field name="CarNo">
+                                                    <default-field>
+                                                        <display text="${technicianFirstFloor.CarNo}"/>
+                                                    </default-field>
+                                                </field>
+                                                <field name="InTime">
+                                                    <default-field title="Technician Status">
+                                                        <drop-down allow-empty="false" allow-multiple="false">
+                                                            <option key="In"/>
+                                                            <option key="Out"/>
+                                                        </drop-down>
+                                                    </default-field>
+                                                </field>
+                                                <field name="submitTechnicianStatusFirstFloor"><default-field title="Submit1"><submit/></default-field></field>
+                                            </form-single>
+                                        </container-dialog>
                                     </container>
                                 </widgets>
                             </section-iterate>
