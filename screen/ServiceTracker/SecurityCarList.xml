@@ -1,14 +1,17 @@
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.4.xsd"
         default-menu-include="false" standalone="true">
+
     <transition name="createEntry">
         <service-call name="tracker.TrackerServices.create#ReceptionEntity"/>
         <default-response url="../Service"/>
     </transition>
+
     <actions>
         <service-call name="tracker.TrackerServices.get#SecurityAndCarStatus" in-map="context"
                       out-map="context"/>
     </actions>
+
     <widgets>
         <container id="reception-section">
             <section-iterate name="CarEntries" list="receptionCarList" entry="reception">

@@ -1,14 +1,17 @@
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.4.xsd"
         default-menu-include="false" standalone="true">
+
     <transition name="createController">
-        <service-call name="tracker.TrackerServices.create#JobController"/>
+        <service-call name="tracker.TrackerServices.create#JobController"/> <!-- TODO:  Need to add condition to restrict the number of Car in the floor -->
         <default-response url="../Service"/>
     </transition>
+
     <actions>
         <service-call name="tracker.TrackerServices.get#AdviserEntryAndCarStatus" in-map="context"
                       out-map="context"/>
     </actions>
+
     <widgets>
         <container id="controller-section">
             <section-iterate name="controllerEntries" list="jobControllerCarList" entry="controller">
@@ -16,7 +19,6 @@
                     <container>
                         <container-dialog id="job-controller-container" button-text="Controller">
                             <form-single name="job-controller-form" transition="createController">
-                                <!-- TODO: This will be change when creating Job controller field -->
                                 <field name="CarNo">
                                     <default-field>
                                         <display text="${controller.CarNo}"/>

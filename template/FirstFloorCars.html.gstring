@@ -1,3 +1,3 @@
-${'<b>Bay No: </b>' + technicianFirstFloor.BayNo + '<p></p>'}
-${'<b>Car No: </b>' + technicianFirstFloor.CarNo + '<p></p>'}
-${'<b>Waiting for: </b>' + technicianFirstFloor.TechnicianId + '<p></p>'}
+${'<b><i>Bay No<i>: </b>' + technicianFirstFloor.BayNo + '<p></p>'}
+${'<b><i>Car No<i>: </b>' + technicianFirstFloor.CarNo + '<p></p>'}
+${'<b><i>Waiting for Technician(Emp id)<i>: </b>' + technicianFirstFloor.TechnicianId + '<p></p>'}
