@@ -34,7 +34,7 @@
 <!-- TODO: Working on this -->
     <entity entity-name="JobController" package-name="service.tracker">
         <field name="CarNo" type="text-long" is-pk="true"/>
-        <field name="FromDate" type="date-time" is-pk="true"/>
+        <field name="FromDate" type="date-time"/>
         <field name="Area" type="text-medium"/>
         <field name="BayNo" type="text-long"/>
         <field name="AwaitingTechnician" type="text-medium"/>
@@ -43,9 +43,10 @@
     <entity entity-name="Technicians" package-name="service.tracker">
         <field name="CarNo" type="text-long" is-pk="true"/>
         <field name="TechnicianId" type="text-long" is-pk="true"/>
+        <field name="JobId" type="id" is-pk="true"/>
         <field name="InTime" type="date-time"/>
         <field name="OutTime" type="date-time"/>
-        <field name="FromDate" type="date-time" is-pk="true"/>
+        <field name="FromDate" type="date-time"/>
     </entity>
 
     <view-entity entity-name="JobControllerAndTechnician" package-name="service.tracker">
@@ -53,7 +54,7 @@
         <member-entity entity-alias="ENUM" entity-name="Technicians" join-from-alias="EXFTAP">
                 <key-map field-name="CarNo" related-entity-name="CarNo"/>
         </member-entity>
-        <alias-all entity-alias="EXFTAP"/>
+        <alias-all entity-alias="EXFTAP"><exclude field="FromDate"/></alias-all>
         <alias-all entity-alias="ENUM"/>
     </view-entity>
 

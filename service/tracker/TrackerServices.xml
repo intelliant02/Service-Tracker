@@ -30,7 +30,12 @@
             <parameter name="BayNo"/>
             <parameter name="TechnicianId"/>
             <parameter name="AwaitingTechnician"/>
+            <parameter name="JobId"/>
+            <auto-parameters include="pk" required="true"/>
         </in-parameters>
+
+        <out-parameters><parameter name="JobId"/></out-parameters>
+
         <actions>
             <service-call name="create#service.tracker.JobController" in-map="[CarNo:CarNo, FromDate:ec.user.getNowTimestamp(), BayNo:BayNo, Area:Area, AwaitingTechnician:AwaitingTechnician]"/>
             <service-call name="update#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:'Job Controller', OutTime:ec.user.getNowTimestamp()]">
@@ -39,7 +44,7 @@
                 </econditions>
             </service-call>
             <service-call name="create#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:'Technician', InTime:ec.user.getNowTimestamp()]"/>
-            <service-call name="create#service.tracker.Technicians" in-map="[CarNo:CarNo, TechnicianId:TechnicianId, FromDate:ec.user.getNowTimestamp()]"/>
+            <service-call name="create#service.tracker.Technicians" in-map="[CarNo:CarNo, JobId:JobId, TechnicianId:TechnicianId, FromDate:ec.user.getNowTimestamp()]"/>
         </actions>
     </service>
 
@@ -90,10 +95,20 @@
             <parameter name="CarNo"/>
             <parameter name="TechnicianId"/>
             <parameter name="FromDate"/>
+            <parameter name="InTime"/>
         </in-parameters>
         <actions>
             <!--TODO: What if technician want to enter double in time-->
-            <service-call name="update#service.tracker.Technicians" in-map="[CarNo:CarNo, TechnicianId:TechnicianId, FromDate:FromDate, InTime:ec.user.getNowTimestamp()]"/>
+
+            <service-call name="update#service.tracker.Technicians" in-map="[CarNo:CarNo, TechnicianId:TechnicianId, InTime:InTime, FromDate:FromDate]">
+
+                <econditions combine="and">
+                    <econdition field-name="CarNo" value="${CarNo}"/>
+                    <econdition field-name="TechnicianId" value="${TechnicianId}"/>
+                    <econdition field-name="FromDate" value="${FromDate}"/>
+                    <econdition field-name="OutTime" from="null"/>
+                </econditions>
+            </service-call>
 
             <!-- <else>
                  <service-call name="update#service.tracker.Technicians" in-map="[CarNo:CarNo, TechnicianId:TechnicianId, FromDate:FromDate, OutTime:CurrentDateTime.getDateTime()]">

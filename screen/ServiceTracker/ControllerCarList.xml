@@ -3,124 +3,126 @@
         default-menu-include="false" standalone="true">
 
     <transition name="technicianStatusFloor">
-           <service-call name="tracker.TrackerServices.update#Technicians" in-map="[CarNo:CarNo, TechnicianId:TechnicianId, FromDate:ec.user.getNowTimestamp()]"/>
-         <default-response url="../Service"/>
-   </transition>
+        <actions>
+            <service-call name="tracker.TrackerServices.update#Technicians" in-map="[CarNo:CarNo, TechnicianId:TechnicianId, FromDate:FromDate, InTime:ec.user.getNowTimestamp()]"/>
+        </actions>
+        <default-response url="../Service"/>
+    </transition>
 
-   <actions>
-       <service-call name="tracker.TrackerServices.get#JobControllerAndTechnician" in-map="context" out-map="context"/>
-       <entity-find entity-name="JobControllerAndTechnician" list="technicianListFirstFloor">
-           <econditions combine="and">
-               <econdition field-name="Area" value="First Floor"/>
-               <econdition field-name="AwaitingTechnician" value="Yes"/>
-           </econditions>
-       </entity-find>
-   </actions>
+    <actions>
+        <service-call name="tracker.TrackerServices.get#JobControllerAndTechnician" in-map="context" out-map="context"/>
+        <entity-find entity-name="JobControllerAndTechnician" list="technicianListFirstFloor">
+            <econditions combine="and">
+                <econdition field-name="Area" value="First Floor"/>
+                <econdition field-name="AwaitingTechnician" value="Yes"/>
+            </econditions>
+        </entity-find>
+    </actions>
 
-   <widgets>
+    <widgets>
 
-       <section name="GroundFloorCarList">
-           <widgets>
-               <container-box>
-                   <box-header><label text="Ground Floor" type="strong"/></box-header>
-                   <box-toolbar/>
-                   <box-body>
-                       <container style="float-box" type="ul">
-                           <section-iterate name="GroundFloorList" list="technicianList" entry="technician">
-                               <widgets>
-                                   <container type="li">
-                                       <render-mode><text type="html" location="component://ServiceTracker/template/GroundFloorCars.html.gstring"/></render-mode>
-                                       <container-dialog id="Status" button-text="Status">
-                                           <form-single name="technicianStatusFrom" transition="technicianStatusFloor">
-                                               <auto-fields-entity entity-name="Technicians" field-type="edit"/>
-                                               <field name="CarNo">
-                                                   <default-field>
-                                                       <display text="${technician.CarNo}"/>
-                                                   </default-field>
-                                               </field>
-                                               <field name="TechnicianId">
-                                                   <default-field>
-                                                       <display text="${technician.TechnicianId}"/>
-                                                   </default-field>
-                                               </field>
-                                               <field name="FromDate">
-                                                   <default-field>
-                                                       <display text="${technician.FromDate}"/>
-                                                   </default-field>
-                                               </field>
-                                               <field name="TestParameter">
-                                                   <default-field title="Technician Status">
-                                                       <drop-down allow-empty="false" allow-multiple="false">
-                                                           <option key="In"/>
-                                                           <option key="Out"/>
-                                                       </drop-down>
-                                                   </default-field>
-                                               </field>
-                                               <field name="InTime">
-                                                   <default-field><display/></default-field>
-                                               </field>
-                                               <field name="OutTime">
-                                                   <default-field><hidden/></default-field>
-                                               </field>
-                                               <field name="submitTechnicianStatus"><default-field title="Submit"><submit/></default-field></field>
-                                           </form-single>
-                                       </container-dialog>
-                                   </container>
-                               </widgets>
-                           </section-iterate>
-                       </container>
-                   </box-body>
-               </container-box>
-           </widgets>
-       </section>
+        <section name="GroundFloorCarList">
+            <widgets>
+                <container-box>
+                    <box-header><label text="Ground Floor" type="strong"/></box-header>
+                    <box-toolbar/>
+                    <box-body>
+                        <container style="float-box" type="ul">
+                            <section-iterate name="GroundFloorList" list="technicianList" entry="technician">
+                                <widgets>
+                                    <container type="li">
+                                        <render-mode><text type="html" location="component://ServiceTracker/template/GroundFloorCars.html.gstring"/></render-mode>
+                                        <container-dialog id="Status" button-text="Status">
+                                            <form-single name="technicianStatusFrom" transition="technicianStatusFloor">
+                                                <auto-fields-entity entity-name="Technicians" field-type="edit"/>
+                                                <field name="CarNo">
+                                                    <default-field>
+                                                        <display text="${technician.CarNo}"/>
+                                                    </default-field>
+                                                </field>
+                                                <field name="TechnicianId">
+                                                    <default-field>
+                                                        <display text="${technician.TechnicianId}"/>
+                                                    </default-field>
+                                                </field>
+                                                <field name="FromDate">
+                                                    <default-field>
+                                                        <display text="${technician.FromDate}"/>
+                                                    </default-field>
+                                                </field>
+                                                <field name="TestParameter">
+                                                    <default-field title="Technician Status">
+                                                        <drop-down allow-empty="false" allow-multiple="false">
+                                                            <option key="In"/>
+                                                            <option key="Out"/>
+                                                        </drop-down>
+                                                    </default-field>
+                                                </field>
+                                                <field name="InTime">
+                                                    <default-field><display/></default-field>
+                                                </field>
+                                                <field name="OutTime">
+                                                    <default-field><hidden/></default-field>
+                                                </field>
+                                                <field name="submitTechnicianStatus"><default-field title="Submit"><submit/></default-field></field>
+                                            </form-single>
+                                        </container-dialog>
+                                    </container>
+                                </widgets>
+                            </section-iterate>
+                        </container>
+                    </box-body>
+                </container-box>
+            </widgets>
+        </section>
 
-          <section name="FirstFloorCarList">
-              <widgets>
-                  <container-box>
-                      <box-header><label text="First Floor" type="strong"/></box-header>
-                      <box-toolbar/>
-                      <box-body>
-                          <container style="float-box" type="ul">
-                              <section-iterate name="FirstFloorList" list="technicianListFirstFloor" entry="technicianFirstFloor">
-                                  <widgets>
-                                      <container type="li">
-                                          <render-mode><text type="html" location="component://ServiceTracker/template/FirstFloorCars.html.gstring"/></render-mode>
-                                          <container-dialog id="StatusForFirstFloor" button-text="Status">
-                                              <form-single name="technicianStatusFirstFloor" transition="technicianStatusFloor">
-                                                  <field name="CarNo">
-                                                      <default-field>
-                                                          <display text="${technicianFirstFloor.CarNo}"/>
-                                                      </default-field>
-                                                  </field>
-                                                  <field name="TechnicianId">
-                                                      <default-field>
-                                                          <display text="${technicianFirstFloor.TechnicianId}"/>
-                                                      </default-field>
-                                                  </field>
-                                                  <field name="FromDate">
-                                                      <default-field>
-                                                          <display text="${technicianFirstFloor.FromDate}"/>
-                                                      </default-field>
-                                                  </field>
-                                                  <field name="TestParameter">
-                                                      <default-field title="Technician Status">
-                                                          <drop-down allow-empty="false" allow-multiple="false">
-                                                              <option key="In"/>
-                                                              <option key="Out"/>
-                                                          </drop-down>
-                                                      </default-field>
-                                                  </field>
-                                                  <field name="submitTechnicianStatusFirstFloor"><default-field title="Submit"><submit/></default-field></field>
-                                              </form-single>
-                                          </container-dialog>
-                                      </container>
-                                  </widgets>
-                              </section-iterate>
-                          </container>
-                      </box-body>
-                  </container-box>
-              </widgets>
-          </section>
+        <section name="FirstFloorCarList">
+            <widgets>
+                <container-box>
+                    <box-header><label text="First Floor" type="strong"/></box-header>
+                    <box-toolbar/>
+                    <box-body>
+                        <container style="float-box" type="ul">
+                            <section-iterate name="FirstFloorList" list="technicianListFirstFloor" entry="technicianFirstFloor">
+                                <widgets>
+                                    <container type="li">
+                                        <render-mode><text type="html" location="component://ServiceTracker/template/FirstFloorCars.html.gstring"/></render-mode>
+                                        <container-dialog id="StatusForFirstFloor" button-text="Status">
+                                            <form-single name="technicianStatusFirstFloor" transition="technicianStatusFloor">
+                                                <field name="CarNo">
+                                                    <default-field>
+                                                        <display text="${technicianFirstFloor.CarNo}"/>
+                                                    </default-field>
+                                                </field>
+                                                <field name="TechnicianId">
+                                                    <default-field>
+                                                        <display text="${technicianFirstFloor.TechnicianId}"/>
+                                                    </default-field>
+                                                </field>
+                                                <field name="FromDate">
+                                                    <default-field>
+                                                        <display text="${technicianFirstFloor.FromDate}"/>
+                                                    </default-field>
+                                                </field>
+                                                <field name="TestParameter">
+                                                    <default-field title="Technician Status">
+                                                        <drop-down allow-empty="false" allow-multiple="false">
+                                                            <option key="In"/>
+                                                            <option key="Out"/>
+                                                        </drop-down>
+                                                    </default-field>
+                                                </field>
+                                                <field name="submitTechnicianStatusFirstFloor"><default-field title="Submit"><submit/></default-field></field>
+                                            </form-single>
+                                        </container-dialog>
+                                    </container>
+                                </widgets>
+                            </section-iterate>
+                        </container>
+                    </box-body>
+                </container-box>
+            </widgets>
+        </section>
 
     </widgets>
 </screen>

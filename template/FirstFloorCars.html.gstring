@@ -1,3 +1,4 @@
 ${'<b><i>Bay No<i>: </b>' + technicianFirstFloor.BayNo + '<p></p>'}
 ${'<b><i>Car No<i>: </b>' + technicianFirstFloor.CarNo + '<p></p>'}
+${'<b><i>Job Id<i>:</b>' + technicianFirstFloor.JobId + '<p></p>'}
 ${'<b><i>Waiting for Technician(Emp id)<i>: </b>' + technicianFirstFloor.TechnicianId + '<p></p>'}

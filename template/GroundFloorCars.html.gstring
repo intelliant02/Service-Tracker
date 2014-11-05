@@ -1,3 +1,4 @@
 ${'<b><i>Bay No</i>: </b>' + technician.BayNo + '<p></p>'}
 ${'<b><i>Car No</i>: </b>' + technician.CarNo + '<p></p>'}
+${'<b><i>Job Id<i>:</b>' + technician.JobId + '<p></p>'}
 ${'<b><i>Waiting for Technician(Emp id)</i>: </b>' + technician.TechnicianId + '<p></p>'}
