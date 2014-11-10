@@ -41,6 +41,7 @@
                                 <field name="TechnicianId">
                                     <default-field><text-line size="5"/></default-field>
                                 </field>
+                                <field name="JobId"><default-field><text-line size="4"/></default-field></field>
                                 <field name="AwaitingTechnician">
                                     <default-field><display text="Yes"/></default-field>
                                 </field>

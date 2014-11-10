@@ -4,7 +4,16 @@
 
     <transition name="technicianStatusFloor">
         <actions>
-            <service-call name="tracker.TrackerServices.update#Technicians" in-map="[CarNo:CarNo, TechnicianId:TechnicianId, FromDate:FromDate, InTime:ec.user.getNowTimestamp()]"/>
+            <if condition="TestParameter == 'In'">
+                <then>
+                    <service-call name="update#service.tracker.Technicians" in-map="[CarNo:CarNo, JobId:JobId, TechnicianId:TechnicianId, InTime:ec.user.getNowTimestamp()]"/>
+                    <service-call name="update#service.tracker.JobController" in-map="[CarNo:CarNo, TechnicianId:TechnicianId, AwaitingTechnician:'Working', FromDate:FromDate]"/>
+                </then>
+                <else>
+                    <service-call name="update#service.tracker.Technicians" in-map="[CarNo:CarNo, JobId:JobId, TechnicianId:TechnicianId, OutTime:ec.user.getNowTimestamp()]"/>
+                    <service-call name="update#service.tracker.JobController" in-map="[CarNo:CarNo, TechnicianId:TechnicianId, AwaitingTechnician:'Done']"/>
+                </else>
+            </if>
         </actions>
         <default-response url="../Service"/>
     </transition>
@@ -15,6 +24,7 @@
             <econditions combine="and">
                 <econdition field-name="Area" value="First Floor"/>
                 <econdition field-name="AwaitingTechnician" value="Yes"/>
+                <econdition field-name="OutTime" from="null"/>
             </econditions>
         </entity-find>
     </actions>
@@ -43,6 +53,11 @@
                                                 <field name="TechnicianId">
                                                     <default-field>
                                                         <display text="${technician.TechnicianId}"/>
+                                                    </default-field>
+                                                </field>
+                                                <field name="JobId">
+                                                    <default-field>
+                                                        <display text="${technician.JobId}"/>
                                                     </default-field>
                                                 </field>
                                                 <field name="FromDate">
@@ -92,6 +107,11 @@
                                                 <field name="CarNo">
                                                     <default-field>
                                                         <display text="${technicianFirstFloor.CarNo}"/>
+                                                    </default-field>
+                                                </field>
+                                                <field name="JobId">
+                                                    <default-field>
+                                                        <display text="${technicianFirstFloor.JobId}"/>
                                                     </default-field>
                                                 </field>
                                                 <field name="TechnicianId">

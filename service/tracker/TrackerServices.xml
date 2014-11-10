@@ -84,41 +84,9 @@
             <entity-find entity-name="JobControllerAndTechnician" list="technicianList">
                 <econditions combine="and">
                     <econdition field-name="Area" value="Ground Floor"/>
-                    <econdition field-name="AwaitingTechnician" value="Yes"/>
-                </econditions>
-            </entity-find>
-        </actions>
-    </service>
-
-    <service verb="update" noun="Technicians" authenticate="false">
-        <in-parameters>
-            <parameter name="CarNo"/>
-            <parameter name="TechnicianId"/>
-            <parameter name="FromDate"/>
-            <parameter name="InTime"/>
-        </in-parameters>
-        <actions>
-            <!--TODO: What if technician want to enter double in time-->
-
-            <service-call name="update#service.tracker.Technicians" in-map="[CarNo:CarNo, TechnicianId:TechnicianId, InTime:InTime, FromDate:FromDate]">
-
-                <econditions combine="and">
-                    <econdition field-name="CarNo" value="${CarNo}"/>
-                    <econdition field-name="TechnicianId" value="${TechnicianId}"/>
-                    <econdition field-name="FromDate" value="${FromDate}"/>
                     <econdition field-name="OutTime" from="null"/>
                 </econditions>
-            </service-call>
-
-            <!-- <else>
-                 <service-call name="update#service.tracker.Technicians" in-map="[CarNo:CarNo, TechnicianId:TechnicianId, FromDate:FromDate, OutTime:CurrentDateTime.getDateTime()]">
-                     <econditions combine="and">
-                         <econdition field-name="CarNo" value="${CarNo}"/>
-                         <econdition field-name="TechnicianId" value="${TechnicianId}"/>
-                         <econdition field-name="OutTime" from="null"/>
-                     </econditions>
-                 </service-call>
-             </else> -->
+            </entity-find>
         </actions>
     </service>
 
