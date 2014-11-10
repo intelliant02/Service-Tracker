@@ -4,19 +4,30 @@
         <auto-parameters include="all"/>
     </in-parameters>
 </service>
+
     <service verb="delete" noun="AdviserEntry" type="entity-auto" authenticate="false">
         <in-parameters>
             <auto-parameters include="all"/>
         </in-parameters>
     </service>
+
     <service verb="delete" noun="StatusOfCar" type="entity-auto" authenticate="false">
         <in-parameters>
             <auto-parameters include="all"/>
         </in-parameters>
     </service>
+
     <service verb="delete" noun="SecurityCheck" type="entity-auto" authenticate="false">
         <in-parameters>
             <auto-parameters include="all"/>
         </in-parameters>
+    </service>
+
+    <service verb="delete" noun="Technicians" type="entity-auto" authenticate="false">
+        <in-parameters><auto-parameters include="all"/></in-parameters>
+    </service>
+
+    <service verb="delete" noun="JobController" type="entity-auto" authenticate="false">
+        <in-parameters><parameter name="CarNo" required="true"/></in-parameters>
     </service>
 </services>
