@@ -1,23 +1,14 @@
 <screen>
-    <transition name="receptionCarList">
-        <default-response url="../CarListOfReception"/>
-    </transition>
-    <transition name="adviserCarList">
-        <default-response url="../CarListOfAdviser"/>
-    </transition>
+    <transition name="receptionCarList"><default-response url="../CarListOfReception"/></transition>
+    <transition name="adviserCarList"><default-response url="../CarListOfAdviser"/></transition>
     <transition name="createSecurityEntry">
         <service-call name="tracker.TrackerServices.create#SecurityCheck"/>
         <default-response url="."/>
     </transition>
-    <transition name="securityCarList">
-        <default-response url="../SecurityCarList"/>
-    </transition>
-    <transition name="controllerList">
-        <default-response url="../ControllerCarList"/>
-    </transition>
-    <transition name="inspectorList">
-        <default-response url="../InspectorCarList"/>
-    </transition>
+    <transition name="securityCarList"><default-response url="../SecurityCarList"/></transition>
+    <transition name="controllerList"><default-response url="../ControllerCarList"/></transition>
+    <transition name="inspectorList"><default-response url="../InspectorCarList"/></transition>
+    <transition name="secondControllerCarList"><default-response url="../SecondControllerCarList"/> </transition>
     <widgets>
         <label type="h3" text="Welcome to the Service Tracker system"/>
         <container>
@@ -85,8 +76,7 @@
                     <box-body>
                         <section name="panelLeftBackFromTechnician">
                             <widgets>
-                                <label text="Work in progress"/>
-                                <!-- <dynamic-container id="adviserEntry" transition="adviserCarList"/> -->
+                                <dynamic-container id="secondControllerEntry" transition="secondControllerCarList"/>
                             </widgets>
                         </section>
                     </box-body>
@@ -95,11 +85,11 @@
 
             <panel-center spacing="3">
 
-                        <section name="panelCentreGroundFloor">
-                            <widgets>
-                                <dynamic-container id="controllerEntry" transition="controllerList"/>
-                            </widgets>
-                        </section>
+                <section name="panelCentreGroundFloor">
+                    <widgets>
+                        <dynamic-container id="controllerEntry" transition="controllerList"/>
+                    </widgets>
+                </section>
 
 
                 <!--<container-box>
