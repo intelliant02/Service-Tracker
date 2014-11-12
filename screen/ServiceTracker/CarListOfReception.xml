@@ -15,7 +15,7 @@
 
     <widgets>
         <container id="reception-section">
-            <section-iterate name="CarEntriesReception" list="adviserCarList" entry="adviser">
+            <section-iterate name="car-entries-reception-section" list="adviserCarList" entry="adviser">
                 <widgets>
                     <container>
                         <section name="test"> <!-- TODO: Added a sample -> How to show button for different user. Need to implement this when the different user is created -->
@@ -23,23 +23,15 @@
                                 <expression>user == 'john.doe'</expression>
                             </condition>
                             <widgets>
-                                <container-dialog id="Adviser-container" button-text="Adviser">
-                                    <form-single name="Adviser-form" transition="createAdviserEntry">
+                                <container-dialog id="adviser-container" button-text="Adviser">
+                                    <form-single name="adviser-form" transition="createAdviserEntry">
                                         <auto-fields-entity entity-name="AdviserEntry" field-type="edit"/>
-                                        <field name="CarNo">
+                                        <field name="carNo">
                                             <default-field>
-                                                <display text="${adviser.CarNo}"/>
+                                                <display text="${adviser.carNo}"/>
                                             </default-field>
                                         </field>
-                                        <field name="BeforeRoadTest">
-                                            <default-field>
-                                                <drop-down allow-empty="false" no-current-selected-key="No">
-                                                    <option key="Yes"/>
-                                                    <option key="No"/>
-                                                </drop-down>
-                                            </default-field>
-                                        </field>
-                                        <field name="AfterRoadTest">
+                                        <field name="beforeRoadTest">
                                             <default-field>
                                                 <drop-down allow-empty="false" no-current-selected-key="No">
                                                     <option key="Yes"/>
@@ -47,12 +39,20 @@
                                                 </drop-down>
                                             </default-field>
                                         </field>
-                                        <field name="CarStatus">
+                                        <field name="afterRoadTest">
+                                            <default-field>
+                                                <drop-down allow-empty="false" no-current-selected-key="No">
+                                                    <option key="Yes"/>
+                                                    <option key="No"/>
+                                                </drop-down>
+                                            </default-field>
+                                        </field>
+                                        <field name="carStatus">
                                             <default-field title="Status">
                                                 <display text="Job Controller"/>
                                             </default-field>
                                         </field>
-                                        <field name="CapNumber">
+                                        <field name="capNumber">
                                             <default-field>
                                                 <text-line size="20"/>
                                             </default-field>
@@ -64,12 +64,12 @@
                                         </field>
                                     </form-single>
                                 </container-dialog>
-                                <label text="${adviser.CarNo}"/>
-                                <label text="${adviser.CarStatus}"/>
+                                <label text="${adviser.carNo}"/>
+                                <label text="${adviser.carStatus}"/>
                             </widgets>
                             <fail-widgets>
-                                <label text="${adviser.CarNo}"/>
-                                <label text="${adviser.CarStatus}"/>
+                                <label text="${adviser.carNo}"/>
+                                <label text="${adviser.carStatus}"/>
                             </fail-widgets>
                         </section>
                     </container>

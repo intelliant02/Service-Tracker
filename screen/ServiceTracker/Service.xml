@@ -15,7 +15,7 @@
             <container-dialog id="security-check" button-text="Security Check">
                 <form-single name="security-form" transition="createSecurityEntry">
                     <auto-fields-entity entity-name="service.tracker.SecurityCheck" field-type="edit"/>
-                    <field name="KmIn">
+                    <field name="kmIn">
                         <default-field title="Km In">
                             <text-line size="20"/>
                         </default-field>

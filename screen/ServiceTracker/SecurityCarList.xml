@@ -14,16 +14,16 @@
 
     <widgets>
         <container id="reception-section">
-            <section-iterate name="CarEntries" list="receptionCarList" entry="reception">
+            <section-iterate name="carEntries" list="receptionCarList" entry="reception">
                 <widgets>
                     <container>
-                        <container-dialog id="EntryForReceptionist" button-text="Reception">
-                            <form-single name="CarEntryAtReception" transition="createEntry">
+                        <container-dialog id="entry-for-receptionist" button-text="Reception">
+                            <form-single name="carEntryAtReception" transition="createEntry">
                                 <auto-fields-entity entity-name="service.tracker.ReceptionEntity" field-type="edit"/>
-                                <field name="CarNo">
-                                    <default-field><display text="${reception.CarNo}"/></default-field>
+                                <field name="carNo">
+                                    <default-field><display text="${reception.carNo}"/></default-field>
                                 </field>
-                                <field name="Job">
+                                <field name="job">
                                     <default-field>
                                         <drop-down no-current-selected-key="PM(Paid)">
                                             <option key="PM(Free)"/>
@@ -35,7 +35,7 @@
                                         <display/>
                                     </default-field>
                                 </field>
-                                <field name="DriverOrOwner">
+                                <field name="driverOrOwner">
                                     <default-field title="D/O">
                                         <drop-down allow-empty="false" no-current-selected-key="Driver">
                                             <option key="Driver"/>
@@ -43,12 +43,12 @@
                                         </drop-down>
                                     </default-field>
                                 </field>
-                                <field name="CarStatus">
+                                <field name="carStatus">
                                     <default-field title="Status">
                                         <display text="Service adviser"/>
                                     </default-field>
                                 </field>
-                                <field name="Gift">
+                                <field name="gift">
                                     <default-field>
                                         <drop-down allow-empty="false" no-current-selected-key="No">
                                             <option key="Yes"/>
@@ -56,7 +56,7 @@
                                         </drop-down>
                                     </default-field>
                                 </field>
-                                <field name="PickUp">
+                                <field name="pickUp">
                                     <default-field>
                                         <drop-down allow-empty="false" no-current-selected-key="No">
                                             <option key="Yes"/>
@@ -64,7 +64,7 @@
                                         </drop-down>
                                     </default-field>
                                 </field>
-                                <field name="DropCar">
+                                <field name="dropCar">
                                     <default-field>
                                         <drop-down allow-empty="false" no-current-selected-key="No">
                                             <option key="Yes"/>
@@ -72,7 +72,7 @@
                                         </drop-down>
                                     </default-field>
                                 </field>
-                                <field name="CustomerWaiting">
+                                <field name="customerWaiting">
                                     <default-field>
                                         <drop-down allow-empty="false" no-current-selected-key="No">
                                             <option key="Yes"/>
@@ -80,15 +80,15 @@
                                         </drop-down>
                                     </default-field>
                                 </field>
-                                <field name="ReceptionSubmitButton">
+                                <field name="receptionSubmitButton">
                                     <default-field title="Create">
                                         <submit/>
                                     </default-field>
                                 </field>
                             </form-single>
                         </container-dialog>
-                        <label text="${reception.CarNo}"/>
-                        <label text="${reception.CarStatus}"/>
+                        <label text="${reception.carNo}"/>
+                        <label text="${reception.carStatus}"/>
                     </container>
                 </widgets>
             </section-iterate>

@@ -1,56 +1,56 @@
 <entities>
 <!--================== This is Reception Entity ===================-->
     <entity entity-name="ReceptionEntity" package-name="service.tracker" authorize-skip="true">
-        <field name="CarNo" type="text-long" is-pk="true"/>
-        <field name="Job" type="text-medium"/>
-        <field name="ServiceAdviser" type="text-medium"/>
-        <field name="DriverOrOwner" type="text-medium"/>
-        <field name="Gift" type="text-medium"/>
+        <field name="carNo" type="text-long" is-pk="true"/>
+        <field name="job" type="text-medium"/>
+        <field name="serviceAdviser" type="text-medium"/>
+        <field name="driverOrOwner" type="text-medium"/>
+        <field name="gift" type="text-medium"/>
         <!-- <field name="JDP" type="text-medium"/> -->
-        <field name="DropCar" type="text-medium"/>
-        <field name="CustomerWaiting" type="text-medium"/>
+        <field name="dropCar" type="text-medium"/>
+        <field name="customerWaiting" type="text-medium"/>
     </entity>
 
     <entity entity-name="CarStatusType" package-name="service.tracker">
-        <field name="CarStatus" type="text-long" is-pk="true"/>
+        <field name="carStatus" type="text-long" is-pk="true"/>
     </entity>
 
     <entity entity-name="SecurityCheck" package-name="service.tracker">
-        <field name="CarNo" type="text-medium" is-pk="true"/>
-        <field name="KmIn" type="text-medium"/>
+        <field name="carNo" type="text-medium" is-pk="true"/>
+        <field name="kmIn" type="text-medium"/>
     </entity>
 
     <entity entity-name="AdviserEntry" package-name="service.tracker">
-        <field name="CarNo" type="text-long" is-pk="true"/>
-        <field name="CustomerName" type="text-long"/>
-        <field name="MobileNo" type="text-long"/>
-        <field name="PromisedTime" type="date-time"/>
-        <field name="DriverName" type="text-long"/>
-        <field name="DriverMobile" type="text-long"/>
-        <field name="Job" type="text-long"/>
-        <field name="BeforeRoadTest" type="text-long"/>
-        <field name="AfterRoadTest" type="text-long"/>
+        <field name="carNo" type="text-long" is-pk="true"/>
+        <field name="customerName" type="text-long"/>
+        <field name="mobileNo" type="text-long"/>
+        <field name="promisedTime" type="date-time"/>
+        <field name="driverName" type="text-long"/>
+        <field name="driverMobile" type="text-long"/>
+        <field name="job" type="text-long"/>
+        <field name="beforeRoadTest" type="text-long"/>
+        <field name="afterRoadTest" type="text-long"/>
     </entity>
 <!-- TODO: Working on this -->
     <entity entity-name="JobController" package-name="service.tracker">
-        <field name="CarNo" type="text-long" is-pk="true"/>
-        <field name="FromDate" type="date-time"/>
-        <field name="Area" type="text-medium"/>
-        <field name="BayNo" type="text-long"/>
-        <field name="AwaitingTechnician" type="text-medium"/>
+        <field name="carNo" type="text-long" is-pk="true"/>
+        <field name="fromDate" type="date-time"/>
+        <field name="area" type="text-medium"/>
+        <field name="bayNo" type="text-long"/>
+        <field name="awaitingTechnician" type="text-medium"/>
     </entity>
     <!-- TODO: Working on this -->
     <entity entity-name="Technicians" package-name="service.tracker">
-        <field name="CarNo" type="text-long" is-pk="true"/>
-        <field name="TechnicianId" type="text-long" is-pk="true"/>
-        <field name="JobId" type="id" is-pk="true"/>
-        <field name="InTime" type="date-time"/>
-        <field name="OutTime" type="date-time"/>
-        <field name="FromDate" type="date-time"/>
+        <field name="carNo" type="text-long" is-pk="true"/>
+        <field name="technicianId" type="text-long" is-pk="true"/>
+        <field name="jobId" type="id" is-pk="true"/>
+        <field name="inTime" type="date-time"/>
+        <field name="outTime" type="date-time"/>
+        <field name="fromDate" type="date-time"/>
     </entity>
 
     <entity entity-name="TestDrive" package-name="service.tracker">
-        <field name="CarNo" type="text-long" is-pk="true"/>
+        <field name="carNo" type="text-long" is-pk="true"/>
         <field name="kmIn" type="text-long" is-pk="true"/>
         <field name="kmOut" type="text-long" is-pk="true"/>
     </entity>
@@ -58,7 +58,7 @@
     <view-entity entity-name="JobControllerAndTechnician" package-name="service.tracker">
         <member-entity entity-alias="EXFTAP" entity-name="JobController"/>
         <member-entity entity-alias="ENUM" entity-name="Technicians" join-from-alias="EXFTAP">
-                <key-map field-name="CarNo" related-entity-name="CarNo"/>
+                <key-map field-name="carNo" related-entity-name="carNo"/>
         </member-entity>
         <alias-all entity-alias="EXFTAP"><exclude field="FromDate"/></alias-all>
         <alias-all entity-alias="ENUM"/>
@@ -68,7 +68,7 @@
     <view-entity entity-name="ReceptionEntityAndCarStatus" package-name="service.tracker" authorize-skip="true">
         <member-entity entity-alias="EXFTAP" entity-name="ReceptionEntity"/>
         <member-entity entity-alias="ENUM" entity-name="StatusOfCar" join-from-alias="EXFTAP">
-            <key-map field-name="CarNo" related-entity-name="CarNo"/>
+            <key-map field-name="carNo" related-entity-name="carNo"/>
         </member-entity>
         <alias-all entity-alias="EXFTAP"/>
         <alias-all entity-alias="ENUM"/>
@@ -77,7 +77,7 @@
     <view-entity entity-name="AdviserEntryAndCarStatus" package-name="service.tracker" authorize-skip="true">
         <member-entity entity-alias="EXFTAP" entity-name="AdviserEntry"/>
         <member-entity entity-alias="ENUM" entity-name="StatusOfCar" join-from-alias="EXFTAP">
-            <key-map field-name="CarNo" related-entity-name="CarNo"/>
+            <key-map field-name="carNo" related-entity-name="carNo"/>
         </member-entity>
         <alias-all entity-alias="EXFTAP"/>
         <alias-all entity-alias="ENUM"/>
@@ -86,7 +86,7 @@
     <view-entity entity-name="SecurityAndCarStatus" package-name="service.tracker" authorize-skip="true">
         <member-entity entity-alias="EXFTAP" entity-name="SecurityCheck"/>
         <member-entity entity-alias="ENUM" entity-name="StatusOfCar" join-from-alias="EXFTAP">
-            <key-map field-name="CarNo" related-entity-name="CarNo"/>
+            <key-map field-name="carNo" related-entity-name="carNo"/>
         </member-entity>
         <alias-all entity-alias="EXFTAP"/>
         <alias-all entity-alias="ENUM"/>

@@ -19,30 +19,29 @@
                     <container>
                         <container-dialog id="job-controller-container" button-text="Controller">
                             <form-single name="job-controller-form" transition="createController">
-                                <field name="CarNo">
+                                <field name="carNo">
                                     <default-field>
-                                        <display text="${controller.CarNo}"/>
+                                        <display text="${controller.carNo}"/>
                                     </default-field>
                                 </field>
-                                <field name="Area">
+                                <field name="area">
                                     <default-field>
                                         <drop-down allow-empty="false" no-current-selected-key="Ground Floor">
                                             <option key="First Floor"/>
                                             <option key="Ground Floor"/>
-                                            <option key="Second Floor"/>
                                         </drop-down>
                                     </default-field>
                                 </field>
-                                <field name="BayNo">
+                                <field name="bayNo">
                                     <default-field>
                                         <text-line size="3"/>
                                     </default-field>
                                 </field>
-                                <field name="TechnicianId">
+                                <field name="technicianId">
                                     <default-field><text-line size="5"/></default-field>
                                 </field>
-                                <field name="JobId"><default-field><text-line size="4"/></default-field></field>
-                                <field name="AwaitingTechnician">
+                                <field name="jobId"><default-field><text-line size="4"/></default-field></field>
+                                <field name="awaitingTechnician">
                                     <default-field><display text="Yes"/></default-field>
                                 </field>
                                 <field name="controllerSubmitButton">
@@ -52,8 +51,8 @@
                                 </field>
                             </form-single>
                         </container-dialog>
-                        <label text="${controller.CarNo}"/>
-                        <label text="${controller.CarStatus}"/>
+                        <label text="${controller.carNo}"/>
+                        <label text="${controller.carStatus}"/>
                     </container>
                 </widgets>
             </section-iterate>

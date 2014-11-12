@@ -28,6 +28,6 @@
     </service>
 
     <service verb="delete" noun="JobController" type="entity-auto" authenticate="false">
-        <in-parameters><parameter name="CarNo" required="true"/></in-parameters>
+        <in-parameters><parameter name="carNo" required="true"/></in-parameters>
     </service>
 </services>

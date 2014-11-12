@@ -1,78 +1,69 @@
 <services>
+    <!--============ Creating a Service for reception ============-->
     <service verb="create" noun="ReceptionEntity" authenticate="false">
         <in-parameters>
-            <parameter name="CarNo"/>
-            <parameter name="Job"/>
-            <parameter name="ServiceAdviser"/>
-            <parameter name="DriverOrOwner"/>
-            <parameter name="Gift"/>
-            <parameter name="DropCar"/>
-            <parameter name="CustomerWaiting"/>
-            <parameter name="CarStatus"/>
+            <parameter name="carNo" required="true"/>
+            <parameter name="job"/>
+            <parameter name="serviceAdviser" required="true"><matches regexp="[a-zA-Z ]*$"/></parameter>
+            <parameter name="driverOrOwner"/>
+            <parameter name="gift"/>
+            <parameter name="dropCar"/>
+            <parameter name="customerWaiting"/>
+            <parameter name="carStatus"/>
         </in-parameters>
         <actions>
-            <service-call name="create#service.tracker.ReceptionEntity"  in-map="[CarNo:CarNo, ServiceAdviser:ServiceAdviser,
-                                                                                  DriverOrOwner:DriverOrOwner, Gift:Gift,
-                                                                                  DropCar:DropCar, CustomerWaiting:CustomerWaiting, Job:Job]"/>
-            <service-call name="update#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:'Reception', OutTime:ec.user.getNowTimestamp()]">
+            <service-call name="create#service.tracker.ReceptionEntity"  in-map="[carNo:carNo, serviceAdviser:serviceAdviser,
+                                                                                  driverOrOwner:driverOrOwner, gift:gift,
+                                                                                  dropCar:dropCar, customerWaiting:customerWaiting, job:job]"/>
+            <service-call name="update#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Reception', outTime:ec.user.getNowTimestamp()]">
                 <econditions>
-                    <econdition field-name="CarNo" value="${CarNo}"/>
+                    <econdition field-name="carNo" value="${carNo}"/>
                 </econditions>
             </service-call>
-            <service-call name="create#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:'Service Adviser', InTime:ec.user.getNowTimestamp()]"/> <!-- Need to change create from update -->
+            <service-call name="create#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Service Adviser', inTime:ec.user.getNowTimestamp()]"/> <!-- Need to change create from update -->
         </actions>
     </service>
-
+    <!--============ Creating a Service for Job Controller ============-->
     <service verb="create" noun="JobController" authenticate="false">
         <in-parameters>
-            <parameter name="CarNo"/>
-            <parameter name="Area"/>
-            <parameter name="BayNo"/>
-            <parameter name="TechnicianId"/>
-            <parameter name="AwaitingTechnician"/>
-            <parameter name="JobId"/>
+            <parameter name="carNo"/>
+            <parameter name="area"/>
+            <parameter name="bayNo" required="true"><number-integer/></parameter>
+            <parameter name="technicianId" required="true"/>
+            <parameter name="awaitingTechnician"/>
+            <parameter name="jobId" required="true"/>
             <auto-parameters include="pk" required="true"/>
         </in-parameters>
 
-        <out-parameters><parameter name="JobId"/></out-parameters>
+        <out-parameters><parameter name="jobId"/></out-parameters>
 
         <actions>
-            <service-call name="create#service.tracker.JobController" in-map="[CarNo:CarNo, FromDate:ec.user.getNowTimestamp(), BayNo:BayNo, Area:Area, AwaitingTechnician:AwaitingTechnician]"/>
-            <service-call name="update#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:'Job Controller', OutTime:ec.user.getNowTimestamp()]">
+            <service-call name="create#service.tracker.JobController" in-map="[carNo:carNo, fromDate:ec.user.getNowTimestamp(), bayNo:bayNo, area:area, awaitingTechnician:awaitingTechnician]"/>
+            <service-call name="update#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Job Controller', outTime:ec.user.getNowTimestamp()]">
                 <econditions>
-                    <econdition field-name="CarNo" value="${CarNo}"/>
+                    <econdition field-name="carNo" value="${carNo}"/>
                 </econditions>
             </service-call>
-            <service-call name="create#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:'Technician', InTime:ec.user.getNowTimestamp()]"/>
-            <service-call name="create#service.tracker.Technicians" in-map="[CarNo:CarNo, JobId:JobId, TechnicianId:TechnicianId, FromDate:ec.user.getNowTimestamp()]"/>
+            <service-call name="create#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Technician', inTime:ec.user.getNowTimestamp()]"/>
+            <service-call name="create#service.tracker.Technicians" in-map="[carNo:carNo, jobId:jobId, technicianId:technicianId, fromDate:ec.user.getNowTimestamp()]"/>
         </actions>
     </service>
-
-    <service verb="create" noun="CarController" authenticate="false">
-        <in-parameters>
-            <auto-parameters include="all"/>
-        </in-parameters>
-        <actions>
-            <service-call name="create#service.tracker.CarController" in-map="context" out-map="context"/>
-            <service-call name="create#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:CarStatus]"/>
-        </actions>
-    </service>
-
+    <!--============ Creating a Service for Technician's test drive ============-->
     <service verb="create" noun="TestDrive" authenticate="false">
         <in-parameters>
-            <parameter name="CarNo" required="true"/>
-            <parameter name="TechnicianId"/>
-            <parameter name="JobId"/>
+            <parameter name="carNo" required="true"/>
+            <parameter name="technicianId"/>
+            <parameter name="jobId"/>
             <parameter name="kmIn" required="true"/>
             <parameter name="kmOut" required="true"/>
-            <parameter name="TechnicianId" required="true"/>
+            <parameter name="technicianId" required="true"/>
         </in-parameters>
         <actions>
-            <service-call name="create#service.tracker.TestDrive" in-map="[CarNo:CarNo, kmIn:kmIn, kmOut:kmOut]"/>
-            <service-call name="update#service.tracker.JobController" in-map="[CarNo:CarNo, TechnicianId:TechnicianId, AwaitingTechnician:'Test Drive']"/>
+            <service-call name="create#service.tracker.TestDrive" in-map="[carNo:carNo, kmIn:kmIn, kmOut:kmOut]"/>
+            <service-call name="update#service.tracker.JobController" in-map="[carNo:carNo, technicianId:technicianId, awaitingTechnician:'Test Drive']"/>
         </actions>
     </service>
-
+    <!--============ Creating a Service for retrieve Security entry ============-->
     <service verb="get" noun="SecurityAndCarStatus" authenticate="false">
         <in-parameters>
             <auto-parameters include="all"/>
@@ -83,13 +74,13 @@
         <actions>
             <entity-find entity-name="SecurityAndCarStatus" list="receptionCarList">
                 <econditions combine="and">
-                    <econdition field-name="CarStatus" value="Reception"/>
-                    <econdition field-name="OutTime" from="null"/>
+                    <econdition field-name="carStatus" value="Reception"/>
+                    <econdition field-name="outTime" from="null"/>
                 </econditions>
             </entity-find>
         </actions>
     </service>
-
+    <!--============ Creating a Service for retrieving Job controller car list ============-->
     <service verb="get" noun="JobControllerAndTechnician" authenticate="false">
         <in-parameters><auto-parameters include="all"/></in-parameters>
         <out-parameters>
@@ -98,23 +89,24 @@
         <actions>
             <entity-find entity-name="JobControllerAndTechnician" list="technicianList">
                 <econditions combine="and">
-                    <econdition field-name="Area" value="Ground Floor"/>
-                    <econdition field-name="OutTime" from="null"/>
+                    <econdition field-name="area" value="Ground Floor"/>
+                    <econdition field-name="outTime" from="null"/>
                 </econditions>
             </entity-find>
         </actions>
     </service>
-
+    <!--============ Creating a Service for Security entry ============-->
     <service verb="create" noun="SecurityCheck" authenticate="false">
         <in-parameters>
-            <auto-parameters include="all"/>
+            <parameter name="carNo" required="true"/>
+            <parameter name="kmIn" required="true"><matches regexp="^[1-9][0-9]*$"/></parameter>
         </in-parameters>
         <actions>
-            <service-call name="create#service.tracker.SecurityCheck" in-map="[CarNo:CarNo, KmIn:KmIn]"/>
-            <service-call name="create#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:'Reception', InTime:ec.user.getNowTimestamp()]"/>
+            <service-call name="create#service.tracker.SecurityCheck" in-map="[carNo:carNo, kmIn:kmIn]"/>
+            <service-call name="create#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Reception', inTime:ec.user.getNowTimestamp()]"/>
         </actions>
     </service>
-
+    <!--============ Creating a Service for retrieving Reception entry  ============-->
     <service verb="get" noun="ReceptionEntityAndCarStatus" authenticate="false">
         <in-parameters>
             <auto-parameters include="all"/>
@@ -125,13 +117,13 @@
         <actions>
             <entity-find entity-name="ReceptionEntityAndCarStatus" list="adviserCarList">
                 <econditions combine="and">
-                    <econdition field-name="CarStatus" value="Service Adviser"/>
-                    <econdition field-name="OutTime" from="null"/>
+                    <econdition field-name="carStatus" value="Service Adviser"/>
+                    <econdition field-name="outTime" from="null"/>
                 </econditions>
             </entity-find>
         </actions>
     </service>
-
+    <!--============ Creating a Service for retrieving Adviser entry ============-->
     <service verb="get" noun="AdviserEntryAndCarStatus" authenticate="false">
         <in-parameters>
             <auto-parameters include="all"/>
@@ -142,51 +134,37 @@
         <actions>
             <entity-find entity-name="AdviserEntryAndCarStatus" list="jobControllerCarList">
                 <econditions combine="and">
-                    <econdition field-name="CarStatus" value="Job Controller"/>
-                    <econdition field-name="OutTime" from="null"/>
+                    <econdition field-name="carStatus" value="Job Controller"/>
+                    <econdition field-name="outTime" from="null"/>
                 </econditions>
             </entity-find>
         </actions>
     </service>
-
-    <service verb="get" noun="StatusOfCar" authenticate="false">
-        <in-parameters>
-            <auto-parameters include="all"/>
-        </in-parameters>
-        <out-parameters>
-            <parameter name="receptionCarList" type="List"/>
-        </out-parameters>
-        <actions>
-            <entity-find entity-name="StatusOfCar" list="receptionCarList">
-                <econditions>
-                    <econdition field-name="CarStatus" value="Reception"/>
-                </econditions>
-            </entity-find>
-        </actions>
-    </service>
-
+    <!--============ Creating a Service for adviser entry ============-->
     <service verb="create" noun="AdviserEntry" authenticate="false">
         <in-parameters>
-            <parameter name="CarNo"/>
-            <parameter name="CustomerName"/>
-            <parameter name="MobileNo"/>
+            <parameter name="carNo"/>
+            <parameter name="customerName" required="true"><matches regexp="[a-zA-Z ]*$"/></parameter>
+            <parameter name="mobileNo" required="true"><matches regexp="^\d?(?:(?:[\+]?(?:[\d]{1,3}(?:[ ]+|[\-.])))?[(]?(?:[\d]{3})[\-/)]?(?:[ ]+)?)?(?:[a-zA-Z2-9][a-zA-Z0-9 \-.]{6,})(?:(?:[ ]+|[xX]|(i:ext[\.]?)){1,2}(?:[\d]{1,5}))?$"/></parameter>
             <parameter name="promisedTime"/>
-            <parameter name="DriverName"/>
-            <parameter name="Job"/>
-            <parameter name="BeforeRoadTest"/>
-            <parameter name="AfterRoadTest"/>
-            <parameter name="CarStatus"/>
+            <parameter name="driverName" required="true"><matches regexp="[a-zA-Z ]*$"/></parameter><!--TODO: Need to change some attribute -->
+            <parameter name="driverMobile" required="true"><matches regexp="^\d?(?:(?:[\+]?(?:[\d]{1,3}(?:[ ]+|[\-.])))?[(]?(?:[\d]{3})[\-/)]?(?:[ ]+)?)?(?:[a-zA-Z2-9][a-zA-Z0-9 \-.]{6,})(?:(?:[ ]+|[xX]|(i:ext[\.]?)){1,2}(?:[\d]{1,5}))?$"/></parameter>
+            <parameter name="job"/>
+            <parameter name="beforeRoadTest"/>
+            <parameter name="afterRoadTest"/>
+            <parameter name="carStatus"/>
+            <parameter name="capNumber" required="true"><matches regexp="^[1-9][0-9]*$"/> </parameter>
         </in-parameters>
         <actions>
-            <service-call name="create#service.tracker.AdviserEntry"  in-map="[CarNo:CarNo, CustomerName:CustomerName, MobileNo:MobileNo,
-                                                                               PromisedTime:PromisedTime, DriverName:DriverName, DriverMobile:DriverMobile,
-                                                                               Job:Job, BeforeRoadTest:BeforeRoadTest, AfterRoadTest:AfterRoadTest]"/>
-            <service-call name="update#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:'Service Adviser', OutTime:ec.user.getNowTimestamp()]">
+            <service-call name="create#service.tracker.AdviserEntry"  in-map="[carNo:carNo, customerName:customerName, mobileNo:mobileNo,
+                                                                               PromisedTime:PromisedTime, driverName:driverName, driverMobile:driverMobile,
+                                                                               job:job, beforeRoadTest:beforeRoadTest, afterRoadTest:afterRoadTest]"/>
+            <service-call name="update#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Service Adviser', outTime:ec.user.getNowTimestamp()]">
                 <econditions>
-                    <econdition field-name="CarNo" value="${CarNo}"/>
+                    <econdition field-name="carNo" value="${carNo}"/>
                 </econditions>
             </service-call>
-            <service-call name="create#service.tracker.StatusOfCar" in-map="[CarNo:CarNo, CarStatus:'Job Controller', InTime:ec.user.getNowTimestamp()]"/>
+            <service-call name="create#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Job Controller', inTime:ec.user.getNowTimestamp()]"/>
         </actions>
     </service>
 

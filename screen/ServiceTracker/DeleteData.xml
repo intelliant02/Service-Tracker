@@ -30,9 +30,7 @@
         <default-response url="."/>
     </transition>
 
-    <transition name="findReceptionEntity">
-        <default-response url="."/>
-    </transition>
+    <transition name="findReceptionEntity"><default-response url="."/></transition>
 
     <transition name="deleteSecurity">
         <service-call name="delete#SecurityCheck"/>
@@ -40,192 +38,169 @@
     </transition>
 
     <actions>
-        <entity-find entity-name="service.tracker.JobController" list="controllerList"><search-form-inputs/></entity-find>
-        <entity-find entity-name="service.tracker.JobControllerAndTechnician" list="tutorialList2"><search-form-inputs/></entity-find>
+        <entity-find entity-name="service.tracker.JobController" list="controllerList">
+            <econditions><econdition field-name="awaitingTechnician" value="Done"/></econditions>
+        </entity-find>
+        <entity-find entity-name="service.tracker.JobControllerAndTechnician" list="findReceptionList"><search-form-inputs/></entity-find>
         <entity-find entity-name="service.tracker.StatusOfCar" list="receptionList"><search-form-inputs/></entity-find>
         <entity-find entity-name="service.tracker.SecurityCheck" list="securityTestList"><search-form-inputs/></entity-find>
         <entity-find entity-name="service.tracker.Technicians" list="technicianList"><search-form-inputs/></entity-find>
     </actions>
 
     <widgets>
-        <container-dialog id="delete1" button-text="Delete Reception">
-            <form-single name="delete1" transition="deleteReception">
-                <field name="CarNo">
-                    <default-field title="CarNo" tooltip="This is the status of the example">
+        <container-dialog id="delete-reception" button-text="Delete Reception">
+            <form-single name="deleteReceptionForm" transition="deleteReception">
+                <field name="carNo">
+                    <default-field title="carNo" tooltip="This is the status of the example">
                         <drop-down allow-empty="false" allow-multiple="false">
-                            <entity-options key="${CarNo}">
+                            <entity-options key="${carNo}">
                                 <entity-find entity-name="ReceptionEntity"/>
                             </entity-options>
                         </drop-down>
                     </default-field>
                 </field>
-                <field name="submitButton">
-                    <default-field title="Delete">
-                        <submit/>
-                    </default-field>
-                </field>
+                <field name="submitButton"><default-field title="Delete"><submit/></default-field></field>
             </form-single>
         </container-dialog>
-        <container-dialog id="deleteSecurity" button-text="Delete Security">
-            <form-single name="deleteSecurity" transition="deleteSecurity">
-                <field name="CarNo">
-                    <default-field title="CarNo" tooltip="This is the status of the example">
+        <container-dialog id="delete-security" button-text="Delete Security">
+            <form-single name="deleteSecurityForm" transition="deleteSecurity">
+                <field name="carNo">
+                    <default-field title="carNo" tooltip="This is the status of the example">
                         <drop-down allow-empty="false" allow-multiple="false">
-                            <entity-options key="${CarNo}">
+                            <entity-options key="${carNo}">
                                 <entity-find entity-name="SecurityCheck"/>
                             </entity-options>
                         </drop-down>
                     </default-field>
                 </field>
-                <field name="submitButton1">
-                    <default-field title="Delete">
-                        <submit/>
-                    </default-field>
-                </field>
+                <field name="submitButton1"><default-field title="Delete"><submit/></default-field></field>
             </form-single>
         </container-dialog>
 
-        <container-dialog id="delete" button-text="delete status">
-            <form-single name="deleteN" transition="deleteStatusType">
-                <field name="CarNo">
-                    <default-field title="CarNo" tooltip="This is the status of the example">
+        <container-dialog id="delete-status" button-text="delete status">
+            <form-single name="deleteStatus" transition="deleteStatusType">
+                <field name="carNo">
+                    <default-field title="carNo" tooltip="This is the status of the example">
                         <drop-down allow-empty="false" allow-multiple="false">
-                            <entity-options key="${CarNo}">
-                                <entity-find entity-name="StatusOfCar">
-                                </entity-find>
+                            <entity-options key="${carNo}">
+                                <entity-find entity-name="StatusOfCar"/>
                             </entity-options>
                         </drop-down>
                     </default-field>
                 </field>
-                <field name="CarStatus">
+                <field name="carStatus">
                     <default-field><drop-down allow-empty="false" allow-multiple="false">
-                        <entity-options key="${CarStatus}">
-                            <entity-find entity-name="StatusOfCar">
-                            </entity-find>
+                        <entity-options key="${carStatus}">
+                            <entity-find entity-name="StatusOfCar"/>
                         </entity-options>
                     </drop-down></default-field>
                 </field>
-                <field name="submitButton">
-                    <default-field title="Delete">
-                        <submit/>
-                    </default-field>
-                </field>
+                <field name="submitButton"><default-field title="Delete"><submit/></default-field></field>
             </form-single>
         </container-dialog>
 
-        <container-dialog id="deleteStatusType" button-text="Delete Adviser">
-            <form-single name="delete-status" transition="deleteAdviser">
-                <field name="CarNo">
+        <container-dialog id="delete-adviser" button-text="Delete Adviser">
+            <form-single name="deleteAdviserForm" transition="deleteAdviser">
+                <field name="carNo">
                     <default-field title="Status">
                         <drop-down allow-empty="false" allow-multiple="false">
-                            <entity-options key="${CarNo}">
-                                <entity-find entity-name="service.tracker.AdviserEntry">
-                                </entity-find>
+                            <entity-options key="${carNo}">
+                                <entity-find entity-name="service.tracker.AdviserEntry"/>
                             </entity-options>
                         </drop-down>
                     </default-field>
                 </field>
-                <field name="submitButton">
-                    <default-field title="Delete">
-                        <submit/>
-                    </default-field>
-                </field>
+                <field name="submitButton"><default-field title="Delete"><submit/></default-field></field>
             </form-single>
         </container-dialog>
 
-        <!--TODO -->
-        <container-dialog id="deleteTechnician" button-text="Delete Technician">
-            <form-single name="delete-technician" transition="deleteTechnician">
-                <auto-fields-entity entity-name="Technicians" field-type="edit"/>
-                <field name="submitButton">
-                    <default-field title="Delete">
-                        <submit/>
-                    </default-field>
-                </field>
-            </form-single>
-        </container-dialog>
-
-        <container-dialog id="deleteJobController" button-text="Delete Controller">
-            <form-single name="delete-JobController" transition="deleteJobController">
-                <field name="CarNo">
+        <container-dialog id="delete-technician" button-text="Delete Technician">
+            <form-single name="deleteTechnicianForm" transition="deleteTechnician">
+                <field name="carNo">
                     <default-field title="Car">
                         <drop-down allow-empty="false" allow-multiple="false">
-                            <entity-options key="${CarNo}">
-                                <entity-find entity-name="service.tracker.JobController">
-                                </entity-find>
+                            <entity-options key="${carNo}">
+                                <entity-find entity-name="service.tracker.Technicians"/>
                             </entity-options>
                         </drop-down>
                     </default-field>
                 </field>
-                <field name="TechnicianId">
-                    <default-field title="technician">
+                <field name="technicianId">
+                    <default-field title="Technician Id">
                         <drop-down allow-empty="false" allow-multiple="false">
-                            <entity-options key="${TechnicianId}">
-                                <entity-find entity-name="service.tracker.JobController">
-                                </entity-find>
+                            <entity-options key="${technicianId}">
+                                <entity-find entity-name="service.tracker.Technicians"/>
                             </entity-options>
                         </drop-down>
                     </default-field>
                 </field>
-                <field name="submitButton">
-                    <default-field title="Delete">
-                        <submit/>
+                <field name="jobId">
+                    <default-field title="jobId">
+                        <drop-down allow-empty="false" allow-multiple="false">
+                            <entity-options key="${jobId}">
+                                <entity-find entity-name="service.tracker.Technicians"/>
+                            </entity-options>
+                        </drop-down>
                     </default-field>
                 </field>
+                <field name="submitButton"><default-field title="Delete"><submit/></default-field></field>
             </form-single>
         </container-dialog>
 
-        <form-list name="ListController" list="controllerList" transition="findReceptionEntity" dynamic="true">
-            <field name="CarNo">
-                <default-field>
-                    <display/>
-                </default-field>
-            </field>
-            <field name="TechnicianId">
-                <default-field>
-                    <display/>
-                </default-field>
-            </field>
+        <container-dialog id="delete-job-controller" button-text="Delete Controller">
+            <form-single name="delete-job-controller" transition="deleteJobController">
+                <field name="carNo">
+                    <default-field title="Car">
+                        <drop-down allow-empty="false" allow-multiple="false">
+                            <entity-options key="${carNo}">
+                                <entity-find entity-name="service.tracker.JobController"/>
+                            </entity-options>
+                        </drop-down>
+                    </default-field>
+                </field>
+                <field name="technicianId">
+                    <default-field title="technician">
+                        <drop-down allow-empty="false" allow-multiple="false">
+                            <entity-options key="${technicianId}">
+                                <entity-find entity-name="service.tracker.JobController"/>
+                            </entity-options>
+                        </drop-down>
+                    </default-field>
+                </field>
+                <field name="submitButton"><default-field title="Delete"><submit/></default-field></field>
+            </form-single>
+        </container-dialog>
+
+        <form-list name="controller-list" list="controllerList" transition="findReceptionEntity" dynamic="true">
+            <field name="carNo"><default-field><display/></default-field></field>
+            <field name="awaitingTechnician"><default-field><display/></default-field></field>
         </form-list>
 
-        <form-list name="ListTutorials2" list="receptionList" transition="findReceptionEntity" dynamic="true">
-            <field name="CarNo">
-                <default-field>
-                    <display/>
-                </default-field>
-            </field>
-            <field name="CarStatus">
-                <default-field>
-                    <display/>
-                </default-field>
-            </field>
-            <field name="InTime"><default-field><display/></default-field></field>
+        <form-list name="reception-list" list="receptionList" transition="findReceptionEntity" dynamic="true">
+            <field name="carNo"><default-field><display/></default-field></field>
+            <field name="carStatus"><default-field><display/></default-field></field>
+            <field name="inTime"><default-field><display/></default-field></field>
         </form-list>
 
-        <form-list name="ListTutorial" list="tutorialList2" transition="findReceptionEntity" dynamic="true">
-            <field name="TechnicianId"> <default-field> <display/> </default-field></field>
-            <field name="CarNo"> <default-field> <display/> </default-field> </field>
-            <field name="InTime"> <default-field> <display/> </default-field> </field>
-            <field name="OutTime"> <default-field> <display/> </default-field> </field>
-            <field name="FromDate"> <default-field> <display/> </default-field> </field>
+        <form-list name="find-reception" list="findReceptionList" transition="findReceptionEntity" dynamic="true">
+            <field name="technicianId"> <default-field> <display/> </default-field></field>
+            <field name="carNo"> <default-field> <display/> </default-field> </field>
+            <field name="inTime"> <default-field> <display/> </default-field> </field>
+            <field name="outTime"> <default-field> <display/> </default-field> </field>
+            <field name="fromDate"> <default-field> <display/> </default-field> </field>
         </form-list>
 
-        <form-list name="ListTutorials" list="securityTestList" transition="findReceptionEntity" dynamic="true">
-            <field name="CarNo">
-                <default-field><display/></default-field>
-            </field>
-            <field name="CarStatus">
-                <default-field><display/></default-field>
-            </field>
-            <field name="InTime">
-                <default-field><display/></default-field>
-            </field>
+        <form-list name="security-list-form" list="securityTestList" transition="findReceptionEntity" dynamic="true">
+            <field name="carNo"><default-field><display/></default-field></field>
+            <field name="carStatus"><default-field><display/></default-field></field>
+            <field name="inTime"><default-field><display/></default-field></field>
         </form-list>
-        <form-list name="TechnicianList" list="technicianList" transition="findReceptionEntity">
-            <field name="CarNo"><default-field><display/></default-field></field>
-            <field name="TechnicianId"><default-field><display/></default-field></field>
-            <field name="FromDate"><default-field><display/></default-field></field>
-            <field name="InTime"><default-field><display/></default-field></field>
+
+        <form-list name="technician-list-form" list="technicianList" transition="findReceptionEntity">
+            <field name="carNo"><default-field><display/></default-field></field>
+            <field name="technicianId"><default-field><display/></default-field></field>
+            <field name="fromDate"><default-field><display/></default-field></field>
+            <field name="inTime"><default-field><display/></default-field></field>
         </form-list>
 
     </widgets>

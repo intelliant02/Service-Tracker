@@ -8,7 +8,7 @@
 
     <actions>
         <entity-find entity-name="service.tracker.JobController" list="secondCarListOfController">
-            <econditions><econdition field-name="AwaitingTechnician" value="Done"/></econditions>
+            <econditions><econdition field-name="awaitingTechnician" value="Done"/></econditions>
         </entity-find>
     </actions>
 
@@ -27,8 +27,8 @@
                                 </field>
                             </form-single>
                         </container-dialog>
-                        <label text="${secondController.CarNo}"/>
-                        <label text="${secondController.AwaitingTechnician}"/>
+                        <label text="${secondController.carNo}"/>
+                        <label text="${secondController.awaitingTechnician}"/>
                     </container>
                 </widgets>
             </section-iterate>

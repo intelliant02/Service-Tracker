@@ -3,19 +3,19 @@
         default-menu-include="false" standalone="true">
 
     <transition name="dummyTransition">
-        <service-call name="create#service.tracker.TestDrive" in-map="[CarNo:CarNo, kmIn:kmIn, kmOut:kmOut]"/>
+        <service-call name="create#service.tracker.TestDrive" in-map="[carNo:carNo, kmIn:kmIn, kmOut:kmOut]"/>
         <default-response url="."/></transition>
 
     <transition name="technicianStatusFloor">
         <actions>
-            <if condition="TestParameter == 'In'">
+            <if condition="punchTechnician == 'In'">
                 <then>
-                    <service-call name="update#service.tracker.Technicians" in-map="[CarNo:CarNo, JobId:JobId, TechnicianId:TechnicianId, InTime:ec.user.getNowTimestamp()]"/>
-                    <service-call name="update#service.tracker.JobController" in-map="[CarNo:CarNo, TechnicianId:TechnicianId, AwaitingTechnician:'Working', FromDate:FromDate]"/>
+                    <service-call name="update#service.tracker.Technicians" in-map="[carNo:carNo, jobId:jobId, technicianId:technicianId, inTime:ec.user.getNowTimestamp()]"/>
+                    <service-call name="update#service.tracker.JobController" in-map="[carNo:carNo, technicianId:technicianId, awaitingTechnician:'Working', fromDate:fromDate]"/>
                 </then>
                 <else>
-                    <service-call name="update#service.tracker.Technicians" in-map="[CarNo:CarNo, JobId:JobId, TechnicianId:TechnicianId, OutTime:ec.user.getNowTimestamp()]"/>
-                    <service-call name="update#service.tracker.JobController" in-map="[CarNo:CarNo, TechnicianId:TechnicianId, AwaitingTechnician:'Done']"/>
+                    <service-call name="update#service.tracker.Technicians" in-map="[carNo:carNo, jobId:jobId, technicianId:technicianId, outTime:ec.user.getNowTimestamp()]"/>
+                    <service-call name="update#service.tracker.JobController" in-map="[carNo:carNo, technicianId:technicianId, awaitingTechnician:'Done']"/>
                 </else>
             </if>
         </actions>
@@ -26,50 +26,50 @@
         <service-call name="tracker.TrackerServices.get#JobControllerAndTechnician" in-map="context" out-map="context"/>
         <entity-find entity-name="JobControllerAndTechnician" list="technicianListFirstFloor">
             <econditions combine="and">
-                <econdition field-name="Area" value="First Floor"/>
-                <econdition field-name="AwaitingTechnician" value="Yes"/>
-                <econdition field-name="OutTime" from="null"/>
+                <econdition field-name="area" value="First Floor"/>
+                <econdition field-name="awaitingTechnician" value="Yes"/>
+                <econdition field-name="outTime" from="null"/>
             </econditions>
         </entity-find>
     </actions>
 
     <widgets>
 
-        <section name="GroundFloorCarList">
+        <section name="groundFloorCarList">
             <widgets>
                 <container-box>
                     <box-header><label text="Ground Floor" type="strong"/></box-header>
                     <box-toolbar/>
                     <box-body>
                         <container style="float-box" type="ul">
-                            <section-iterate name="GroundFloorList" list="technicianList" entry="technician">
+                            <section-iterate name="ground-floor-list" list="technicianList" entry="technician">
                               <widgets>
                                     <container type="li">
                                         <render-mode><text type="html" location="component://ServiceTracker/template/GroundFloorCars.html.gstring"/></render-mode>
-                                        <container-dialog id="Status" button-text="Status">
+                                        <container-dialog id="status" button-text="Status">
                                             <form-single name="technicianStatusFrom" transition="technicianStatusFloor">
                                                 <auto-fields-entity entity-name="Technicians" field-type="edit"/>
-                                                <field name="CarNo">
+                                                <field name="carNo">
                                                     <default-field>
-                                                        <display text="${technician.CarNo}"/>
+                                                        <display text="${technician.carNo}"/>
                                                     </default-field>
                                                 </field>
-                                                <field name="TechnicianId">
+                                                <field name="technicianId">
                                                     <default-field>
-                                                        <display text="${technician.TechnicianId}"/>
+                                                        <display text="${technician.technicianId}"/>
                                                     </default-field>
                                                 </field>
-                                                <field name="JobId">
+                                                <field name="jobId">
                                                     <default-field>
-                                                        <display text="${technician.JobId}"/>
+                                                        <display text="${technician.jobId}"/>
                                                     </default-field>
                                                 </field>
-                                                <field name="FromDate">
+                                                <field name="fromDate">
                                                     <default-field>
-                                                        <display text="${technician.FromDate}"/>
+                                                        <display text="${technician.fromDate}"/>
                                                     </default-field>
                                                 </field>
-                                                <field name="TestParameter">
+                                                <field name="punchTechnician">
                                                     <default-field title="Technician Status">
                                                         <drop-down allow-empty="false" allow-multiple="false">
                                                             <option key="In"/>
@@ -77,10 +77,10 @@
                                                         </drop-down>
                                                     </default-field>
                                                 </field>
-                                                <field name="InTime">
+                                                <field name="inTime">
                                                     <default-field><display/></default-field>
                                                 </field>
-                                                <field name="OutTime">
+                                                <field name="outTime">
                                                     <default-field><hidden/></default-field>
                                                 </field>
                                                 <field name="submitTechnicianStatus"><default-field title="Submit"><submit/></default-field></field>
@@ -88,12 +88,12 @@
                                         </container-dialog>
                                         <container-dialog id="technician-test-drive" button-text="Test Drive">
                                             <form-single name="technician-test-drive-form" transition="dummyTransition">
-                                                <field name="CarNo">
-                                                    <default-field title="Car"><display text="${technician.CarNo}"/></default-field>
+                                                <field name="carNo">
+                                                    <default-field title="Car"><display text="${technician.carNo}"/></default-field>
                                                 </field>
-                                                <field name="TechnicianId">
+                                                <field name="technicianId">
                                                     <default-field>
-                                                        <display text="${technician.TechnicianId}"/>
+                                                        <display text="${technician.technicianId}"/>
                                                     </default-field>
                                                 </field>
                                                 <field name="kmIn">
@@ -118,7 +118,7 @@
             </widgets>
         </section>
 
-        <section name="FirstFloorCarList">
+        <section name="firstFloorCarList">
             <widgets>
                 <container-box>
                     <box-header><label text="First Floor" type="strong"/></box-header>
@@ -129,34 +129,34 @@
                                 <widgets>
                                     <container type="li">
                                         <render-mode><text type="html" location="component://ServiceTracker/template/FirstFloorCars.html.gstring"/></render-mode>
-                                        <container-dialog id="StatusForFirstFloor" button-text="Status">
+                                        <container-dialog id="statusForFirstFloor" button-text="Status">
                                             <form-single name="technicianStatusFirstFloor" transition="technicianStatusFloor">
-                                                <field name="CarNo">
+                                                <field name="carNo">
                                                     <default-field>
-                                                        <display text="${technicianFirstFloor.CarNo}"/>
+                                                        <display text="${technicianFirstFloor.carNo}"/>
                                                     </default-field>
-                                                    <field name="TechnicianId">
+                                                    <field name="technicianId">
                                                         <default-field>
-                                                            <display text="${technicianFirstFloor.TechnicianId}"/>
+                                                            <display text="${technicianFirstFloor.technicianId}"/>
                                                         </default-field>
                                                     </field>
                                                 </field>
-                                                <field name="JobId">
+                                                <field name="jobId">
                                                     <default-field>
-                                                        <display text="${technicianFirstFloor.JobId}"/>
+                                                        <display text="${technicianFirstFloor.jobId}"/>
                                                     </default-field>
                                                 </field>
-                                                <field name="TechnicianId">
+                                                <field name="technicianId">
                                                     <default-field>
-                                                        <display text="${technicianFirstFloor.TechnicianId}"/>
+                                                        <display text="${technicianFirstFloor.technicianId}"/>
                                                     </default-field>
                                                 </field>
-                                                <field name="FromDate">
+                                                <field name="fromDate">
                                                     <default-field>
-                                                        <display text="${technicianFirstFloor.FromDate}"/>
+                                                        <display text="${technicianFirstFloor.fromDate}"/>
                                                     </default-field>
                                                 </field>
-                                                <field name="TestParameter">
+                                                <field name="punchTechnician">
                                                     <default-field title="Technician Status">
                                                         <drop-down allow-empty="false" allow-multiple="false">
                                                             <option key="In"/>
@@ -169,8 +169,8 @@
                                         </container-dialog>
                                         <container-dialog id="technician-test-drive-first" button-text="Test Drive">
                                             <form-single name="technician-test-drive-first-form" transition="dummyTransition">
-                                                <field name="CarNo">
-                                                    <default-field title="Car"><display text="${technicianFirstFloor.CarNo}"/></default-field>
+                                                <field name="carNo">
+                                                    <default-field title="Car"><display text="${technicianFirstFloor.carNo}"/></default-field>
                                                 </field>
                                                 <field name="kmIn">
                                                     <default-field title="Km In">
