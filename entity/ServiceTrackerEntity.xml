@@ -49,6 +49,12 @@
         <field name="FromDate" type="date-time"/>
     </entity>
 
+    <entity entity-name="TestDrive" package-name="service.tracker">
+        <field name="CarNo" type="text-long" is-pk="true"/>
+        <field name="kmIn" type="text-long" is-pk="true"/>
+        <field name="kmOut" type="text-long" is-pk="true"/>
+    </entity>
+
     <view-entity entity-name="JobControllerAndTechnician" package-name="service.tracker">
         <member-entity entity-alias="EXFTAP" entity-name="JobController"/>
         <member-entity entity-alias="ENUM" entity-name="Technicians" join-from-alias="EXFTAP">

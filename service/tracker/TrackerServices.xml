@@ -58,6 +58,21 @@
         </actions>
     </service>
 
+    <service verb="create" noun="TestDrive" authenticate="false">
+        <in-parameters>
+            <parameter name="CarNo" required="true"/>
+            <parameter name="TechnicianId"/>
+            <parameter name="JobId"/>
+            <parameter name="kmIn" required="true"/>
+            <parameter name="kmOut" required="true"/>
+            <parameter name="TechnicianId" required="true"/>
+        </in-parameters>
+        <actions>
+            <service-call name="create#service.tracker.TestDrive" in-map="[CarNo:CarNo, kmIn:kmIn, kmOut:kmOut]"/>
+            <service-call name="update#service.tracker.JobController" in-map="[CarNo:CarNo, TechnicianId:TechnicianId, AwaitingTechnician:'Test Drive']"/>
+        </actions>
+    </service>
+
     <service verb="get" noun="SecurityAndCarStatus" authenticate="false">
         <in-parameters>
             <auto-parameters include="all"/>

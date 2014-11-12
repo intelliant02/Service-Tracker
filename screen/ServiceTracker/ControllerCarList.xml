@@ -2,6 +2,10 @@
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.4.xsd"
         default-menu-include="false" standalone="true">
 
+    <transition name="dummyTransition">
+        <service-call name="create#service.tracker.TestDrive" in-map="[CarNo:CarNo, kmIn:kmIn, kmOut:kmOut]"/>
+        <default-response url="."/></transition>
+
     <transition name="technicianStatusFloor">
         <actions>
             <if condition="TestParameter == 'In'">
@@ -39,7 +43,7 @@
                     <box-body>
                         <container style="float-box" type="ul">
                             <section-iterate name="GroundFloorList" list="technicianList" entry="technician">
-                                <widgets>
+                              <widgets>
                                     <container type="li">
                                         <render-mode><text type="html" location="component://ServiceTracker/template/GroundFloorCars.html.gstring"/></render-mode>
                                         <container-dialog id="Status" button-text="Status">
@@ -82,6 +86,29 @@
                                                 <field name="submitTechnicianStatus"><default-field title="Submit"><submit/></default-field></field>
                                             </form-single>
                                         </container-dialog>
+                                        <container-dialog id="technician-test-drive" button-text="Test Drive">
+                                            <form-single name="technician-test-drive-form" transition="dummyTransition">
+                                                <field name="CarNo">
+                                                    <default-field title="Car"><display text="${technician.CarNo}"/></default-field>
+                                                </field>
+                                                <field name="TechnicianId">
+                                                    <default-field>
+                                                        <display text="${technician.TechnicianId}"/>
+                                                    </default-field>
+                                                </field>
+                                                <field name="kmIn">
+                                                    <default-field title="Km In">
+                                                        <text-line size="20"/>
+                                                    </default-field>
+                                                </field>
+                                                <field name="kmOut"><default-field title="Km Out"><text-line size="20"/></default-field> </field>
+                                                <field name="technicianTestDriveSubmitButton">
+                                                    <default-field title="Test Drive">
+                                                        <submit/>
+                                                    </default-field>
+                                                </field>
+                                            </form-single>
+                                        </container-dialog>
                                     </container>
                                 </widgets>
                             </section-iterate>
@@ -108,6 +135,11 @@
                                                     <default-field>
                                                         <display text="${technicianFirstFloor.CarNo}"/>
                                                     </default-field>
+                                                    <field name="TechnicianId">
+                                                        <default-field>
+                                                            <display text="${technicianFirstFloor.TechnicianId}"/>
+                                                        </default-field>
+                                                    </field>
                                                 </field>
                                                 <field name="JobId">
                                                     <default-field>
@@ -133,6 +165,20 @@
                                                     </default-field>
                                                 </field>
                                                 <field name="submitTechnicianStatusFirstFloor"><default-field title="Submit"><submit/></default-field></field>
+                                            </form-single>
+                                        </container-dialog>
+                                        <container-dialog id="technician-test-drive-first" button-text="Test Drive">
+                                            <form-single name="technician-test-drive-first-form" transition="dummyTransition">
+                                                <field name="CarNo">
+                                                    <default-field title="Car"><display text="${technicianFirstFloor.CarNo}"/></default-field>
+                                                </field>
+                                                <field name="kmIn">
+                                                    <default-field title="Km In">
+                                                        <text-line size="20"/>
+                                                    </default-field>
+                                                </field>
+                                                <field name="kmOut"><default-field title="Km Out"><text-line size="20"/></default-field> </field>
+                                                <field name="technicianTestDriveFirstSubmitButton"><default-field title="Test Drive"><submit/></default-field></field>
                                             </form-single>
                                         </container-dialog>
                                     </container>
