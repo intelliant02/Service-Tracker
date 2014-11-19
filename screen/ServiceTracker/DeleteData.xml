@@ -180,6 +180,7 @@
             <field name="carNo"><default-field><display/></default-field></field>
             <field name="carStatus"><default-field><display/></default-field></field>
             <field name="inTime"><default-field><display/></default-field></field>
+            <field name="outTime"> <default-field> <display/> </default-field> </field>
         </form-list>
 
         <form-list name="find-reception" list="findReceptionList" transition="findReceptionEntity" dynamic="true">

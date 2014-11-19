@@ -21,10 +21,10 @@
                             <form-single name="carEntryAtReception" transition="createEntry">
                                 <auto-fields-entity entity-name="service.tracker.ReceptionEntity" field-type="edit"/>
                                 <field name="carNo">
-                                    <default-field><display text="${reception.carNo}"/></default-field>
+                                    <default-field title="Car No."><display text="${reception.carNo}"/></default-field>
                                 </field>
                                 <field name="job">
-                                    <default-field>
+                                    <default-field title="Job">
                                         <drop-down no-current-selected-key="PM(Paid)">
                                             <option key="PM(Free)"/>
                                             <option key="PM(Paid)"/>
@@ -49,7 +49,7 @@
                                     </default-field>
                                 </field>
                                 <field name="gift">
-                                    <default-field>
+                                    <default-field title="Gift">
                                         <drop-down allow-empty="false" no-current-selected-key="No">
                                             <option key="Yes"/>
                                             <option key="No"/>
@@ -57,7 +57,7 @@
                                     </default-field>
                                 </field>
                                 <field name="pickUp">
-                                    <default-field>
+                                    <default-field title="Pick up">
                                         <drop-down allow-empty="false" no-current-selected-key="No">
                                             <option key="Yes"/>
                                             <option key="No"/>
@@ -65,7 +65,7 @@
                                     </default-field>
                                 </field>
                                 <field name="dropCar">
-                                    <default-field>
+                                    <default-field title="Drop car">
                                         <drop-down allow-empty="false" no-current-selected-key="No">
                                             <option key="Yes"/>
                                             <option key="No"/>
@@ -73,7 +73,7 @@
                                     </default-field>
                                 </field>
                                 <field name="customerWaiting">
-                                    <default-field>
+                                    <default-field title="Customer Waiting">
                                         <drop-down allow-empty="false" no-current-selected-key="No">
                                             <option key="Yes"/>
                                             <option key="No"/>

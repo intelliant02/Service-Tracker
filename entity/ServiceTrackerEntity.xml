@@ -31,7 +31,7 @@
         <field name="beforeRoadTest" type="text-long"/>
         <field name="afterRoadTest" type="text-long"/>
     </entity>
-<!-- TODO: Working on this -->
+
     <entity entity-name="JobController" package-name="service.tracker">
         <field name="carNo" type="text-long" is-pk="true"/>
         <field name="fromDate" type="date-time"/>
@@ -39,7 +39,7 @@
         <field name="bayNo" type="text-long"/>
         <field name="awaitingTechnician" type="text-medium"/>
     </entity>
-    <!-- TODO: Working on this -->
+
     <entity entity-name="Technicians" package-name="service.tracker">
         <field name="carNo" type="text-long" is-pk="true"/>
         <field name="technicianId" type="text-long" is-pk="true"/>
@@ -74,6 +74,14 @@
         <alias-all entity-alias="ENUM"/>
     </view-entity>
 
+    <view-entity entity-name="AdviserEntryAndCarStatus" package-name="service.tracker" authorize-skip="true">
+        <member-entity entity-alias="EXFTAP" entity-name="AdviserEntry"/>
+        <member-entity entity-alias="ENUM" entity-name="StatusOfCar" join-from-alias="EXFTAP">
+            <key-map field-name="carNo" related-entity-name="carNo"/>
+        </member-entity>
+        <alias-all entity-alias="EXFTAP"/>
+        <alias-all entity-alias="ENUM"/>
+    </view-entity>
     <view-entity entity-name="AdviserEntryAndCarStatus" package-name="service.tracker" authorize-skip="true">
         <member-entity entity-alias="EXFTAP" entity-name="AdviserEntry"/>
         <member-entity entity-alias="ENUM" entity-name="StatusOfCar" join-from-alias="EXFTAP">

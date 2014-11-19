@@ -27,12 +27,12 @@
                                     <form-single name="adviser-form" transition="createAdviserEntry">
                                         <auto-fields-entity entity-name="AdviserEntry" field-type="edit"/>
                                         <field name="carNo">
-                                            <default-field>
+                                            <default-field title="Car No.">
                                                 <display text="${adviser.carNo}"/>
                                             </default-field>
                                         </field>
                                         <field name="beforeRoadTest">
-                                            <default-field>
+                                            <default-field title="Before Road Test">
                                                 <drop-down allow-empty="false" no-current-selected-key="No">
                                                     <option key="Yes"/>
                                                     <option key="No"/>
@@ -40,7 +40,7 @@
                                             </default-field>
                                         </field>
                                         <field name="afterRoadTest">
-                                            <default-field>
+                                            <default-field title="After Road Test">
                                                 <drop-down allow-empty="false" no-current-selected-key="No">
                                                     <option key="Yes"/>
                                                     <option key="No"/>
@@ -53,7 +53,7 @@
                                             </default-field>
                                         </field>
                                         <field name="capNumber">
-                                            <default-field>
+                                            <default-field title="Cap Number">
                                                 <text-line size="20"/>
                                             </default-field>
                                         </field>

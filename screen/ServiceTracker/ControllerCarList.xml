@@ -4,7 +4,8 @@
 
     <transition name="dummyTransition">
         <service-call name="create#service.tracker.TestDrive" in-map="[carNo:carNo, kmIn:kmIn, kmOut:kmOut]"/>
-        <default-response url="."/></transition>
+        <default-response url="."/>
+    </transition>
 
     <transition name="technicianStatusFloor">
         <actions>
@@ -50,22 +51,22 @@
                                             <form-single name="technicianStatusFrom" transition="technicianStatusFloor">
                                                 <auto-fields-entity entity-name="Technicians" field-type="edit"/>
                                                 <field name="carNo">
-                                                    <default-field>
+                                                    <default-field title="Car No.">
                                                         <display text="${technician.carNo}"/>
                                                     </default-field>
                                                 </field>
                                                 <field name="technicianId">
-                                                    <default-field>
+                                                    <default-field title="Technician Id">
                                                         <display text="${technician.technicianId}"/>
                                                     </default-field>
                                                 </field>
                                                 <field name="jobId">
-                                                    <default-field>
+                                                    <default-field title="Job Id">
                                                         <display text="${technician.jobId}"/>
                                                     </default-field>
                                                 </field>
                                                 <field name="fromDate">
-                                                    <default-field>
+                                                    <default-field >
                                                         <display text="${technician.fromDate}"/>
                                                     </default-field>
                                                 </field>
@@ -78,10 +79,10 @@
                                                     </default-field>
                                                 </field>
                                                 <field name="inTime">
-                                                    <default-field><display/></default-field>
+                                                    <default-field title="In Time"><display/></default-field>
                                                 </field>
                                                 <field name="outTime">
-                                                    <default-field><hidden/></default-field>
+                                                    <default-field title="Out Time"><hidden/></default-field>
                                                 </field>
                                                 <field name="submitTechnicianStatus"><default-field title="Submit"><submit/></default-field></field>
                                             </form-single>
@@ -89,10 +90,10 @@
                                         <container-dialog id="technician-test-drive" button-text="Test Drive">
                                             <form-single name="technician-test-drive-form" transition="dummyTransition">
                                                 <field name="carNo">
-                                                    <default-field title="Car"><display text="${technician.carNo}"/></default-field>
+                                                    <default-field title="Car No."><display text="${technician.carNo}"/></default-field>
                                                 </field>
                                                 <field name="technicianId">
-                                                    <default-field>
+                                                    <default-field title="Technician Id">
                                                         <display text="${technician.technicianId}"/>
                                                     </default-field>
                                                 </field>
@@ -132,23 +133,18 @@
                                         <container-dialog id="statusForFirstFloor" button-text="Status">
                                             <form-single name="technicianStatusFirstFloor" transition="technicianStatusFloor">
                                                 <field name="carNo">
-                                                    <default-field>
+                                                    <default-field title="Car No.">
                                                         <display text="${technicianFirstFloor.carNo}"/>
                                                     </default-field>
                                                     <field name="technicianId">
-                                                        <default-field>
+                                                        <default-field title="Technician Id">
                                                             <display text="${technicianFirstFloor.technicianId}"/>
                                                         </default-field>
                                                     </field>
                                                 </field>
                                                 <field name="jobId">
-                                                    <default-field>
+                                                    <default-field title="Job Id">
                                                         <display text="${technicianFirstFloor.jobId}"/>
-                                                    </default-field>
-                                                </field>
-                                                <field name="technicianId">
-                                                    <default-field>
-                                                        <display text="${technicianFirstFloor.technicianId}"/>
                                                     </default-field>
                                                 </field>
                                                 <field name="fromDate">
@@ -170,7 +166,7 @@
                                         <container-dialog id="technician-test-drive-first" button-text="Test Drive">
                                             <form-single name="technician-test-drive-first-form" transition="dummyTransition">
                                                 <field name="carNo">
-                                                    <default-field title="Car"><display text="${technicianFirstFloor.carNo}"/></default-field>
+                                                    <default-field title="Car No."><display text="${technicianFirstFloor.carNo}"/></default-field>
                                                 </field>
                                                 <field name="kmIn">
                                                     <default-field title="Km In">

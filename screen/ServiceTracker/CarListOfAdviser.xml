@@ -20,12 +20,12 @@
                         <container-dialog id="job-controller-container" button-text="Controller">
                             <form-single name="job-controller-form" transition="createController">
                                 <field name="carNo">
-                                    <default-field>
+                                    <default-field title="Car No.">
                                         <display text="${controller.carNo}"/>
                                     </default-field>
                                 </field>
                                 <field name="area">
-                                    <default-field>
+                                    <default-field title="Area">
                                         <drop-down allow-empty="false" no-current-selected-key="Ground Floor">
                                             <option key="First Floor"/>
                                             <option key="Ground Floor"/>
@@ -33,16 +33,16 @@
                                     </default-field>
                                 </field>
                                 <field name="bayNo">
-                                    <default-field>
+                                    <default-field title="Bay No.">
                                         <text-line size="3"/>
                                     </default-field>
                                 </field>
                                 <field name="technicianId">
-                                    <default-field><text-line size="5"/></default-field>
+                                    <default-field title="Technician Id"><text-line size="5"/></default-field>
                                 </field>
-                                <field name="jobId"><default-field><text-line size="4"/></default-field></field>
+                                <field name="jobId"><default-field title="Job Id"><text-line size="4"/></default-field></field>
                                 <field name="awaitingTechnician">
-                                    <default-field><display text="Yes"/></default-field>
+                                    <default-field title="Awaiting for Technician"><display text="Yes"/></default-field>
                                 </field>
                                 <field name="controllerSubmitButton">
                                     <default-field title="Create">
