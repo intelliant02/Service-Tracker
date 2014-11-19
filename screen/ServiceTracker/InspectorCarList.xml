@@ -1,7 +1,48 @@
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.4.xsd"
         default-menu-include="false" standalone="true">
+
+    <transition name="doneFromController">
+        <actions>
+            <service-call name="update#service.tracker.JobController" in-map="[carNo:carNo, awaitingTechnician:'Ready for final Inspection']"/>
+            <service-call name="update#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Technician', outTime:ec.user.getNowTimestamp()]"/>
+            <service-call name="create#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Washing']"/>
+        </actions>
+        <default-response url="../Service"/>
+    </transition>
+
+    <actions>
+        <entity-find entity-name="service.tracker.JobController" list="fiCarList">
+            <econditions><econdition field-name="awaitingTechnician" value="Done"/></econditions>
+        </entity-find>
+    </actions>
+
     <widgets>
-        <label text="Work in progress" type="h5"/>
+        <container id="FI-controller-section" style="float-box" type="ul">
+            <section-iterate name="car-entries-for-FI" list="fiCarList" entry="fiCar">
+                <widgets>
+                    <container type="li">
+                        <!-- TODO: Find a good way to implement Done and add another technician -->
+                        <!--TODO: Need to add a comment field for communication between technician and job controller -->
+                        <render-mode><text type="html" location="component://ServiceTracker/template/FiCarList.html.gstring"/></render-mode>
+                        <container-dialog id="second-job-controller-container" button-text="Done">
+                            <form-single name="second-job-controller-form" transition="doneFromController">
+                                <field name="carNo">
+                                    <default-field title="Car No.">
+                                        <display text="${fiCar.carNo}"/>
+                                    </default-field>
+                                </field>
+                                <field name="controllerSubmitButton">
+                                    <default-field title="Done">
+                                        <submit/>
+                                    </default-field>
+                                </field>
+                            </form-single>
+                        </container-dialog>
+                    </container>
+                </widgets>
+            </section-iterate>
+        </container>
     </widgets>
+
 </screen>

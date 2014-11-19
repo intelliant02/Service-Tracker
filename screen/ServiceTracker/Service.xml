@@ -8,7 +8,6 @@
     <transition name="securityCarList"><default-response url="../SecurityCarList"/></transition>
     <transition name="controllerList"><default-response url="../ControllerCarList"/></transition>
     <transition name="inspectorList"><default-response url="../InspectorCarList"/></transition>
-    <transition name="secondControllerCarList"><default-response url="../SecondControllerCarList"/> </transition>
     <widgets>
         <label type="h3" text="Welcome to the Service Tracker system"/>
         <container>
@@ -68,19 +67,6 @@
                         </section>
                     </box-body>
                 </container-box>
-                <!-- TODO: Need to implement another section in the panel left where all car will be listed which is back from technician.  -->
-                <container-box>
-                    <box-header>
-                        <label text="Back from Technician" type="h5"/>
-                    </box-header>
-                    <box-body>
-                        <section name="panelLeftBackFromTechnician">
-                            <widgets>
-                                <dynamic-container id="secondControllerEntry" transition="secondControllerCarList"/>
-                            </widgets>
-                        </section>
-                    </box-body>
-                </container-box>
             </panel-left>
 
             <panel-center spacing="3">
@@ -90,18 +76,6 @@
                         <dynamic-container id="controllerEntry" transition="controllerList"/>
                     </widgets>
                 </section>
-
-
-                <!--<container-box>
-                    <box-header><label text="First Floor" type="strong"/></box-header>
-                    <box-body>
-                        <section name="panelCentreFiReady">
-                            <widgets>
-                                <label text="Work in progress"/>
-                            </widgets>
-                        </section>
-                    </box-body>
-                </container-box> -->
 
                 <container-box>
                     <box-header><label text="FI ready" type="strong"/></box-header>
