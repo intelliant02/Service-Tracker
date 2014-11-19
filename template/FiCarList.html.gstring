@@ -1,1 +1,1 @@
-${'<b><i>Car No<i>: </b>' + fiCar.carNo + '<p></p>'}
+${'<b><i>Car No</i>: </b> <span class="label label-success">' + fiCar.carNo + '</span> <p></p>'}
