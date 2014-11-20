@@ -9,6 +9,7 @@
     <transition name="controllerList"><default-response url="../ControllerCarList"/></transition>
     <transition name="inspectorList"><default-response url="../InspectorCarList"/></transition>
     <transition name="washingList"><default-response url="../WashingCarList"/></transition>
+    <transition name="deliverList"><default-response url="../DeliveryCarList"/></transition>
     <widgets>
         <label type="h3" text="Welcome to the Service Tracker system"/>
         <container>
@@ -106,8 +107,7 @@
                     <box-body>
                         <section name="panelRightDelivery">
                             <widgets>
-                                <label text="Work in progress"/>
-                                <!-- TODO: <dynamic-container id="deliveryReadyEntry" transition="deliveryList"/> -->
+                                <dynamic-container id="deliveryReadyEntry" transition="deliverList"/>
                             </widgets>
                         </section>
                     </box-body>

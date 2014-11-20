@@ -207,4 +207,21 @@
             <service-call name="update#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Washing', outTime:ec.user.getNowTimestamp()]"/>
         </actions>
     </service>
+
+    <service verb="getDelivery" noun="StatusOfCar" authenticate="false">
+        <in-parameters>
+            <auto-parameters include="all"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="deliveryList" type="List"/>
+        </out-parameters>
+        <actions>
+            <entity-find entity-name="service.tracker.StatusOfCar" list="deliveryList">
+                <econditions combine="and">
+                    <econdition field-name="carStatus" value="Ready for Delivered"/>
+                    <econdition field-name="outTime" from="null"/>
+                </econditions>
+            </entity-find>
+        </actions>
+    </service>
 </services>

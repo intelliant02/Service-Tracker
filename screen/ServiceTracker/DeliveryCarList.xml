@@ -1,0 +1,31 @@
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.4.xsd"
+        default-menu-include="false" standalone="true">
+    <transition name="finishDeliver">
+        <default-response url="../Service"/>
+    </transition>
+    <actions>
+        <service-call name="tracker.TrackerServices.getDelivery#StatusOfCar" in-map="context" out-map="context"/>
+    </actions>
+    <widgets>
+        <container id="delivery-section">
+            <section-iterate name="carDeliver" list="deliveryList" entry="deliver">
+                <widgets>
+                    <container>
+                        <form-single name="deliver-list" transition="finishDeliver">
+                            <field name="submitButton"><default-field title="Deliver"><submit/></default-field></field>
+                            <field name="carNo">
+                                <default-field title="">
+                                    <display text="${deliver.carNo}"/>
+                                </default-field>
+                            </field>
+                            <field-layout>
+                                <field-row-big><field-ref name="carNo"/><field-ref name="submitButton"/></field-row-big>
+                            </field-layout>
+                        </form-single>
+                    </container>
+                </widgets>
+            </section-iterate>
+        </container>
+    </widgets>
+</screen>
