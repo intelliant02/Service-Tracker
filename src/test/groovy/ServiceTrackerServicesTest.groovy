@@ -163,4 +163,20 @@ class ServiceTrackerServicesTest extends Specification {
         ec.entity.makeFind("service.tracker.Technicians").condition("carNo", "WB-01-00003").deleteAll()
     }
 
+    def "Remove car from washing section which is ready for delivered"() {
+        when:
+        ec.entity.makeFind("service.tracker.StatusOfCar").condition("carNo", "WB-01-0001").deleteAll()
+        ec.entity.makeFind("service.tracker.StatusOfCar").condition("carNo", "WB-03-0001").deleteAll()
+        ec.entity.makeValue("service.tracker.StatusOfCar").setAll([carNo:"WB-03-0001", carStatus:"Washing", inTime:ec.user.getNowTimestamp()]).create()
+        ec.service.sync().name("tracker.TrackerServices.doneWashingStatusOfCar").parameters([carNo:"WB-03-0001"]).call()
+        def nullWashingCar = ec.entity.makeFind("service.tracker.StatusOfCar").condition([carNo:"WB-03-0001", outTime:null, carStatus:'Washing']).list()
+        def getWashingCar = ec.entity.makeFind("service.tracker.StatusOfCar").condition([carNo:"WB-03-0001"]).one()
+        then:
+        nullWashingCar.isEmpty() == true
+        getWashingCar.inTime != null
+        getWashingCar.carStatus == 'Ready for Delivered'
+        cleanup:
+        ec.entity.makeFind("service.tracker.StatusOfCar").condition("carNo", "WB-01-0001").deleteAll()
+    }
+
 }

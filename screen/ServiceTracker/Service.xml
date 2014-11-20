@@ -8,6 +8,7 @@
     <transition name="securityCarList"><default-response url="../SecurityCarList"/></transition>
     <transition name="controllerList"><default-response url="../ControllerCarList"/></transition>
     <transition name="inspectorList"><default-response url="../InspectorCarList"/></transition>
+    <transition name="washingList"><default-response url="../WashingCarList"/></transition>
     <widgets>
         <label type="h3" text="Welcome to the Service Tracker system"/>
         <container>
@@ -95,8 +96,7 @@
                     <box-body>
                         <section name="panelRightWasher">
                             <widgets>
-                                <label text="Work in progress"/>
-                                <!-- TODO: <dynamic-container id="fiReadyEntry" transition="inspectorList"/> -->
+                                <dynamic-container id="washingReadyEntry" transition="washingList"/>
                             </widgets>
                         </section>
                     </box-body>
@@ -104,10 +104,10 @@
                 <container-box>
                     <box-header><label type="strong" text="Awaiting delivery"/></box-header>
                     <box-body>
-                        <section name="panelRightWasher">
+                        <section name="panelRightDelivery">
                             <widgets>
                                 <label text="Work in progress"/>
-                                <!-- TODO: <dynamic-container id="fiReadyEntry" transition="inspectorList"/> -->
+                                <!-- TODO: <dynamic-container id="deliveryReadyEntry" transition="deliveryList"/> -->
                             </widgets>
                         </section>
                     </box-body>

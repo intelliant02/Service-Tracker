@@ -6,7 +6,7 @@
         <actions>
             <service-call name="update#service.tracker.JobController" in-map="[carNo:carNo, awaitingTechnician:'Ready for final Inspection']"/>
             <service-call name="update#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Technician', outTime:ec.user.getNowTimestamp()]"/>
-            <service-call name="create#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Washing']"/>
+            <service-call name="create#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Washing', inTime:ec.user.getNowTimestamp()]"/>
         </actions>
         <default-response url="../Service"/>
     </transition>

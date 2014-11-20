@@ -181,4 +181,30 @@
         </actions>
     </service>
 
+    <service verb="getWashing" noun="StatusOfCar" authenticate="false">
+        <in-parameters>
+            <auto-parameters include="all"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="washingList" type="List"/>
+        </out-parameters>
+        <actions>
+            <entity-find entity-name="service.tracker.StatusOfCar" list="washingList">
+                <econditions combine="and">
+                    <econdition field-name="carStatus" value="Washing"/>
+                    <econdition field-name="outTime" from="null"/>
+                </econditions>
+            </entity-find>
+        </actions>
+    </service>
+
+    <service verb="doneWashing" noun="StatusOfCar" authenticate="false">
+        <in-parameters>
+            <auto-parameters include="all"/>
+        </in-parameters>
+        <actions>
+            <service-call name="create#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Ready for Delivered', inTime:ec.user.getNowTimestamp()]"/>
+            <service-call name="update#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Washing', outTime:ec.user.getNowTimestamp()]"/>
+        </actions>
+    </service>
 </services>
