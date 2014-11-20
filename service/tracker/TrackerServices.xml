@@ -31,21 +31,33 @@
             <parameter name="bayNo" required="true"><number-integer/></parameter>
             <parameter name="technicianId" required="true"/>
             <parameter name="awaitingTechnician"/>
-            <parameter name="jobId" required="true"/>
+            <parameter name="jobId" required="true"/> <!-- As of now this is given manually. Have to find a better way so that it wil can fit in out-parameter  -->
             <auto-parameters include="pk" required="true"/>
         </in-parameters>
 
-        <out-parameters><parameter name="jobId"/></out-parameters>
-
         <actions>
-            <service-call name="create#service.tracker.JobController" in-map="[carNo:carNo, fromDate:ec.user.getNowTimestamp(), bayNo:bayNo, area:area, awaitingTechnician:awaitingTechnician]"/>
-            <service-call name="update#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Job Controller', outTime:ec.user.getNowTimestamp()]">
-                <econditions>
-                    <econdition field-name="carNo" value="${carNo}"/>
+            <entity-find entity-name="service.tracker.JobController" list="carLocationList">
+                <econditions combine="and">
+                    <econdition field-name="bayNo" value="${bayNo}"/>
+                    <econdition field-name="area" value="${area}"/>
+                    <econdition field-name="awaitingTechnician" value="Yes"/>
                 </econditions>
-            </service-call>
-            <service-call name="create#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Technician', inTime:ec.user.getNowTimestamp()]"/>
-            <service-call name="create#service.tracker.Technicians" in-map="[carNo:carNo, jobId:jobId, technicianId:technicianId, fromDate:ec.user.getNowTimestamp()]"/>
+            </entity-find>
+            <if condition="!carLocationList">
+                <then>
+                    <service-call name="create#service.tracker.JobController" in-map="[carNo:carNo, fromDate:ec.user.getNowTimestamp(), bayNo:bayNo, area:area, awaitingTechnician:awaitingTechnician]"/>
+                    <service-call name="update#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Job Controller', outTime:ec.user.getNowTimestamp()]">
+                        <econditions>
+                            <econdition field-name="carNo" value="${carNo}"/>
+                        </econditions>
+                    </service-call>
+                    <service-call name="create#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Technician', inTime:ec.user.getNowTimestamp()]"/>
+                    <service-call name="create#service.tracker.Technicians" in-map="[carNo:carNo, jobId:jobId, technicianId:technicianId, fromDate:ec.user.getNowTimestamp()]"/>
+                </then>
+                <else>
+                    <return message="The Bay No ${bayNo} in ${area} is not vacant. Please choose another location."/>
+                </else>
+            </if>
         </actions>
     </service>
     <!--============ Creating a Service for Technician's test drive ============-->

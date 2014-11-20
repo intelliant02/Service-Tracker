@@ -3,7 +3,7 @@
         default-menu-include="false" standalone="true">
 
     <transition name="createController">
-        <service-call name="tracker.TrackerServices.create#JobController"/> <!-- TODO:  Need to add condition to restrict the number of Car in the floor -->
+        <service-call name="tracker.TrackerServices.create#JobController"/>
         <default-response url="../Service"/>
     </transition>
 

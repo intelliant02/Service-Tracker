@@ -35,7 +35,7 @@ class ServiceTrackerServicesTest extends Specification {
         when:
         def createEntry = ec.entity.makeValue("service.tracker.AdviserEntry")
                 .setAll([carNo: "WB-02-M", customerName: "Rahul", customerMobile: "9830984765", driverName: "Roy",
-                driverMobile: "9840857843", beforeRoadTest: "Yes", afterRoadTest: "Yes", capNumber:"1234567"]).create()
+                         driverMobile: "9840857843", beforeRoadTest: "Yes", afterRoadTest: "Yes", capNumber:"1234567"]).create()
         EntityValue created = ec.entity.makeFind("service.tracker.AdviserEntry").condition("carNo", "WB-02-M").one()
 
         then:
@@ -69,7 +69,7 @@ class ServiceTrackerServicesTest extends Specification {
                 .parameters([carNo: "WB-01-0002", kmIn: "123"]).call()
         def createEntryReception = ec.service.sync().name("tracker.TrackerServices.createReceptionEntity")
                 .parameters([carNo: "WB-01-0002", job: "PM(Free)", serviceAdviser: "Abhishek Bagchi", driverOrOwner: "Owner",
-                gift: "Yes", dropCar: "Yes", customerWaiting: "No"]).call()
+                             gift: "Yes", dropCar: "Yes", customerWaiting: "No"]).call()
         EntityValue getValue = ec.entity.makeFind("service.tracker.ReceptionEntity").condition("carNo", "WB-01-0002").one()
         EntityValue getSecurity = ec.entity.makeFind("service.tracker.SecurityCheck").condition("carNo", "WB-01-0002").one()
 
@@ -94,11 +94,11 @@ class ServiceTrackerServicesTest extends Specification {
                 .parameters([carNo: "WB-01-0003", kmIn: "123"]).call()
         def createEntryReception = ec.service.sync().name("tracker.TrackerServices.createReceptionEntity")
                 .parameters([carNo: "WB-01-0003", job: "PM(Free)", serviceAdviser: "Abhishek Bagchi", driverOrOwner: "Owner",
-                gift: "Yes", dropCar: "Yes", customerWaiting: "No"]).call()
+                             gift: "Yes", dropCar: "Yes", customerWaiting: "No"]).call()
         def createEntryAdviser = ec.service.sync().name("tracker.TrackerServices.createAdviserEntry")
                 .parameters([carNo:"WB-01-0003", customerName:"Deb", mobileNo:"9836545651",
-                driverName:"Raj", driverMobile:"9836545651",
-                job:"PM(Free)", beforeRoadTest:"Yes", afterRoadTest:"No", capNumber: "1234567"]).call()
+                             driverName:"Raj", driverMobile:"9836545651",
+                             job:"PM(Free)", beforeRoadTest:"Yes", afterRoadTest:"No", capNumber: "1234567"]).call()
         EntityValue getValue = ec.entity.makeFind("service.tracker.ReceptionEntity").condition("carNo", "WB-01-0003").one()
         EntityValue getSecurity = ec.entity.makeFind("service.tracker.SecurityCheck").condition("carNo", "WB-01-0003").one()
         EntityValue getAdviser = ec.entity.makeFind("service.tracker.AdviserEntry").condition("carNo", "WB-01-0003").one()
@@ -134,6 +134,10 @@ class ServiceTrackerServicesTest extends Specification {
         def createJobController = ec.service.sync().name("tracker.TrackerServices.createJobController")
                 .parameters([carNo:"WB-01-00003" , area:"Ground Floor", bayNo:"1", technicianId:"123456", awaitingTechnician:"Yes",
                              jobId:'job1']).call()
+        EntityValue getJobControllerWhenErrorOccured = ec.entity.makeFind("service.tracker.JobController").condition("carNo", "WB-01-00003").one()
+        def createJobController2 = ec.service.sync().name("tracker.TrackerServices.createJobController")
+                .parameters([carNo:"WB-01-00003" , area:"Ground Floor", bayNo:"234", technicianId:"123456", awaitingTechnician:"Yes",
+                             jobId:'job1']).call()
         EntityValue getSecurity = ec.entity.makeFind("service.tracker.SecurityCheck").condition("carNo", "WB-01-00003").one()
         EntityValue getReception = ec.entity.makeFind("service.tracker.ReceptionEntity").condition("carNo", "WB-01-00003").one()
         EntityValue getAdviser = ec.entity.makeFind("service.tracker.AdviserEntry").condition("carNo", "WB-01-00003").one()
@@ -144,6 +148,7 @@ class ServiceTrackerServicesTest extends Specification {
         getSecurity.kmIn == "123"
         getReception.serviceAdviser == "Abhishek Bagchi"
         getAdviser.customerName == "Deb"
+        getJobControllerWhenErrorOccured == null
         getJobController != null
         getJobController.awaitingTechnician == "Yes"
         getTechnician != null
