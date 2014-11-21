@@ -1,0 +1,15 @@
+<entities>
+<entity entity-name="ServiceAdviser" package-name="service.internal">
+    <field name="empName" type="text-long"/>
+    <field name="empId" type="text-medium"/>
+    <field name="nameAndId" type="text-long" is-pk="true"/>
+    <seed-data>
+        <service.internal.ServiceAdviser empName="Abhishek Bagchi" empId="100" nameAndId="Abhishek Bagchi(100)"/>
+        <service.internal.ServiceAdviser empName="Rahul Roy" empId="101" nameAndId="Rahul Roy(101)"/>
+        <service.internal.ServiceAdviser empName="Abhra Jana" empId="102" nameAndId="Abhra Jana(102)"/>
+        <service.internal.ServiceAdviser empName="Biswajit Chakrabartya" empId="103" nameAndId="Biswajit Chakrabartya(103)"/>
+        <service.internal.ServiceAdviser empName="Abhishek Bagchi" empId="104" nameAndId="Abhishek Bagchi(104)"/>
+        <service.internal.ServiceAdviser empName="Vivek Dubay" empId="105" nameAndId="Vivek Dubay(105)"/>
+    </seed-data>
+</entity>
+</entities>

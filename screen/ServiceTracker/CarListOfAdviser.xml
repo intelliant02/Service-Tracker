@@ -17,7 +17,7 @@
             <section-iterate name="controllerEntries" list="jobControllerCarList" entry="controller">
                 <widgets>
                     <container>
-                        <container-dialog id="job-controller-container" button-text="Controller">
+                        <container-dialog id="job-controller-container" button-text="${controller.carNo}">
                             <form-single name="job-controller-form" transition="createController">
                                 <field name="carNo">
                                     <default-field title="Car No.">
@@ -51,8 +51,6 @@
                                 </field>
                             </form-single>
                         </container-dialog>
-                        <label text="${controller.carNo}"/>
-                        <label text="${controller.carStatus}"/>
                     </container>
                 </widgets>
             </section-iterate>

@@ -35,4 +35,11 @@ class SeedDataTest extends Specification {
         then:
         entityList.size() == 8
     }
+
+    def "Test for Service adviser"() {
+        when:
+        def entityList = ec.entity.makeFind("service.internal.ServiceAdviser").list()
+        then:
+        entityList.size() == 6
+    }
 }

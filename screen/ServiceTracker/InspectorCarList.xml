@@ -25,7 +25,7 @@
                         <!-- TODO: Find a good way to implement Done and add another technician -->
                         <!--TODO: Need to add a comment field for communication between technician and job controller -->
                         <render-mode><text type="html" location="component://ServiceTracker/template/FiCarList.html.gstring"/></render-mode>
-                        <container-dialog id="second-job-controller-container" button-text="Done">
+                        <container-dialog id="second-job-controller-container" button-text="${fiCar.carNo}">
                             <form-single name="second-job-controller-form" transition="doneFromController">
                                 <field name="carNo">
                                     <default-field title="Car No.">

@@ -23,7 +23,7 @@
                                 <expression>user == 'john.doe'</expression>
                             </condition>
                             <widgets>
-                                <container-dialog id="adviser-container" button-text="Adviser">
+                                <container-dialog id="adviser-container" button-text="${adviser.carNo}">
                                     <form-single name="adviser-form" transition="createAdviserEntry">
                                         <auto-fields-entity entity-name="AdviserEntry" field-type="edit"/>
                                         <field name="carNo">
@@ -64,12 +64,9 @@
                                         </field>
                                     </form-single>
                                 </container-dialog>
-                                <label text="${adviser.carNo}"/>
-                                <label text="${adviser.carStatus}"/>
                             </widgets>
                             <fail-widgets>
                                 <label text="${adviser.carNo}"/>
-                                <label text="${adviser.carStatus}"/>
                             </fail-widgets>
                         </section>
                     </container>

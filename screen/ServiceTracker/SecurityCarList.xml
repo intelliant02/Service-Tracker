@@ -17,7 +17,7 @@
             <section-iterate name="carEntries" list="receptionCarList" entry="reception">
                 <widgets>
                     <container>
-                        <container-dialog id="entry-for-receptionist" button-text="Reception">
+                        <container-dialog id="entry-for-receptionist" button-text="${reception.carNo}">
                             <form-single name="carEntryAtReception" transition="createEntry">
                                 <auto-fields-entity entity-name="service.tracker.ReceptionEntity" field-type="edit"/>
                                 <field name="carNo">
@@ -33,6 +33,15 @@
                                             <option key="BP"/>
                                         </drop-down>
                                         <display/>
+                                    </default-field>
+                                </field>
+                                <field name="serviceAdviser">
+                                    <default-field title="Service Adviser">
+                                        <drop-down allow-empty="false" allow-multiple="false">
+                                            <entity-options key="${nameAndId}">
+                                                <entity-find entity-name="ServiceAdviser"/>
+                                            </entity-options>
+                                        </drop-down>
                                     </default-field>
                                 </field>
                                 <field name="driverOrOwner">
@@ -87,8 +96,6 @@
                                 </field>
                             </form-single>
                         </container-dialog>
-                        <label text="${reception.carNo}"/>
-                        <label text="${reception.carStatus}"/>
                     </container>
                 </widgets>
             </section-iterate>

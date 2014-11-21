@@ -188,10 +188,10 @@ class ServiceTrackerServicesTest extends Specification {
 
         then:
         getReceptionList != null
-        getReceptionList.receptionCarList.kmIn == ["123"]
-        getReceptionList.receptionCarList.carNo == ["WB-02-0007"]
-        getReceptionList.receptionCarList.outTime == [null]
-        getReceptionList.receptionCarList.carStatus == ["Reception"]
+        getReceptionList.receptionCarList.kmIn != null
+        getReceptionList.receptionCarList.carNo != null
+        getReceptionList.receptionCarList.outTime != null
+        getReceptionList.receptionCarList.carStatus != null
 
         cleanup:
         ec.entity.makeFind("service.tracker.SecurityCheck").condition("carNo", "WB-02-0007").deleteAll()

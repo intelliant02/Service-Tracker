@@ -178,6 +178,7 @@
                 </econditions>
             </service-call>
             <service-call name="create#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Job Controller', inTime:ec.user.getNowTimestamp()]"/>
+        <message text="${getInvoice}"/>
         </actions>
     </service>
 
@@ -222,6 +223,16 @@
                     <econdition field-name="outTime" from="null"/>
                 </econditions>
             </entity-find>
+        </actions>
+    </service>
+
+    <service verb="create" noun="CarInvoice" authenticate="false">
+        <in-parameters>
+            <parameter name="carNo" required="true"/>
+            <parameter name="carInvoice"><matches regexp="^[1-9][0-9]*$"/></parameter>
+        </in-parameters>
+        <actions>
+            <service-call name="create#service.tracker.CarInvoice" in-map="[carNo:carNo, carInvoice:carInvoice]"/>
         </actions>
     </service>
 </services>

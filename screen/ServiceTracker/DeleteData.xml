@@ -38,10 +38,16 @@
     </transition>
 
     <actions>
+        <entity-find entity-name="service.tracker.CarInvoice" list="getInvoice">
+            <econditions>
+                <econdition field-name="carNo" value="${carNo}"/>
+            </econditions>
+        </entity-find>
         <entity-find entity-name="service.tracker.JobController" list="controllerList">
             <econditions><econdition field-name="awaitingTechnician" value="Done"/></econditions>
         </entity-find>
         <entity-find entity-name="service.tracker.JobControllerAndTechnician" list="findReceptionList"><search-form-inputs/></entity-find>
+        <entity-find entity-name="service.tracker.ReceptionEntity" list="receptionEntityList"><search-form-inputs/></entity-find>
         <entity-find entity-name="service.tracker.StatusOfCar" list="receptionList"><search-form-inputs/></entity-find>
         <entity-find entity-name="service.tracker.SecurityCheck" list="securityTestList"><search-form-inputs/></entity-find>
         <entity-find entity-name="service.tracker.Technicians" list="technicianList"><search-form-inputs/></entity-find>
@@ -76,6 +82,7 @@
                 <field name="submitButton1"><default-field title="Delete"><submit/></default-field></field>
             </form-single>
         </container-dialog>
+
 
         <container-dialog id="delete-status" button-text="delete status">
             <form-single name="deleteStatus" transition="deleteStatusType">
@@ -176,6 +183,8 @@
             <field name="awaitingTechnician"><default-field><display/></default-field></field>
         </form-list>
 
+
+
         <form-list name="reception-list" list="receptionList" transition="findReceptionEntity" dynamic="true">
             <field name="carNo"><default-field><display/></default-field></field>
             <field name="carStatus"><default-field><display/></default-field></field>
@@ -204,5 +213,13 @@
             <field name="inTime"><default-field><display/></default-field></field>
         </form-list>
 
+        <form-list name="reception-list-form" list="receptionEntityList" transition="findReceptionEntity">
+        <field name="carNo"><default-field><display/></default-field></field>
+        </form-list>
+
+        <form-list name="invoice-list" list="getInvoice" transition="findReceptionEntity" dynamic="true">
+            <field name="carNo"><default-field><display/></default-field></field>
+            <field name="carInvoice"><default-field><display/></default-field></field>
+        </form-list>
     </widgets>
 </screen>
