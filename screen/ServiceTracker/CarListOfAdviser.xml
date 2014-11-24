@@ -3,7 +3,18 @@
         default-menu-include="false" standalone="true">
 
     <transition name="createController">
-        <service-call name="tracker.TrackerServices.create#JobController"/>
+        <actions><entity-find entity-name="service.internal.CarPlaces" list="wholeArea">
+            <econdition field-name="placeValue" value="${Area}"/>
+        </entity-find>
+            <script> <![CDATA[
+                        println Area
+                        String floorArea = wholeArea.floor
+                        String bayArea = wholeArea.bayNo
+                        floorArea = "${floorArea - '[' - ']'}"
+                        bayArea = "${bayArea - '[' - ']'}"
+        ]]></script>
+            <service-call name="tracker.TrackerServices.create#JobController" in-map="carNo:carNo, area:floorArea, bayNo:bayArea, technicianId:technicianId, jobId:jobId, awaitingTechnician:awaitingTechnician"/>
+        </actions>
         <default-response url="../Service"/>
     </transition>
 
@@ -24,17 +35,13 @@
                                         <display text="${controller.carNo}"/>
                                     </default-field>
                                 </field>
-                                <field name="area">
-                                    <default-field title="Area">
-                                        <drop-down allow-empty="false" no-current-selected-key="Ground Floor">
-                                            <option key="First Floor"/>
-                                            <option key="Ground Floor"/>
+                                <field name="Area">
+                                    <default-field title="Place">
+                                        <drop-down allow-empty="false" allow-multiple="false">
+                                            <entity-options key="${placeValue}">
+                                                <entity-find entity-name="service.internal.CarPlaces"/>
+                                            </entity-options>
                                         </drop-down>
-                                    </default-field>
-                                </field>
-                                <field name="bayNo">
-                                    <default-field title="Bay No.">
-                                        <text-line size="3"/>
                                     </default-field>
                                 </field>
                                 <field name="technicianId">
@@ -51,6 +58,7 @@
                                 </field>
                             </form-single>
                         </container-dialog>
+                        <label text="${controller.customerName}"/>
                     </container>
                 </widgets>
             </section-iterate>

@@ -27,37 +27,25 @@
     <service verb="create" noun="JobController" authenticate="false">
         <in-parameters>
             <parameter name="carNo"/>
-            <parameter name="area"/>
-            <parameter name="bayNo" required="true"><number-integer/></parameter>
+            <parameter name="area" required="true"/>
             <parameter name="technicianId" required="true"/>
             <parameter name="awaitingTechnician"/>
+            <parameter name="bayNo"/>
             <parameter name="jobId" required="true"/> <!-- As of now this is given manually. Have to find a better way so that it wil can fit in out-parameter  -->
             <auto-parameters include="pk" required="true"/>
         </in-parameters>
 
         <actions>
-            <entity-find entity-name="service.tracker.JobController" list="carLocationList">
-                <econditions combine="and">
-                    <econdition field-name="bayNo" value="${bayNo}"/>
-                    <econdition field-name="area" value="${area}"/>
-                    <econdition field-name="awaitingTechnician" value="Yes"/>
+            <set field="placeValue" value="${area + ' ' + bayNo}"/>
+            <service-call name="create#service.tracker.JobController" in-map="[carNo:carNo, fromDate:ec.user.getNowTimestamp(), bayNo:bayNo, area:area, awaitingTechnician:awaitingTechnician]"/>
+            <service-call name="update#service.internal.CarPlaces" in-map="[vacant:'No', placeValue:placeValue]"/>
+            <service-call name="update#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Job Controller', outTime:ec.user.getNowTimestamp()]">
+                <econditions>
+                    <econdition field-name="carNo" value="${carNo}"/>
                 </econditions>
-            </entity-find>
-            <if condition="!carLocationList">
-                <then>
-                    <service-call name="create#service.tracker.JobController" in-map="[carNo:carNo, fromDate:ec.user.getNowTimestamp(), bayNo:bayNo, area:area, awaitingTechnician:awaitingTechnician]"/>
-                    <service-call name="update#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Job Controller', outTime:ec.user.getNowTimestamp()]">
-                        <econditions>
-                            <econdition field-name="carNo" value="${carNo}"/>
-                        </econditions>
-                    </service-call>
-                    <service-call name="create#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Technician', inTime:ec.user.getNowTimestamp()]"/>
-                    <service-call name="create#service.tracker.Technicians" in-map="[carNo:carNo, jobId:jobId, technicianId:technicianId, fromDate:ec.user.getNowTimestamp()]"/>
-                </then>
-                <else>
-                    <return message="The Bay No ${bayNo} in ${area} is not vacant. Please choose another location."/>
-                </else>
-            </if>
+            </service-call>
+            <service-call name="create#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Technician', inTime:ec.user.getNowTimestamp()]"/>
+            <service-call name="create#service.tracker.Technicians" in-map="[carNo:carNo, jobId:jobId, technicianId:technicianId, fromDate:ec.user.getNowTimestamp()]"/>
         </actions>
     </service>
     <!--============ Creating a Service for Technician's test drive ============-->
@@ -101,7 +89,7 @@
         <actions>
             <entity-find entity-name="JobControllerAndTechnician" list="technicianList">
                 <econditions combine="and">
-                    <econdition field-name="area" value="Ground Floor"/>
+                    <econdition field-name="area" value="Ground floor"/>
                     <econdition field-name="outTime" from="null"/>
                 </econditions>
             </entity-find>

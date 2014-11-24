@@ -25,4 +25,21 @@
             <service.internal.CustomerDetails custName="Rishi" mobileNumber="7724569829" carNo="WB-02G-00007"/>
         </seed-data>
     </entity>
+
+    <entity entity-name="CarPlaces" package-name="service.internal">
+        <field name="floor" type="text-long"/>
+        <field name="bayNo" type="text-medium"/>
+        <field name="vacant" type="text-medium"/>
+        <field name="placeValue" type="text-long" is-pk="true"/>
+
+        <seed-data>
+            <service.internal.CarPlaces floor="Ground floor" bayNo="1" placeValue="Ground floor 1" vacant="0"/>
+            <service.internal.CarPlaces floor="Ground floor" bayNo="2" placeValue="Ground floor 2" vacant="0"/>
+            <service.internal.CarPlaces floor="Ground floor" bayNo="3" placeValue="Ground floor 3" vacant="0"/>
+            <service.internal.CarPlaces floor="First floor" bayNo="1" placeValue="First floor 1" vacant="0"/>
+            <service.internal.CarPlaces floor="First floor" bayNo="2" placeValue="First floor 2" vacant="0"/>
+            <service.internal.CarPlaces floor="First floor" bayNo="3" placeValue="First floor 3" vacant="0"/>
+        </seed-data>
+    </entity>
+
 </entities>

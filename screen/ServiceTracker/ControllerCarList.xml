@@ -3,7 +3,6 @@
         default-menu-include="false" standalone="true">
 
     <transition name="dummyTransition">
-        <service-call name="create#service.tracker.TestDrive" in-map="[carNo:carNo, kmIn:kmIn, kmOut:kmOut]"/>
         <default-response url="."/>
     </transition>
 
@@ -44,7 +43,7 @@
                     <box-body>
                         <container style="float-box" type="ul">
                             <section-iterate name="ground-floor-list" list="technicianList" entry="technician">
-                              <widgets>
+                                <widgets>
                                     <container type="li">
                                         <render-mode><text type="html" location="component://ServiceTracker/template/GroundFloorCars.html.gstring"/></render-mode>
                                         <container-dialog id="status" button-text="Status">

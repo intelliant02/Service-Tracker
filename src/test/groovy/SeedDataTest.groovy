@@ -42,4 +42,25 @@ class SeedDataTest extends Specification {
         then:
         entityList.size() == 6
     }
+
+    def "Test for Customer Details"() {
+        when:
+        def entityList = ec.entity.makeFind("service.internal.CustomerDetails").list()
+        then:
+        entityList.size() == 5
+    }
+
+    def "Test for Car places"() {
+        when:
+        def entityList = ec.entity.makeFind("service.internal.CarPlaces").list()
+        then:
+        entityList.size() == 6
+    }
+
+    def "Test for Vacant field"() {
+        when:
+        def showResult = ec.entity.makeFind("service.internal.CarPlaces").condition("placeValue", "Ground floor 3").one()
+        then:
+        showResult.vacant == '0'
+    }
 }
