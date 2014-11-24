@@ -75,8 +75,11 @@
         <member-entity entity-alias="ENUM" entity-name="StatusOfCar" join-from-alias="EXFTAP">
             <key-map field-name="carNo" related-entity-name="carNo"/>
         </member-entity>
+        <member-entity entity-alias="CUSTD" entity-name="service.internal.CustomerDetails" join-from-alias="EXFTAP">
+        <key-map field-name="carNo" related-entity-name="carNo"/></member-entity>
         <alias-all entity-alias="EXFTAP"/>
         <alias-all entity-alias="ENUM"/>
+        <alias-all entity-alias="CUSTD"/>
     </view-entity>
 
     <view-entity entity-name="AdviserEntryAndCarStatus" package-name="service.tracker" authorize-skip="true">

@@ -31,6 +31,16 @@
                                                 <display text="${adviser.carNo}"/>
                                             </default-field>
                                         </field>
+                                        <field name="customerName">
+                                            <default-field title="Customer Name">
+                                                <display text="${adviser.custName}"/>
+                                            </default-field>
+                                        </field>
+                                        <field name="mobileNo">
+                                            <default-field title="Mobile number">
+                                                <display text="${adviser.mobileNumber}"/>
+                                            </default-field>
+                                        </field>
                                         <field name="beforeRoadTest">
                                             <default-field title="Before Road Test">
                                                 <drop-down allow-empty="false" no-current-selected-key="No">
@@ -64,9 +74,11 @@
                                         </field>
                                     </form-single>
                                 </container-dialog>
+                                <label text="${adviser.serviceAdviser}"/>
                             </widgets>
                             <fail-widgets>
                                 <label text="${adviser.carNo}"/>
+                                <label text="${adviser.serviceAdviser}"/>
                             </fail-widgets>
                         </section>
                     </container>

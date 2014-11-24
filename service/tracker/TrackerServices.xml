@@ -4,7 +4,7 @@
         <in-parameters>
             <parameter name="carNo" required="true"/>
             <parameter name="job"/>
-            <parameter name="serviceAdviser" required="true"><matches regexp="[a-zA-Z ]*$"/></parameter>
+            <parameter name="serviceAdviser"/>
             <parameter name="driverOrOwner"/>
             <parameter name="gift"/>
             <parameter name="dropCar"/>
@@ -178,7 +178,7 @@
                 </econditions>
             </service-call>
             <service-call name="create#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Job Controller', inTime:ec.user.getNowTimestamp()]"/>
-        <message text="${getInvoice}"/>
+            <message text="${getInvoice}"/>
         </actions>
     </service>
 
