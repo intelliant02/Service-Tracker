@@ -2,3 +2,4 @@ ${'<b><i>Bay No<i>: </b>' + technicianFirstFloor.bayNo + '<p></p>'}
 ${'<b><i>Car No<i>: </b>' + technicianFirstFloor.carNo + '<p></p>'}
 ${'<b><i>Job Id<i>:</b>' + technicianFirstFloor.jobId + '<p></p>'}
 ${'<b><i>Waiting for Technician(Emp id)<i>: </b>' + technicianFirstFloor.technicianId + '<p></p>'}
+${'<b><i>Awaiting Technician</i>: </b>' + technicianFirstFloor.awaitingTechnician + '<p></p>'}

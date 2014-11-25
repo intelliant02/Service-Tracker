@@ -34,7 +34,6 @@
             <parameter name="jobId" required="true"/> <!-- As of now this is given manually. Have to find a better way so that it wil can fit in out-parameter  -->
             <auto-parameters include="pk" required="true"/>
         </in-parameters>
-
         <actions>
             <set field="placeValue" value="${area + ' ' + bayNo}"/>
             <service-call name="create#service.tracker.JobController" in-map="[carNo:carNo, fromDate:ec.user.getNowTimestamp(), bayNo:bayNo, area:area, awaitingTechnician:awaitingTechnician]"/>

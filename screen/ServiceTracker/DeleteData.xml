@@ -25,6 +25,11 @@
         <default-response url="."/>
     </transition>
 
+    <transition name="updatePlace">
+        <service-call name="update#service.internal.CarPlaces" in-map="[placeValue:placeValue, vacant:vacant]"/>
+        <default-response url="."/>
+    </transition>
+
     <transition name="deleteStatus">
         <service-call name="delete#StatusOfCar"/>
         <default-response url="."/>
@@ -38,19 +43,22 @@
     </transition>
 
     <actions>
-        <entity-find entity-name="service.tracker.CarInvoice" list="getInvoice">
-            <econditions>
-                <econdition field-name="carNo" value="${carNo}"/>
+        <entity-find entity-name="service.tracker.JobControllerAndTechnician" list="technicianList1">
+            <econditions combine="and">
+                <econdition field-name="area" value="Ground Floor"/>
+                <econdition field-name="outTime" from="null"/>
             </econditions>
         </entity-find>
         <entity-find entity-name="service.tracker.JobController" list="controllerList">
-            <econditions><econdition field-name="awaitingTechnician" value="Done"/></econditions>
+            <search-form-inputs/>
         </entity-find>
         <entity-find entity-name="service.tracker.JobControllerAndTechnician" list="findReceptionList"><search-form-inputs/></entity-find>
-        <entity-find entity-name="service.tracker.ReceptionEntity" list="receptionEntityList"><search-form-inputs/></entity-find>
+        <entity-find entity-name="service.tracker.JobController" list="receptionEntityList"><search-form-inputs/></entity-find>
         <entity-find entity-name="service.tracker.StatusOfCar" list="receptionList"><search-form-inputs/></entity-find>
         <entity-find entity-name="service.tracker.SecurityCheck" list="securityTestList"><search-form-inputs/></entity-find>
         <entity-find entity-name="service.tracker.Technicians" list="technicianList"><search-form-inputs/></entity-find>
+        <entity-find entity-name="service.internal.CustomerDetails" list="custList"><search-form-inputs/></entity-find>
+        <entity-find entity-name="service.internal.CarPlaces" list="placeList"><search-form-inputs/></entity-find>
     </actions>
 
     <widgets>
@@ -83,6 +91,21 @@
             </form-single>
         </container-dialog>
 
+        <container-dialog id="update-place" button-text="Update place">
+            <form-single name="updatePlaceForm" transition="updatePlace">
+                <field name="placeValue">
+                    <default-field title="Place">
+                        <drop-down allow-empty="false" allow-multiple="false">
+                            <entity-options key="${placeValue}">
+                                <entity-find entity-name="CarPlaces"/>
+                            </entity-options>
+                        </drop-down>
+                    </default-field>
+                </field>
+                <field name="vacant"><default-field title="Vacant"><text-line size="5"/></default-field></field>
+                <field name="submitButton"><default-field title="Delete"><submit/></default-field></field>
+            </form-single>
+        </container-dialog>
 
         <container-dialog id="delete-status" button-text="delete status">
             <form-single name="deleteStatus" transition="deleteStatusType">
@@ -165,15 +188,6 @@
                         </drop-down>
                     </default-field>
                 </field>
-                <field name="technicianId">
-                    <default-field title="technician">
-                        <drop-down allow-empty="false" allow-multiple="false">
-                            <entity-options key="${technicianId}">
-                                <entity-find entity-name="service.tracker.JobController"/>
-                            </entity-options>
-                        </drop-down>
-                    </default-field>
-                </field>
                 <field name="submitButton"><default-field title="Delete"><submit/></default-field></field>
             </form-single>
         </container-dialog>
@@ -214,12 +228,21 @@
         </form-list>
 
         <form-list name="reception-list-form" list="receptionEntityList" transition="findReceptionEntity">
-        <field name="carNo"><default-field><display/></default-field></field>
+            <field name="carNo"><default-field><display/></default-field></field>
         </form-list>
 
-        <form-list name="invoice-list" list="getInvoice" transition="findReceptionEntity" dynamic="true">
+        <form-list name="invoice-list" list="technicianList1" transition="findReceptionEntity" dynamic="true">
             <field name="carNo"><default-field><display/></default-field></field>
-            <field name="carInvoice"><default-field><display/></default-field></field>
+        </form-list>
+
+        <form-list name="cust-list" list="custList" transition="findReceptionEntity" dynamic="true">
+            <field name="carNo"><default-field><display/></default-field></field>
+        </form-list>
+        <form-list name="place-list" list="placeList" transition="findReceptionEntity" dynamic="true">
+            <field name="vacant"><default-field><display/></default-field></field>
+            <field name="placeValue"><default-field><display/></default-field></field>
+            <field name="floor"><default-field><display/></default-field></field>
+            <field name="bayNo"><default-field><display/></default-field></field>
         </form-list>
     </widgets>
 </screen>

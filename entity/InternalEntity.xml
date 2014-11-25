@@ -33,12 +33,12 @@
         <field name="placeValue" type="text-long" is-pk="true"/>
 
         <seed-data>
-            <service.internal.CarPlaces floor="Ground floor" bayNo="1" placeValue="Ground floor 1" vacant="0"/>
-            <service.internal.CarPlaces floor="Ground floor" bayNo="2" placeValue="Ground floor 2" vacant="0"/>
-            <service.internal.CarPlaces floor="Ground floor" bayNo="3" placeValue="Ground floor 3" vacant="0"/>
-            <service.internal.CarPlaces floor="First floor" bayNo="1" placeValue="First floor 1" vacant="0"/>
-            <service.internal.CarPlaces floor="First floor" bayNo="2" placeValue="First floor 2" vacant="0"/>
-            <service.internal.CarPlaces floor="First floor" bayNo="3" placeValue="First floor 3" vacant="0"/>
+            <service.internal.CarPlaces floor="Ground floor" bayNo="1" placeValue="Ground floor 1"/>
+            <service.internal.CarPlaces floor="Ground floor" bayNo="2" placeValue="Ground floor 2"/>
+            <service.internal.CarPlaces floor="Ground floor" bayNo="3" placeValue="Ground floor 3"/>
+            <service.internal.CarPlaces floor="First floor" bayNo="1" placeValue="First floor 1"/>
+            <service.internal.CarPlaces floor="First floor" bayNo="2" placeValue="First floor 2"/>
+            <service.internal.CarPlaces floor="First floor" bayNo="3" placeValue="First floor 3"/>
         </seed-data>
     </entity>
 

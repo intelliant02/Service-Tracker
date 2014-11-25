@@ -26,8 +26,7 @@
         <service-call name="tracker.TrackerServices.get#JobControllerAndTechnician" in-map="context" out-map="context"/>
         <entity-find entity-name="JobControllerAndTechnician" list="technicianListFirstFloor">
             <econditions combine="and">
-                <econdition field-name="area" value="First Floor"/>
-                <econdition field-name="awaitingTechnician" value="Yes"/>
+                <econdition field-name="area" value="First floor"/>
                 <econdition field-name="outTime" from="null"/>
             </econditions>
         </entity-find>
@@ -135,12 +134,12 @@
                                                     <default-field title="Car No.">
                                                         <display text="${technicianFirstFloor.carNo}"/>
                                                     </default-field>
+                                                    </field>
                                                     <field name="technicianId">
                                                         <default-field title="Technician Id">
                                                             <display text="${technicianFirstFloor.technicianId}"/>
                                                         </default-field>
                                                     </field>
-                                                </field>
                                                 <field name="jobId">
                                                     <default-field title="Job Id">
                                                         <display text="${technicianFirstFloor.jobId}"/>

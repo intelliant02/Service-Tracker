@@ -3,11 +3,11 @@
         default-menu-include="false" standalone="true">
 
     <transition name="createController">
-        <actions><entity-find entity-name="service.internal.CarPlaces" list="wholeArea">
-            <econdition field-name="placeValue" value="${Area}"/>
-        </entity-find>
-            <script> <![CDATA[
-                        println Area
+        <actions>
+            <entity-find entity-name="service.internal.CarPlaces" list="wholeArea">
+                <econdition field-name="placeValue" value="${Area}"/>
+            </entity-find>
+            <script><![CDATA[
                         String floorArea = wholeArea.floor
                         String bayArea = wholeArea.bayNo
                         floorArea = "${floorArea - '[' - ']'}"
@@ -39,7 +39,9 @@
                                     <default-field title="Place">
                                         <drop-down allow-empty="false" allow-multiple="false">
                                             <entity-options key="${placeValue}">
-                                                <entity-find entity-name="service.internal.CarPlaces"/>
+                                                <entity-find entity-name="service.internal.CarPlaces">
+                                                    <econdition field-name="vacant" value="0"/>
+                                                </entity-find>
                                             </entity-options>
                                         </drop-down>
                                     </default-field>
