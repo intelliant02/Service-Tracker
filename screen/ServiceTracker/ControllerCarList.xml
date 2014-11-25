@@ -8,7 +8,7 @@
 
     <transition name="technicianStatusFloor">
         <actions>
-            <if condition="punchTechnician == 'In'">
+            <if condition="awaitingTechnician == 'Yes'">
                 <then>
                     <service-call name="update#service.tracker.Technicians" in-map="[carNo:carNo, jobId:jobId, technicianId:technicianId, inTime:ec.user.getNowTimestamp()]"/>
                     <service-call name="update#service.tracker.JobController" in-map="[carNo:carNo, technicianId:technicianId, awaitingTechnician:'Working', fromDate:fromDate]"/>
@@ -47,7 +47,6 @@
                                         <render-mode><text type="html" location="component://ServiceTracker/template/GroundFloorCars.html.gstring"/></render-mode>
                                         <container-dialog id="status" button-text="Status">
                                             <form-single name="technicianStatusFrom" transition="technicianStatusFloor">
-                                                <auto-fields-entity entity-name="Technicians" field-type="edit"/>
                                                 <field name="carNo">
                                                     <default-field title="Car No.">
                                                         <display text="${technician.carNo}"/>
@@ -56,6 +55,11 @@
                                                 <field name="technicianId">
                                                     <default-field title="Technician Id">
                                                         <display text="${technician.technicianId}"/>
+                                                    </default-field>
+                                                </field>
+                                                <field name="awaitingTechnician">
+                                                    <default-field title="Status">
+                                                        <display text="${technician.awaitingTechnician}"/>
                                                     </default-field>
                                                 </field>
                                                 <field name="jobId">
@@ -67,20 +71,6 @@
                                                     <default-field >
                                                         <display text="${technician.fromDate}"/>
                                                     </default-field>
-                                                </field>
-                                                <field name="punchTechnician">
-                                                    <default-field title="Technician Status">
-                                                        <drop-down allow-empty="false" allow-multiple="false">
-                                                            <option key="In"/>
-                                                            <option key="Out"/>
-                                                        </drop-down>
-                                                    </default-field>
-                                                </field>
-                                                <field name="inTime">
-                                                    <default-field title="In Time"><display/></default-field>
-                                                </field>
-                                                <field name="outTime">
-                                                    <default-field title="Out Time"><hidden/></default-field>
                                                 </field>
                                                 <field name="submitTechnicianStatus"><default-field title="Submit"><submit/></default-field></field>
                                             </form-single>
@@ -134,12 +124,17 @@
                                                     <default-field title="Car No.">
                                                         <display text="${technicianFirstFloor.carNo}"/>
                                                     </default-field>
-                                                    </field>
-                                                    <field name="technicianId">
-                                                        <default-field title="Technician Id">
-                                                            <display text="${technicianFirstFloor.technicianId}"/>
-                                                        </default-field>
-                                                    </field>
+                                                </field>
+                                                <field name="technicianId">
+                                                    <default-field title="Technician Id">
+                                                        <display text="${technicianFirstFloor.technicianId}"/>
+                                                    </default-field>
+                                                </field>
+                                                <field name="awaitingTechnician">
+                                                    <default-field title="Status">
+                                                        <display text="${technicianFirstFloor.awaitingTechnician}"/>
+                                                    </default-field>
+                                                </field>
                                                 <field name="jobId">
                                                     <default-field title="Job Id">
                                                         <display text="${technicianFirstFloor.jobId}"/>
@@ -148,14 +143,6 @@
                                                 <field name="fromDate">
                                                     <default-field>
                                                         <display text="${technicianFirstFloor.fromDate}"/>
-                                                    </default-field>
-                                                </field>
-                                                <field name="punchTechnician">
-                                                    <default-field title="Technician Status">
-                                                        <drop-down allow-empty="false" allow-multiple="false">
-                                                            <option key="In"/>
-                                                            <option key="Out"/>
-                                                        </drop-down>
                                                     </default-field>
                                                 </field>
                                                 <field name="submitTechnicianStatusFirstFloor"><default-field title="Submit"><submit/></default-field></field>
