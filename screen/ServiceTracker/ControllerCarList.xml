@@ -18,7 +18,7 @@
                     <service-call name="update#service.tracker.JobController" in-map="[carNo:carNo, technicianId:technicianId, awaitingTechnician:'Done']"/>
                 </else>
             </if>
-        </actions>
+        </actions> 
         <default-response url="../Service"/>
     </transition>
 
@@ -46,7 +46,7 @@
                                     <container type="li">
                                         <render-mode><text type="html" location="component://ServiceTracker/template/GroundFloorCars.html.gstring"/></render-mode>
                                         <container-dialog id="status" button-text="Status">
-                                            <form-single name="technicianStatusFrom" transition="technicianStatusFloor">
+                                            <form-single name="technicianStatusFrom" transition="technicianStatusFloor"  helpId="technician-entry" create-help="true" helpContent="Here a technician can punch-in and punch-out for his car job">
                                                 <field name="carNo">
                                                     <default-field title="Car No.">
                                                         <display text="${technician.carNo}"/>

@@ -150,6 +150,7 @@
             <parameter name="driverName" required="true"><matches regexp="[a-zA-Z ]*$"/></parameter><!--TODO: Need to change some attribute -->
             <parameter name="driverMobile" required="true"><matches regexp="^\d?(?:(?:[\+]?(?:[\d]{1,3}(?:[ ]+|[\-.])))?[(]?(?:[\d]{3})[\-/)]?(?:[ ]+)?)?(?:[a-zA-Z2-9][a-zA-Z0-9 \-.]{6,})(?:(?:[ ]+|[xX]|(i:ext[\.]?)){1,2}(?:[\d]{1,5}))?$"/></parameter>
             <parameter name="job"/>
+            <parameter name="promisedTime"/>
             <parameter name="beforeRoadTest"/>
             <parameter name="afterRoadTest"/>
             <parameter name="carStatus"/>
@@ -157,7 +158,7 @@
         </in-parameters>
         <actions>
             <service-call name="create#service.tracker.AdviserEntry"  in-map="[carNo:carNo, customerName:customerName, mobileNo:mobileNo,
-                                                                               PromisedTime:PromisedTime, driverName:driverName, driverMobile:driverMobile,
+                                                                               promisedTime:promisedTime, driverName:driverName, driverMobile:driverMobile,
                                                                                job:job, beforeRoadTest:beforeRoadTest, afterRoadTest:afterRoadTest]"/>
             <service-call name="update#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Service Adviser', outTime:ec.user.getNowTimestamp()]">
                 <econditions>

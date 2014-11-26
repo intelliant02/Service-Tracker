@@ -193,7 +193,7 @@ class ServiceTrackerServicesTest extends Specification {
         ec.service.sync().name("tracker.TrackerServices.createAdviserEntry")
                 .parameters([carNo:"WB-02-0004", customerName:"Deb", mobileNo:"9836545651",
                              driverName:"Raj", driverMobile:"9836545651",
-                             job:"PM(Free)", beforeRoadTest:"Yes", afterRoadTest:"No", capNumber: "1234567"]).call()
+                             job:"PM(Free)", beforeRoadTest:"Yes", afterRoadTest:"No", capNumber: "1234567", promisedTime:"2014-11-27 11:55"]).call()
         EntityValue getValue = ec.entity.makeFind("service.tracker.ReceptionEntity").condition("carNo", "WB-02-0004").one()
         EntityValue getSecurity = ec.entity.makeFind("service.tracker.SecurityCheck").condition("carNo", "WB-02-0004").one()
         EntityValue getAdviser = ec.entity.makeFind("service.tracker.AdviserEntry").condition("carNo", "WB-02-0004").one()
@@ -207,6 +207,7 @@ class ServiceTrackerServicesTest extends Specification {
         getAdviser.job == "PM(Free)"
         getAdviser.beforeRoadTest == "Yes"
         getAdviser.afterRoadTest == "No"
+        getAdviser.promisedTime != null
 
         cleanup:
         getSecurity.delete()
