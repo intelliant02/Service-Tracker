@@ -2,8 +2,11 @@
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.4.xsd"
         default-menu-include="false" standalone="true">
 
-    <transition name="dummyTransition">
-        <default-response url="."/>
+    <transition name="testDriveEntry">
+        <actions>
+            <!-- TODO: Find a way to show kmIn and kmOut conditionally -->
+            <service-call name="tracker.TrackerServices.create#TestDriveTechnician" in-map="[carNo:carNo, kmIn:kmIn, kmOut:kmOut]"/></actions>
+        <default-response url="../Service"/>
     </transition>
 
     <transition name="technicianStatusFloor">
@@ -18,7 +21,7 @@
                     <service-call name="update#service.tracker.JobController" in-map="[carNo:carNo, technicianId:technicianId, awaitingTechnician:'Done']"/>
                 </else>
             </if>
-        </actions> 
+        </actions>
         <default-response url="../Service"/>
     </transition>
 
@@ -76,7 +79,7 @@
                                             </form-single>
                                         </container-dialog>
                                         <container-dialog id="technician-test-drive" button-text="Test Drive">
-                                            <form-single name="technician-test-drive-form" transition="dummyTransition">
+                                            <form-single name="technician-test-drive-form" transition="testDriveEntry">
                                                 <field name="carNo">
                                                     <default-field title="Car No."><display text="${technician.carNo}"/></default-field>
                                                 </field>
@@ -149,7 +152,7 @@
                                             </form-single>
                                         </container-dialog>
                                         <container-dialog id="technician-test-drive-first" button-text="Test Drive">
-                                            <form-single name="technician-test-drive-first-form" transition="dummyTransition">
+                                            <form-single name="technician-test-drive-first-form" transition="testDriveEntry">
                                                 <field name="carNo">
                                                     <default-field title="Car No."><display text="${technicianFirstFloor.carNo}"/></default-field>
                                                 </field>
@@ -159,7 +162,7 @@
                                                     </default-field>
                                                 </field>
                                                 <field name="kmOut"><default-field title="Km Out"><text-line size="20"/></default-field> </field>
-                                                <field name="technicianTestDriveFirstSubmitButton"><default-field title="Test Drive"><submit/></default-field></field>
+                                                <field name="technicianTestDriveFirstSubmitButton"><default-field title="Test Drive1"><submit/></default-field></field>
                                             </form-single>
                                         </container-dialog>
                                     </container>

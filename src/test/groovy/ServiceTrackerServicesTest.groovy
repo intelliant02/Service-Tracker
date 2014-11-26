@@ -281,6 +281,24 @@ class ServiceTrackerServicesTest extends Specification {
         then:
         technicianList != null
 
+        cleanup:
+        ec.entity.makeFind("service.tracker.JobController").condition("carNo", "WB-02-0013").deleteAll()
+        ec.entity.makeFind("service.tracker.Technicians").condition("carNo", "WB-02-0013").deleteAll()
+    }
+
+    def "Test for test drive of technician"() {
+        when:
+        ec.service.sync().name("tracker.TrackerServices.createTestDriveTechnician").parameters([carNo: "WB-02G-00006", kmIn:"123455"]).call()
+        ec.service.sync().name("tracker.TrackerServices.createTestDriveTechnician").parameters([carNo:"WB-02G-00006", kmOut:"123456"]).call()
+        EntityValue getTotalTestDrive = ec.entity.makeFind("service.tracker.TestDriveTechnician").condition("carNo", "WB-02G-00006").one()
+        then:
+        getTotalTestDrive != null
+        getTotalTestDrive.testKey != null
+        getTotalTestDrive.kmIn == 123455
+        getTotalTestDrive.kmOut == 123456
+
+        cleanup:
+        ec.entity.makeFind("service.tracker.TestDriveTechnician").condition("carNo", "WB-02G-00006").deleteAll()
     }
 
 }

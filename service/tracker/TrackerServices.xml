@@ -223,4 +223,34 @@
             <service-call name="create#service.tracker.CarInvoice" in-map="[carNo:carNo, carInvoice:carInvoice]"/>
         </actions>
     </service>
+
+    <!--============= Service for Test drive(Technician) =============-->
+    <service verb="create" noun="TestDriveTechnician" authenticate="false">
+        <in-parameters>
+            <parameter name="carNo" required="true"/>
+            <parameter name="kmIn"/>
+            <parameter name="kmOut"/>
+        </in-parameters>
+        <out-parameters><parameter name="testKey"/></out-parameters>
+        <actions>
+            <if condition="kmIn">
+                <then>
+                    <service-call name="create#service.tracker.TestDriveTechnician" in-map="[carNo:carNo, kmIn:kmIn]"/>
+                </then>
+                <else>
+                    <entity-find entity-name="service.tracker.TestDriveTechnician" list="getTestKey">
+                        <econditions combine="and">
+                            <econdition field-name="carNo" value="${carNo}"/>
+                            <econdition field-name="kmOut" from="null"/>
+                        </econditions>
+                    </entity-find>
+                    <script> <![CDATA[
+                                    String testKeyInField = getTestKey.testKey
+                                    testKeyInField = testKeyInField - '[' - ']'
+                  ]]></script>
+                    <service-call name="update#service.tracker.TestDriveTechnician" in-map="[carNo:carNo, testKey:testKeyInField, kmOut:kmOut]"/>
+                </else>
+            </if>
+        </actions>
+    </service>
 </services>
