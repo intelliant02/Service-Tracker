@@ -91,6 +91,7 @@
                     <econdition field-name="area" value="Ground floor"/>
                     <econdition field-name="outTime" from="null"/>
                 </econditions>
+                <order-by field-name="bayNo"/>
             </entity-find>
         </actions>
     </service>
