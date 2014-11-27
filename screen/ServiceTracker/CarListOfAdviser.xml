@@ -7,11 +7,19 @@
             <entity-find entity-name="service.internal.CarPlaces" list="wholeArea">
                 <econdition field-name="placeValue" value="${Area}"/>
             </entity-find>
+
+            <entity-find entity-name="service.internal.TechnicianMember" list="getTechnicianList">
+                <econdition field-name="nameId" value="${Technician}"/>
+            </entity-find>
+
             <script><![CDATA[
+                        String technicianId = getTechnicianList.id
+                        technicianId = "${technicianId - '[' - ']'}"
                         String floorArea = wholeArea.floor
                         String bayArea = wholeArea.bayNo
                         floorArea = "${floorArea - '[' - ']'}"
                         bayArea = "${bayArea - '[' - ']'}"
+                        ec.message.addError(technicianId)
         ]]></script>
             <service-call name="tracker.TrackerServices.create#JobController" in-map="carNo:carNo, area:floorArea, bayNo:bayArea, technicianId:technicianId, jobId:jobId, awaitingTechnician:awaitingTechnician"/>
         </actions>
@@ -46,8 +54,14 @@
                                         </drop-down>
                                     </default-field>
                                 </field>
-                                <field name="technicianId">
-                                    <default-field title="Technician Id"><text-line size="5"/></default-field>
+                                <field name="Technician">
+                                    <default-field title="Technician">
+                                        <drop-down allow-empty="false" allow-multiple="false">
+                                            <entity-options key="${nameId}">
+                                                <entity-find entity-name="service.internal.TechnicianMember"/>
+                                            </entity-options>
+                                        </drop-down>
+                                    </default-field>
                                 </field>
                                 <field name="jobId"><default-field title="Job Id"><text-line size="4"/></default-field></field>
                                 <field name="awaitingTechnician">

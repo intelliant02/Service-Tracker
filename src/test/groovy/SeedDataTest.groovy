@@ -63,4 +63,11 @@ class SeedDataTest extends Specification {
         then:
         showResult.vacant == '0'
     }
+
+    def "Test for Technician member"() {
+        when:
+        def showResult = ec.entity.makeFind("service.internal.TechnicianMember").list()
+        then:
+        showResult.size() == 8
+    }
 }

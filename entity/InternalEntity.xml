@@ -42,4 +42,20 @@
         </seed-data>
     </entity>
 
+    <entity entity-name="TechnicianMember" package-name="service.internal">
+        <field name="name" type="text-long"/>
+        <field name="id" type="text-medium" is-pk="true"/>
+        <field name="nameId" type="text-medium"/>
+        <seed-data>
+            <service.internal.TechnicianMember name="Rajib" id="1" nameId="Rajib(1)"/>
+            <service.internal.TechnicianMember name="Ritesh" id="2" nameId="Ritesh(2)"/>
+            <service.internal.TechnicianMember name="Rishi" id="3" nameId="Rishi(3)"/>
+            <service.internal.TechnicianMember name="Debashish" id="4" nameId="Debashish(4)"/>
+            <service.internal.TechnicianMember name="Tom" id="5" nameId="Tom(5)"/>
+            <service.internal.TechnicianMember name="Harry" id="6" nameId="Harry(6)"/>
+            <service.internal.TechnicianMember name="Animesh" id="7" nameId="Animesh(7)"/>
+            <service.internal.TechnicianMember name="Kaushik" id="8" nameId="Kaushik(8)"/>
+        </seed-data>
+    </entity>
+
 </entities>
