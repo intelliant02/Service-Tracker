@@ -10,54 +10,78 @@
         <default-response url="../Service"/>
     </transition>
     <actions>
-        <entity-find entity-name="service.tracker.CarInvoice" list="getInvoice">
-            <econditions>
-                <econdition field-name="carNo" value="${carNo}"/>
-            </econditions>
-        </entity-find>
         <service-call name="tracker.TrackerServices.getDelivery#StatusOfCar" in-map="context" out-map="context"/>
     </actions>
     <widgets>
         <container id="delivery-section">
             <section-iterate name="carDeliver" list="deliveryList" entry="deliver">
+                <actions>
+                    <!--============== Details from Reception ==============-->
+                    <entity-find entity-name="service.tracker.ReceptionEntityAndCarStatus" list="lastReceptionList">
+                        <econdition field-name="carNo" value="${deliver.carNo}"/>
+                        <econdition field-name="carStatus" value="Reception"/>
+                    </entity-find>
+                    <set field="job" value="${(lastReceptionList.job).last()}"/>
+                    <set field="serviceAdviser" value="${(lastReceptionList.serviceAdviser).last()}"/>
+                    <set field="gift" value="${(lastReceptionList.gift).last()}"/>
+                    <set field="dropCar" value="${(lastReceptionList.dropCar).last()}"/>
+                    <!--==============  ==============-->
+                    <!--============== Details from Reception ==============-->
+                    <entity-find entity-name="service.tracker.AdviserEntryAndCarStatus" list="lastAdviserList">
+                        <econdition field-name="carNo" value="${deliver.carNo}"/>
+                        <econdition field-name="carStatus" value="Service Adviser"/>
+                    </entity-find>
+                    <set field="customerName" value="${(lastAdviserList.customerName).last()}"/>
+                    <set field="mobileNo" value="${(lastAdviserList.mobileNo).last()}"/>
+                    <set field="promisedTime" value="${(lastAdviserList.promisedTime).last()}"/>
+                    <!--==============  ==============-->
+                </actions>
                 <widgets>
                     <container>
-                        <section name="conditionalField">
-                            <condition>
-                                <expression>getInvoice != null</expression>
-                            </condition>
-                            <widgets>
-                                <label text="${deliver.carNo}"/>
-                                <container-dialog id="invoice-delivery" button-text="Invoice">
-                                    <form-single name="invoice-form" transition="doneInvoice">
-                                        <field name="carNo">
-                                            <default-field title="Car No:">
-                                                <display text="${deliver.carNo}"/>
-                                            </default-field>
-                                        </field>
-                                        <field name="totalInvoice">
-                                            <default-field title="Total Invoice:">
-                                                <text-line size="5"/>
-                                            </default-field>
-                                        </field>
-                                        <field name="submitInvoice"> <default-field title="submit"><submit/></default-field></field>
-                                    </form-single>
-                                </container-dialog>
-                            </widgets>
-                            <fail-widgets>
-                                <form-single name="deliver-list" transition="finishDeliver">
-                                    <field name="submitButton"><default-field title="Deliver"><submit/></default-field></field>
-                                    <field name="carNo">
-                                        <default-field title="">
-                                            <display text="${deliver.carNo}"/>
-                                        </default-field>
-                                    </field>
-                                    <field-layout>
-                                        <field-row-big><field-ref name="carNo"/><field-ref name="submitButton"/></field-row-big>
-                                    </field-layout>
-                                </form-single>
-                            </fail-widgets>
-                        </section>
+                        <container-dialog id="invoice-delivery" button-text="Done">
+                            <label type="h1" text="Details of car ${deliver.carNo}"/>
+                            <form-single name="invoice-form" transition="doneInvoice">
+
+                                <field name="job">
+                                    <default-field title="Job:">
+                                        <display text="${job}"/>
+                                    </default-field>
+                                </field>
+                                <field name="serviceAdviser">
+                                    <default-field title="Service Adviser">
+                                        <display text="${serviceAdviser}"/>
+                                    </default-field>
+                                </field>
+                                <field name="gift">
+                                    <default-field title="Gift">
+                                        <display text="${gift}"/>
+                                    </default-field>
+                                </field>
+                                <field name="dropCar">
+                                    <default-field title="Drop Car">
+                                        <display text="${dropCar}"/>
+                                    </default-field>
+                                </field>
+                                <field name="customerName">
+                                    <default-field title="CustomerName">
+                                        <display text="${customerName}"/>
+                                    </default-field>
+                                </field>
+                                <field name="mobileNo">
+                                    <default-field title="Mobile No:">
+                                        <display text="${mobileNo}"/>
+                                    </default-field>
+                                </field>
+                                <field name="dropCar">
+                                    <default-field title="Promised Time">
+                                        <display text="${promisedTime}"/>
+                                    </default-field>
+                                </field>
+
+
+                                <field name="submitInvoice"> <default-field title="submit"><submit/></default-field></field>
+                            </form-single>
+                        </container-dialog>
                     </container>
                 </widgets>
             </section-iterate>
