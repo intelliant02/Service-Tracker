@@ -35,7 +35,7 @@ class ServiceTrackerServicesTest extends Specification {
         when:
         ec.entity.makeValue("service.tracker.AdviserEntry")
                 .setAll([carNo: "WB-02-0001", customerName: "Rahul", customerMobile: "9830984765", driverName: "Roy",
-                         driverMobile: "9840857843", beforeRoadTest: "Yes", afterRoadTest: "Yes", capNumber:"1234567"]).create()
+                driverMobile: "9840857843", beforeRoadTest: "Yes", afterRoadTest: "Yes", capNumber:"1234567"]).create()
         EntityValue created = ec.entity.makeFind("service.tracker.AdviserEntry").condition("carNo", "WB-02-0001").one()
 
         then:
@@ -69,7 +69,7 @@ class ServiceTrackerServicesTest extends Specification {
                 .parameters([carNo: "WB-02-0003", kmIn: "123"]).call()
         ec.service.sync().name("tracker.TrackerServices.createReceptionEntity")
                 .parameters([carNo: "WB-02-0003", job: "PM(Free)", serviceAdviser: "Abhishek Bagchi(101)", driverOrOwner: "Owner",
-                             gift: "Yes", dropCar: "Yes", customerWaiting: "No"]).call()
+                gift: "Yes", dropCar: "Yes", customerWaiting: "No"]).call()
         EntityValue getValue = ec.entity.makeFind("service.tracker.ReceptionEntity").condition("carNo", "WB-02-0003").one()
         EntityValue getSecurity = ec.entity.makeFind("service.tracker.SecurityCheck").condition("carNo", "WB-02-0003").one()
 
@@ -94,11 +94,8 @@ class ServiceTrackerServicesTest extends Specification {
         Map getReceptionList = ec.service.sync().name("tracker.TrackerServices.getSecurityAndCarStatus").call()
 
         then:
-        getReceptionList != null
-        getReceptionList.receptionCarList.kmIn != null
-        getReceptionList.receptionCarList.carNo != null
-        getReceptionList.receptionCarList.outTime != null
-        getReceptionList.receptionCarList.carStatus != null
+        (getReceptionList.receptionCarList.carNo).contains("WB-02-0007")
+        (getReceptionList.receptionCarList.kmIn).contains("123")
 
         cleanup:
         ec.entity.makeFind("service.tracker.SecurityCheck").condition("carNo", "WB-02-0007").deleteAll()
@@ -107,23 +104,15 @@ class ServiceTrackerServicesTest extends Specification {
 
     def "Check all the car list in Adviser section"() {
         when:
-        ec.entity.makeFind("service.tracker.ReceptionEntity").condition("carNo", "WB-02G-00007").deleteAll()
-        ec.entity.makeFind("service.tracker.StatusOfCar").condition("carNo", "WB-02G-00007").deleteAll()
         ec.entity.makeValue("service.tracker.ReceptionEntity").setAll([carNo:"WB-02G-00007", job:"PM(Free)", serviceAdviser:"Abhishek Bagchi(101)", driverOrOwner:"Owner",
-                                                                       gift:"Yes", dropCar:"Yes", customerWaiting:"No"]).create()
+                gift:"Yes", dropCar:"Yes", customerWaiting:"No"]).create()
         ec.entity.makeValue("service.tracker.StatusOfCar").setAll([carNo:"WB-02G-00007", carStatus: "Service Adviser"]).create()
         def getAdviserList = ec.service.sync().name("tracker.TrackerServices.getReceptionEntityAndCarStatus").call()
 
         then:
-        getAdviserList != null
-        getAdviserList.adviserCarList.carNo != null
-        getAdviserList.adviserCarList.job != null
-        getAdviserList.adviserCarList.serviceAdviser != null
-        getAdviserList.adviserCarList.driverOrOwner != null
-        getAdviserList.adviserCarList.gift != null
-        getAdviserList.adviserCarList.dropCar != null
-        getAdviserList.adviserCarList.customerWaiting != null
-        getAdviserList.adviserCarList.carStatus != null
+        (getAdviserList.adviserCarList.carNo).contains("WB-02G-00007")
+        (getAdviserList.adviserCarList.serviceAdviser).contains("Abhishek Bagchi(101)")
+        (getAdviserList.adviserCarList.carStatus).contains("Service Adviser")
 
         cleanup:
         ec.entity.makeFind("service.tracker.ReceptionEntity").condition("carNo", "WB-02G-00007").deleteAll()
@@ -152,14 +141,14 @@ class ServiceTrackerServicesTest extends Specification {
                 .parameters([carNo: "WB-02G-00007", kmIn: "123"]).call()
         ec.service.sync().name("tracker.TrackerServices.createReceptionEntity")
                 .parameters([carNo: "WB-02G-00007", job: "PM(Free)", serviceAdviser: "Abhishek Bagchi(101)", driverOrOwner: "Owner",
-                             gift: "Yes", dropCar: "Yes", customerWaiting: "No"]).call()
+                gift: "Yes", dropCar: "Yes", customerWaiting: "No"]).call()
         ec.service.sync().name("tracker.TrackerServices.createAdviserEntry")
                 .parameters([carNo:"WB-02G-00007", customerName:"Deb", mobileNo:"9836545651",
-                             driverName:"Raj", driverMobile:"9836545651",
-                             job:"PM(Free)", beforeRoadTest:"Yes", afterRoadTest:"No", capNumber: "123456"]).call()
+                driverName:"Raj", driverMobile:"9836545651",
+                job:"PM(Free)", beforeRoadTest:"Yes", afterRoadTest:"No", capNumber: "123456"]).call()
         ec.service.sync().name("tracker.TrackerServices.createJobController")
                 .parameters([carNo:"WB-02G-00007" , area:"Ground floor", bayNo:"2", technicianId:"123456", awaitingTechnician:"Yes",
-                             jobId:'job1']).call()
+                jobId:'job1']).call()
         EntityValue getSecurity = ec.entity.makeFind("service.tracker.SecurityCheck").condition("carNo", "WB-02G-00007").one()
         EntityValue getReception = ec.entity.makeFind("service.tracker.ReceptionEntity").condition("carNo", "WB-02G-00007").one()
         EntityValue getJobController = ec.entity.makeFind("service.tracker.JobController").condition("carNo", "WB-02G-00007").one()
@@ -189,11 +178,11 @@ class ServiceTrackerServicesTest extends Specification {
                 .parameters([carNo: "WB-02-0004", kmIn: "123"]).call()
         ec.service.sync().name("tracker.TrackerServices.createReceptionEntity")
                 .parameters([carNo: "WB-02-0004", job: "PM(Free)", serviceAdviser: "Abhishek Bagchi(101)", driverOrOwner: "Owner",
-                             gift: "Yes", dropCar: "Yes", customerWaiting: "No"]).call()
+                gift: "Yes", dropCar: "Yes", customerWaiting: "No"]).call()
         ec.service.sync().name("tracker.TrackerServices.createAdviserEntry")
                 .parameters([carNo:"WB-02-0004", customerName:"Deb", mobileNo:"9836545651",
-                             driverName:"Raj", driverMobile:"9836545651",
-                             job:"PM(Free)", beforeRoadTest:"Yes", afterRoadTest:"No", capNumber: "1234567", promisedTime:"2014-11-27 11:55"]).call()
+                driverName:"Raj", driverMobile:"9836545651",
+                job:"PM(Free)", beforeRoadTest:"Yes", afterRoadTest:"No", capNumber: "1234567", promisedTime:"2014-11-27 11:55"]).call()
         EntityValue getValue = ec.entity.makeFind("service.tracker.ReceptionEntity").condition("carNo", "WB-02-0004").one()
         EntityValue getSecurity = ec.entity.makeFind("service.tracker.SecurityCheck").condition("carNo", "WB-02-0004").one()
         EntityValue getAdviser = ec.entity.makeFind("service.tracker.AdviserEntry").condition("carNo", "WB-02-0004").one()
@@ -221,22 +210,21 @@ class ServiceTrackerServicesTest extends Specification {
         when:
         ec.entity.makeFind("service.tracker.AdviserEntry").condition("carNo", "WB-02-0010").deleteAll()
         ec.entity.makeValue("service.tracker.AdviserEntry").setAll([carNo:"WB-02-0010", customerName:"Deb", mobileNo:"9836545651",
-                                                                    driverName:"Raj", driverMobile:"9836545651",
-                                                                    job:"PM(Free)", beforeRoadTest:"Yes", afterRoadTest:"No", capNumber: "123456"]).create()
+                driverName:"Raj", driverMobile:"9836545651",
+                job:"PM(Free)", beforeRoadTest:"Yes", afterRoadTest:"No", capNumber: "123456"]).create()
         ec.entity.makeValue("service.tracker.StatusOfCar").setAll([carNo:"WB-02-0010", carStatus: "Job Controller"]).create()
         Map getControllerList = ec.service.sync().name("tracker.TrackerServices.getAdviserEntryAndCarStatus").call()
 
         then:
-        getControllerList != null
-        getControllerList.jobControllerCarList.carNo != null
-        getControllerList.jobControllerCarList.customerName != null
-        getControllerList.jobControllerCarList.mobileNo != null
-        getControllerList.jobControllerCarList.driverName != null
-        getControllerList.jobControllerCarList.driverMobile != null
-        getControllerList.jobControllerCarList.job != null
-        getControllerList.jobControllerCarList.beforeRoadTest != null
-        getControllerList.jobControllerCarList.afterRoadTest != null
-        getControllerList.jobControllerCarList.carStatus != null
+        getControllerList.jobControllerCarList.carNo.contains("WB-02-0010")
+        getControllerList.jobControllerCarList.customerName.contains("Deb")
+        getControllerList.jobControllerCarList.mobileNo.contains("9836545651")
+        getControllerList.jobControllerCarList.driverName.contains("Raj")
+        getControllerList.jobControllerCarList.driverMobile.contains("9836545651")
+        getControllerList.jobControllerCarList.job.contains("PM(Free)")
+        getControllerList.jobControllerCarList.beforeRoadTest.contains("Yes")
+        getControllerList.jobControllerCarList.afterRoadTest.contains("No")
+        getControllerList.jobControllerCarList.carStatus.contains("Job Controller")
 
         cleanup:
         ec.entity.makeFind("service.tracker.AdviserEntry").condition("carNo", "WB-02-0010").deleteAll()
@@ -263,9 +251,8 @@ class ServiceTrackerServicesTest extends Specification {
         def deliveryCarList = ec.service.sync().name("tracker.TrackerServices.getDeliveryStatusOfCar").call()
 
         then:
-        deliveryCarList != null
-        deliveryCarList.deliveryList.carNo != null
-        deliveryCarList.deliveryList.carStatus != null
+        (deliveryCarList.deliveryList.carNo).contains("WB-02-0012")
+        (deliveryCarList.deliveryList.carStatus).contains("Ready for Delivered")
 
         cleanup:
         ec.entity.makeFind("service.tracker.StatusOfCar").condition("carNo", "WB-02-0012").deleteAll()
@@ -273,17 +260,35 @@ class ServiceTrackerServicesTest extends Specification {
 
     def "Check all the car list in Technician section"() {
         when:
-        ec.entity.makeValue("service.tracker.JobController").setAll([carNo:"WB-02-0013" , area:"Ground Floor", bayNo:"1", technicianId:"123456", awaitingTechnician:"Yes",
-                                                                     jobId:'job1', fromDate:ec.user.getNowTimestamp()]).create()
-        ec.entity.makeValue("service.tracker.Technicians").setAll([carNo:"WB-02-0013", jobId:'job1', technicianId:"123456", fromDate:ec.user.getNowTimestamp()]).create()
-        def technicianList = ec.service.sync().name("tracker.TrackerServices.getDeliveryStatusOfCar").call()
+        ec.entity.makeValue("service.tracker.JobController").setAll([carNo:"WB-02-0013" , area:"Ground floor", bayNo:"1", awaitingTechnician:"Yes",
+                fromDate:ec.user.getNowTimestamp()]).create()
+        ec.entity.makeValue("service.tracker.Technicians").setAll([carNo:"WB-02-0013", jobId:'Job1', technicianId:"123456", fromDate:ec.user.getNowTimestamp()]).create()
+        def getTechnicianList = ec.service.sync().name("tracker.TrackerServices.getJobControllerAndTechnician").call()
 
         then:
-        technicianList != null
+        (getTechnicianList.technicianList.carNo).contains("WB-02-0013")
+        (getTechnicianList.technicianList.area).contains("Ground floor")
+        (getTechnicianList.technicianList.bayNo).contains("1")
+        (getTechnicianList.technicianList.technicianId).contains("123456")
+        (getTechnicianList.technicianList.awaitingTechnician).contains("Yes")
+        (getTechnicianList.technicianList.jobId).contains("Job1")
 
         cleanup:
         ec.entity.makeFind("service.tracker.JobController").condition("carNo", "WB-02-0013").deleteAll()
         ec.entity.makeFind("service.tracker.Technicians").condition("carNo", "WB-02-0013").deleteAll()
+    }
+
+    def "Check all the car list in Delivery section"() {
+        when:
+        ec.entity.makeValue("service.tracker.StatusOfCar").setAll([carNo:"WB-02-0013", carStatus:"Ready for Delivered"]).create()
+        def getDeliveryList = ec.service.sync().name("tracker.TrackerServices.getDeliveryStatusOfCar").call()
+
+        then:
+        (getDeliveryList.deliveryList.carNo).contains("WB-02-0013")
+        (getDeliveryList.deliveryList.carStatus).contains("Ready for Delivered")
+
+        cleanup:
+        ec.entity.makeFind("service.tracker.StatusOfCar").condition("carNo", "WB-02-0013").deleteAll()
     }
 
     def "Test for test drive of technician"() {
