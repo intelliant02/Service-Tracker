@@ -170,7 +170,7 @@
             <message text="${getInvoice}"/>
         </actions>
     </service>
-
+    <!--============= Service for retrieve list of car which is ready for delivery =============-->
     <service verb="getWashing" noun="StatusOfCar" authenticate="false">
         <in-parameters>
             <auto-parameters include="all"/>
@@ -197,7 +197,7 @@
             <service-call name="update#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Washing', outTime:ec.user.getNowTimestamp()]"/>
         </actions>
     </service>
-
+    <!--============= Service for Car Delivery =============-->
     <service verb="getDelivery" noun="StatusOfCar" authenticate="false">
         <in-parameters>
             <auto-parameters include="all"/>
@@ -214,7 +214,7 @@
             </entity-find>
         </actions>
     </service>
-
+    <!--============= Service for Car Invoice =============-->
     <service verb="create" noun="CarInvoice" authenticate="false">
         <in-parameters>
             <parameter name="carNo" required="true"/>
@@ -245,10 +245,7 @@
                             <econdition field-name="kmOut" from="null"/>
                         </econditions>
                     </entity-find>
-                    <script> <![CDATA[
-                                    String testKeyInField = getTestKey.testKey
-                                    testKeyInField = testKeyInField - '[' - ']'
-                  ]]></script>
+                    <set field="testKeyInField" value="${(getTestKey.testKey).last()}"/>
                     <service-call name="update#service.tracker.TestDriveTechnician" in-map="[carNo:carNo, testKey:testKeyInField, kmOut:kmOut]"/>
                 </else>
             </if>

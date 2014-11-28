@@ -11,17 +11,10 @@
             <entity-find entity-name="service.internal.TechnicianMember" list="getTechnicianList">
                 <econdition field-name="nameId" value="${Technician}"/>
             </entity-find>
-
-            <script><![CDATA[
-                        String technicianId = getTechnicianList.id
-                        technicianId = "${technicianId - '[' - ']'}"
-                        String floorArea = wholeArea.floor
-                        String bayArea = wholeArea.bayNo
-                        floorArea = "${floorArea - '[' - ']'}"
-                        bayArea = "${bayArea - '[' - ']'}"
-                        ec.message.addError(technicianId)
-        ]]></script>
-            <service-call name="tracker.TrackerServices.create#JobController" in-map="carNo:carNo, area:floorArea, bayNo:bayArea, technicianId:technicianId, jobId:jobId, awaitingTechnician:awaitingTechnician"/>
+            <set field="technicianId" value="${(getTechnicianList.id).last()}"/>
+            <set field="floorArea" value="${(wholeArea.floor).last()}"/>
+            <set field="bayArea" value="${(wholeArea.bayNo).last()}"/>
+        <service-call name="tracker.TrackerServices.create#JobController" in-map="carNo:carNo, area:floorArea, bayNo:bayArea, technicianId:technicianId, jobId:jobId, awaitingTechnician:awaitingTechnician"/>
         </actions>
         <default-response url="../Service"/>
     </transition>
@@ -81,3 +74,4 @@
         </container>
     </widgets>
 </screen>
+        
