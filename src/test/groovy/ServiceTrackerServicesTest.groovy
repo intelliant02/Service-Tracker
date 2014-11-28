@@ -233,13 +233,13 @@ class ServiceTrackerServicesTest extends Specification {
 
     def "Check all the car list in washing section"() {
         when:
-        ec.entity.makeValue("service.tracker.StatusOfCar").setAll([carNo:"WB-02-0011", carStatus: "Job Controller"]).create()
+        ec.entity.makeValue("service.tracker.StatusOfCar").setAll([carNo:"WB-02-0011", carStatus: "Washing"]).create()
         def washingCarList = ec.service.sync().name("tracker.TrackerServices.getWashingStatusOfCar").call()
 
         then:
         washingCarList != null
-        washingCarList.washingList.carNo != null
-        washingCarList.washingList.carStatus != null
+        (washingCarList.washingList.carNo).contains("WB-02-0011")
+        (washingCarList.washingList.carStatus).contains("Washing")
 
         cleanup:
         ec.entity.makeFind("service.tracker.StatusOfCar").condition("carNo", "WB-02-0011").deleteAll()
