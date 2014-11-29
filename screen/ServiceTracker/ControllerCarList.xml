@@ -28,14 +28,6 @@
 
     <actions>
         <service-call name="tracker.TrackerServices.get#JobControllerAndTechnician" in-map="context" out-map="context"/>
-        <entity-find entity-name="JobControllerAndTechnician" list="technicianListFirstFloor">
-            <econditions combine="and">
-                <econdition field-name="area" value="First floor"/>
-                <econdition field-name="outTime" from="null"/>
-
-            </econditions>
-            <order-by field-name="bayNo"/>
-        </entity-find>
     </actions>
 
     <widgets>
