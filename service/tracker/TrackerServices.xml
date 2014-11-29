@@ -84,11 +84,19 @@
         <in-parameters><auto-parameters include="all"/></in-parameters>
         <out-parameters>
             <parameter name="technicianList" type="List"/>
+            <parameter name="technicianListFirstFloor" type="List"/>
         </out-parameters>
         <actions>
             <entity-find entity-name="JobControllerAndTechnician" list="technicianList">
                 <econditions combine="and">
                     <econdition field-name="area" value="Ground floor"/>
+                    <econdition field-name="outTime" from="null"/>
+                </econditions>
+                <order-by field-name="bayNo"/>
+            </entity-find>
+            <entity-find entity-name="JobControllerAndTechnician" list="technicianListFirstFloor">
+                <econditions combine="and">
+                    <econdition field-name="area" value="First floor"/>
                     <econdition field-name="outTime" from="null"/>
                 </econditions>
                 <order-by field-name="bayNo"/>
@@ -167,7 +175,6 @@
                 </econditions>
             </service-call>
             <service-call name="create#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Job Controller', inTime:ec.user.getNowTimestamp()]"/>
-            <message text="${getInvoice}"/>
         </actions>
     </service>
     <!--============= Service for retrieve list of car which is ready for delivery =============-->
