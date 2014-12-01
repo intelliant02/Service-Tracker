@@ -279,4 +279,17 @@ class ServiceTrackerServicesTest extends Specification {
         ec.entity.makeFind("service.tracker.TestDriveTechnician").condition("carNo", "WB-02G-00006").deleteAll()
     }
 
+    def "Test for Car Delivered to Customer"() {
+        when:
+        ec.entity.makeValue("service.tracker.StatusOfCar").setAll([carNo:"WB-02-0013", carStatus:"Ready for Delivered"]).create()
+        ec.service.sync().name("tracker.TrackerServices.carDeliveredStatusOfCar").parameters([carNo:"WB-02-0013"]).call()
+        EntityValue getCarDelivered = ec.entity.makeFind("service.tracker.StatusOfCar").condition("carNo", "WB-02-0013").one()
+
+        then:
+        getCarDelivered.outTime != null
+
+        cleanup:
+        ec.entity.makeFind("service.tracker.StatusOfCar").condition("carNo", "WB-02-0013").deleteAll()
+    }
+
 }
