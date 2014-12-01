@@ -258,4 +258,16 @@
             </if>
         </actions>
     </service>
+
+    <service verb="carDelivered" noun="StatusOfCar" authenticate="false">
+        <in-parameters><parameter name="carNo"/></in-parameters>
+        <actions>
+            <service-call name="update#service.tracker.StatusOfCar" in-map="[carNo:carNo, carStatus:'Ready for Delivered', outTime:ec.user.getNowTimestamp()]">
+                <econditions combine="and">
+                    <econdition field-name="carNo" value="${carNo}"/>
+                    <econdition field-name="outTime" from="null"/>
+                </econditions>
+            </service-call>
+        </actions>
+    </service>
 </services>

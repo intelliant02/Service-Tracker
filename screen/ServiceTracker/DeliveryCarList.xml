@@ -1,14 +1,12 @@
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.4.xsd"
         default-menu-include="false" standalone="true">
+
     <transition name="finishDeliver">
+        <service-call name="tracker.TrackerServices.carDelivered#StatusOfCar" in-map="[carNo:carNo]"/>
         <default-response url="../Service"/>
     </transition>
-    <transition name="doneInvoice">
-        <service-call name="tracker.TrackerServices.create#CarInvoice" in-map="context"
-                      out-map="context"/>
-        <default-response url="../Service"/>
-    </transition>
+
     <actions>
         <service-call name="tracker.TrackerServices.getDelivery#StatusOfCar" in-map="context" out-map="context"/>
     </actions>
@@ -21,66 +19,83 @@
                         <econdition field-name="carNo" value="${deliver.carNo}"/>
                         <econdition field-name="carStatus" value="Reception"/>
                     </entity-find>
-                    <set field="job" value="${(lastReceptionList.job).last()}"/>
-                    <set field="serviceAdviser" value="${(lastReceptionList.serviceAdviser).last()}"/>
-                    <set field="gift" value="${(lastReceptionList.gift).last()}"/>
-                    <set field="dropCar" value="${(lastReceptionList.dropCar).last()}"/>
                     <!--==============  ==============-->
-                    <!--============== Details from Reception ==============-->
+                    <!--============== Details from Adviser ==============-->
                     <entity-find entity-name="service.tracker.AdviserEntryAndCarStatus" list="lastAdviserList">
                         <econdition field-name="carNo" value="${deliver.carNo}"/>
                         <econdition field-name="carStatus" value="Service Adviser"/>
                     </entity-find>
-                    <set field="customerName" value="${(lastAdviserList.customerName).last()}"/>
-                    <set field="mobileNo" value="${(lastAdviserList.mobileNo).last()}"/>
-                    <set field="promisedTime" value="${(lastAdviserList.promisedTime).last()}"/>
                     <!--==============  ==============-->
+                    <!--============== Details of in and out time ==============-->
+                    <entity-find entity-name="service.tracker.StatusOfCar" list="lastStatusList">
+                        <econdition field-name="carNo" value="${deliver.carNo}"/>
+                    </entity-find>
+                    <!--============== Details of test drive ==============-->
+                    <entity-find entity-name="service.tracker.TestDriveTechnician" list="lastTestDriveList">
+                        <econdition field-name="carNo" value="${deliver.carNo}"/>
+                    </entity-find>
                 </actions>
                 <widgets>
                     <container>
-                        <container-dialog id="invoice-delivery" button-text="Done">
-                            <label type="h1" text="Details of car ${deliver.carNo}"/>
-                            <form-single name="invoice-form" transition="doneInvoice">
-
+                        <label text="${deliver.carNo}"/>
+                        <container-dialog id="car-details-delivery" button-text="Done">
+                            <label type="strong" text="Details of car ${deliver.carNo}"/>
+                            <form-single name="car-details-form" transition="finishDeliver">
                                 <field name="job">
                                     <default-field title="Job:">
-                                        <display text="${job}"/>
+                                        <display text="${(lastReceptionList.job).last()}"/>
                                     </default-field>
                                 </field>
                                 <field name="serviceAdviser">
-                                    <default-field title="Service Adviser">
-                                        <display text="${serviceAdviser}"/>
+                                    <default-field title="Service Adviser:">
+                                        <display text="${(lastReceptionList.serviceAdviser).last()}"/>
                                     </default-field>
                                 </field>
                                 <field name="gift">
-                                    <default-field title="Gift">
-                                        <display text="${gift}"/>
+                                    <default-field title="Gift:">
+                                        <display text="${(lastReceptionList.gift).last()}"/>
                                     </default-field>
                                 </field>
                                 <field name="dropCar">
-                                    <default-field title="Drop Car">
-                                        <display text="${dropCar}"/>
+                                    <default-field title="Drop Car:">
+                                        <display text="${(lastReceptionList.dropCar).last()}"/>
                                     </default-field>
                                 </field>
                                 <field name="customerName">
-                                    <default-field title="CustomerName">
-                                        <display text="${customerName}"/>
+                                    <default-field title="Customer Name:">
+                                        <display text="${(lastAdviserList.customerName).last()}"/>
                                     </default-field>
                                 </field>
                                 <field name="mobileNo">
                                     <default-field title="Mobile No:">
-                                        <display text="${mobileNo}"/>
+                                        <display text="${(lastAdviserList.mobileNo).last()}"/>
                                     </default-field>
                                 </field>
-                                <field name="dropCar">
-                                    <default-field title="Promised Time">
-                                        <display text="${promisedTime}"/>
+                                <field name="promisedTime">
+                                    <default-field title="Promised Time:">
+                                        <display text="${(lastAdviserList.promisedTime).last()}"/>
                                     </default-field>
                                 </field>
-
-
-                                <field name="submitInvoice"> <default-field title="submit"><submit/></default-field></field>
+                                <field name="carNo">
+                                    <default-field title="Car No: ">
+                                        <display text="${(lastAdviserList.carNo).last()}"/>
+                                    </default-field>
+                                </field>
+                                <field name="submitDelivery">
+                                    <default-field title="Delivered"><submit/></default-field>
+                                </field>
+                                <field-layout>
+                                    <field-row><field-ref name="job"/><field-ref name="serviceAdviser"/></field-row>
+                                    <field-row><field-ref name="gift"/><field-ref name="dropCar"/></field-row>
+                                    <field-row><field-ref name="customerName"/><field-ref name="mobileNo"/></field-row>
+                                    <field-row><field-ref name="promisedTime"/><field-ref name="carNo"/></field-row>
+                                    <fields-not-referenced/>
+                                </field-layout>
                             </form-single>
+                            <label type="strong" text="Time taken in every section"/>
+                            <render-mode><text type="html" location="component://ServiceTracker/template/TimeDetailsOfCar.ftl" template="true"/></render-mode>
+                            <label type="strong" text="Test drive"/>
+                            <render-mode><text type="html" location="component://ServiceTracker/template/TestDriveDetails.ftl" template="true"/></render-mode>
                         </container-dialog>
                     </container>
                 </widgets>
