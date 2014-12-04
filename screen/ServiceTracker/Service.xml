@@ -10,12 +10,21 @@
     <transition name="inspectorList"><default-response url="../InspectorCarList"/></transition>
     <transition name="washingList"><default-response url="../WashingCarList"/></transition>
     <transition name="deliverList"><default-response url="../DeliveryCarList"/></transition>
+    <actions>
+        <set field="getAllCar" from="ec.entity.makeFind('service.internal.CustomerDetails').list()"/>
+    </actions>
     <widgets>
         <label type="h3" text="Welcome to the Service Tracker system"/>
         <container>
             <container-dialog id="security-check" button-text="Security Check">
                 <form-single name="security-form" transition="createSecurityEntry">
-                    <auto-fields-entity entity-name="service.tracker.SecurityCheck" field-type="edit"/>
+                    <field name="carNo">
+                        <default-field title="Car No">
+                            <drop-down allow-empty="false">
+                                <list-options list="getAllCar" text="${carNo} - ${custName}"/>
+                            </drop-down>
+                        </default-field>
+                    </field>
                     <field name="kmIn">
                         <default-field title="Km In">
                             <text-line size="20"/>
