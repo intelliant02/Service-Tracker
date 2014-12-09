@@ -5,6 +5,11 @@
         <default-response url="."/>
     </transition>
 
+    <transition name="deleteTestDrive">
+        <service-call name="delete#TestDriveTechnician"/>
+        <default-response url="."/>
+    </transition>
+
     <transition name="deleteTechnician">
         <service-call name="tracker.DeleteServices.delete#Technicians"/>
         <default-response url="."/>
@@ -49,16 +54,21 @@
                 <econdition field-name="outTime" from="null"/>
             </econditions>
         </entity-find>
-        <entity-find entity-name="service.tracker.JobController" list="controllerList">
-            <search-form-inputs/>
+        <entity-find entity-name="service.tracker.SecurityCheck" list="getJobNumber">
+            <econditions combine="and">
+                <econdition field-name="carNo" value="WB-02G-00004"/>
+            </econditions>
         </entity-find>
+        <entity-find entity-name="service.tracker.JobController" list="controllerList"><search-form-inputs/></entity-find>
         <entity-find entity-name="service.tracker.JobControllerAndTechnician" list="findReceptionList"><search-form-inputs/></entity-find>
         <entity-find entity-name="service.tracker.JobController" list="receptionEntityList"><search-form-inputs/></entity-find>
+        <entity-find entity-name="service.tracker.AdviserEntry" list="adviserList"><search-form-inputs/></entity-find>
         <entity-find entity-name="service.tracker.StatusOfCar" list="receptionList"><search-form-inputs/></entity-find>
         <entity-find entity-name="service.tracker.SecurityCheck" list="securityTestList"><search-form-inputs/></entity-find>
         <entity-find entity-name="service.tracker.Technicians" list="technicianList"><search-form-inputs/></entity-find>
         <entity-find entity-name="service.internal.CustomerDetails" list="custList"><search-form-inputs/></entity-find>
         <entity-find entity-name="service.internal.CarPlaces" list="placeList"><search-form-inputs/></entity-find>
+        <entity-find entity-name="service.tracker.TestDriveTechnician" list="testDriveList"><search-form-inputs/></entity-find>
     </actions>
 
     <widgets>
@@ -76,12 +86,44 @@
                 <field name="submitButton"><default-field title="Delete"><submit/></default-field></field>
             </form-single>
         </container-dialog>
+        <container-dialog id="delete-test-drive" button-text="Delete Test Drive">
+            <form-single name="deleteTestDrive" transition="deleteTestDrive">
+                <field name="carNo">
+                    <default-field title="Car No">
+                        <drop-down>
+                            <entity-options key="${carNo}">
+                                <entity-find entity-name="TestDriveTechnician"/>
+                            </entity-options>
+                        </drop-down>
+                    </default-field>
+                </field>
+                <field name="testKey">
+                    <default-field title="Test Key">
+                        <drop-down>
+                            <entity-options key="${testKey}">
+                                <entity-find entity-name="TestDriveTechnician"/>
+                            </entity-options>
+                        </drop-down>
+                    </default-field>
+                </field>
+                <field name="submitButtonTest"><default-field title="Delete"><submit/></default-field></field>
+            </form-single>
+        </container-dialog>
         <container-dialog id="delete-security" button-text="Delete Security">
             <form-single name="deleteSecurityForm" transition="deleteSecurity">
                 <field name="carNo">
                     <default-field title="carNo" tooltip="This is the status of the example">
                         <drop-down allow-empty="false" allow-multiple="false">
                             <entity-options key="${carNo}">
+                                <entity-find entity-name="SecurityCheck"/>
+                            </entity-options>
+                        </drop-down>
+                    </default-field>
+                </field>
+                <field name="jobNumber">
+                    <default-field title="carNo" tooltip="This is the status of the example">
+                        <drop-down allow-empty="false" allow-multiple="false">
+                            <entity-options key="${jobNumber}">
                                 <entity-find entity-name="SecurityCheck"/>
                             </entity-options>
                         </drop-down>
@@ -200,10 +242,7 @@
 
 
         <form-list name="reception-list" list="receptionList" transition="findReceptionEntity" dynamic="true">
-            <field name="carNo"><default-field><display/></default-field></field>
-            <field name="carStatus"><default-field><display/></default-field></field>
-            <field name="inTime"><default-field><display/></default-field></field>
-            <field name="outTime"> <default-field> <display/> </default-field> </field>
+            <auto-fields-entity entity-name="StatusOfCar"/>
         </form-list>
 
         <form-list name="find-reception" list="findReceptionList" transition="findReceptionEntity" dynamic="true">
@@ -216,8 +255,8 @@
 
         <form-list name="security-list-form" list="securityTestList" transition="findReceptionEntity" dynamic="true">
             <field name="carNo"><default-field><display/></default-field></field>
-            <field name="carStatus"><default-field><display/></default-field></field>
-            <field name="inTime"><default-field><display/></default-field></field>
+            <field name="kmIn"><default-field><display/></default-field></field>
+            <field name="jobNumber"><default-field><display/></default-field></field>
         </form-list>
 
         <form-list name="technician-list-form" list="technicianList" transition="findReceptionEntity">
@@ -238,11 +277,22 @@
         <form-list name="cust-list" list="custList" transition="findReceptionEntity" dynamic="true">
             <field name="carNo"><default-field><display/></default-field></field>
         </form-list>
+        <form-list name="adviser-list" list="adviserList" transition="findReceptionEntity" dynamic="true">
+            <field name="carNo"><default-field><display/></default-field></field>
+            <field name="promisedTime"><default-field><display/></default-field></field>
+        </form-list>
         <form-list name="place-list" list="placeList" transition="findReceptionEntity" dynamic="true">
             <field name="vacant"><default-field><display/></default-field></field>
             <field name="placeValue"><default-field><display/></default-field></field>
             <field name="floor"><default-field><display/></default-field></field>
             <field name="bayNo"><default-field><display/></default-field></field>
+        </form-list>
+
+        <form-list name="test-drive-form" list="testDriveList" transition="findReceptionEntity" dynamic="true">
+            <field name="carNo"><default-field><display/></default-field></field>
+            <field name="testKey"><default-field><display/></default-field></field>
+            <field name="kmIn"><default-field><display/></default-field></field>
+            <field name="kmOut"><default-field><display/></default-field></field>
         </form-list>
     </widgets>
 </screen>
