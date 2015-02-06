@@ -2,6 +2,7 @@ import org.moqui.context.ExecutionContext
 import spock.lang.*
 import spock.lang.Specification
 import org.moqui.Moqui
+import testdata.UserData
 
 /**
  * Created by debmalya.biswas on 20/10/14.
@@ -19,7 +20,7 @@ class SecurityTests extends Specification {
     }
 
     def setup() {
-        ec.user.loginUser("john.doe", 'moqui', null)
+        ec.user.loginUser(UserData.userName, UserData.passWord, null)
         ec.artifactExecution.disableAuthz()
         ec.transaction.begin(null)
     }
@@ -30,7 +31,7 @@ class SecurityTests extends Specification {
         ec.user.logoutUser()
     }
 
-    def "Test for Core ArtifactGroup of Service tracker"() {
+    def "test for core ArtifactGroup of Service tracker"() {
 
         when:
         def entityValue = ec.entity.makeFind("moqui.security.ArtifactGroup").condition("artifactGroupId", "SERVICE_TRACKER_APP").one()
@@ -38,7 +39,7 @@ class SecurityTests extends Specification {
         entityValue.description == "Service tracker App (via root screen)"
     }
 
-    def "Test for ArtifactGroupMembers of Service tracker"() {
+    def "test for ArtifactGroupMembers of Service tracker"() {
 
         when:
         def entityValue = ec.entity.makeFind("moqui.security.ArtifactGroupMember").condition("artifactGroupId", "SERVICE_TRACKER_APP").one()

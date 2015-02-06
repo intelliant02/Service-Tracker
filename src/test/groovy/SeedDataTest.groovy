@@ -2,6 +2,8 @@ import org.moqui.Moqui
 import org.moqui.context.ExecutionContext
 import spock.lang.Shared
 import spock.lang.Specification
+import testdata.UserData
+
 /**
  * Created by debmalya.biswas on 21/10/14.
  */
@@ -18,7 +20,7 @@ class SeedDataTest extends Specification {
     }
 
     def setup() {
-        ec.user.loginUser("john.doe", 'moqui', null)
+        ec.user.loginUser(UserData.userName, UserData.passWord, null)
         ec.artifactExecution.disableAuthz()
         ec.transaction.begin(null)
     }

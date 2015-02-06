@@ -16,7 +16,7 @@
 
     <entity entity-name="SecurityCheck" package-name="service.tracker">
         <field name="carNo" type="text-medium" is-pk="true"/>
-        <field name="kmIn" type="text-medium"/>
+        <field name="kmIn" type="number-decimal"/>
     </entity>
 
     <entity entity-name="AdviserEntry" package-name="service.tracker">
