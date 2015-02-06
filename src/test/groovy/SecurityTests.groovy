@@ -1,7 +1,7 @@
-import org.moqui.context.ExecutionContext
-import spock.lang.*
-import spock.lang.Specification
 import org.moqui.Moqui
+import org.moqui.context.ExecutionContext
+import spock.lang.Shared
+import spock.lang.Specification
 import testdata.UserData
 
 /**
