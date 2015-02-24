@@ -50,6 +50,11 @@
                                                         <display text="${technician.carNo}"/>
                                                     </default-field>
                                                 </field>
+                                                <field name="area">
+                                                    <default-field title="Area">
+                                                        <display text="${technician.area + ' ' + technician.bayNo}"/>
+                                                    </default-field>
+                                                </field>
                                                 <field name="technicianId">
                                                     <default-field title="Technician Id">
                                                         <display text="${technician.technicianId}"/>
@@ -80,7 +85,7 @@
                                                 </field>
                                                 <field name="area">
                                                     <default-field title="Area">
-                                                        <display text="${technicianFirstFloor.area + ' ' + technicianFirstFloor.bayNo}"/>
+                                                        <display text="${technician.area + ' ' + technician.bayNo}"/>
                                                     </default-field>
                                                 </field>
                                                 <field name="technicianId">

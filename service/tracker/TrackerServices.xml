@@ -236,8 +236,8 @@
     <service verb="create" noun="TestDriveTechnician" authenticate="false">
         <in-parameters>
             <parameter name="carNo" required="true"/>
-            <parameter name="kmIn"/>
-            <parameter name="kmOut"/>
+            <parameter name="kmIn"><matches regexp="/\[[0-9]+\]/"/></parameter>
+            <parameter name="kmOut"><matches regexp="/\[[0-9]+\]/"/></parameter>
         </in-parameters>
         <out-parameters><parameter name="testKey"/></out-parameters>
         <actions>
